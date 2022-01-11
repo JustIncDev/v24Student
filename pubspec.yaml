@@ -1,0 +1,70 @@
+name: v24_student_app
+description: The student application of the V24 platform.
+
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.14.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+  intl: 0.17.0
+  f_logs: 2.0.0
+  bloc: ^8.0.1
+  flutter_bloc: ^8.0.0
+  provider: ^6.0.1
+  rxdart: ^0.27.3
+  equatable: ^2.0.3
+  sign_in_with_apple: ^3.3.0
+  intl_phone_field:
+    path: ./intl_phone_field
+  flutter_svg: ^1.0.0
+  firebase_auth: ^3.3.4
+  firebase_core: ^1.10.6
+  uuid: ^3.0.5
+  shared_preferences: ^2.0.11
+  liquid_swipe: ^2.1.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  build_runner: 2.0.2
+  retrofit_generator: 2.0.0+1
+  json_serializable: 4.1.1
+  flutter_launcher_icons: 0.9.0
+
+
+
+flutter:
+  uses-material-design: true
+  assets:
+    - icons/
+    - images/
+    - fonts/
+
+  fonts:
+    - family: Montserrat
+      fonts:
+        - asset: fonts/Montserrat-Black.ttf
+          weight: 900
+        - asset: fonts/Montserrat-ExtraBold.ttf
+          weight: 800
+        - asset: fonts/Montserrat-Bold.ttf
+          weight: 700
+        - asset: fonts/Montserrat-SemiBold.ttf
+          weight: 600
+        - asset: fonts/Montserrat-Medium.ttf
+          weight: 500
+        - asset: fonts/Montserrat-Regular.ttf
+          weight: 400
+        - asset: fonts/Montserrat-Light.ttf
+          weight: 300
+        - asset: fonts/Montserrat-ExtraLight.ttf
+          weight: 200
+        - asset: fonts/Montserrat-Thin.ttf
+          weight: 100
