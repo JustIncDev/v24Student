@@ -3,21 +3,21 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>991933001317-od9shb1flnffebl184juatfrkc2b8796.apps.googleusercontent.com</string>
+	<string>823552504826-s1gkh6pedt1tmeg01g14lqcuatp49lt9.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.991933001317-od9shb1flnffebl184juatfrkc2b8796</string>
+	<string>com.googleusercontent.apps.823552504826-s1gkh6pedt1tmeg01g14lqcuatp49lt9</string>
 	<key>API_KEY</key>
-	<string>AIzaSyAYdPUsqhoHwhzBcQdEH33iMSlLG7PULX8</string>
+	<string>AIzaSyDoQpTHGQXw9ZguMKSQ9WIEbxcPqYrv238</string>
 	<key>GCM_SENDER_ID</key>
-	<string>991933001317</string>
+	<string>823552504826</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.v24TeacherApp.ios</string>
+	<string>com.v24StudentApp.ios</string>
 	<key>PROJECT_ID</key>
-	<string>v24service</string>
+	<string>testproject-c0d84</string>
 	<key>STORAGE_BUCKET</key>
-	<string>v24service.appspot.com</string>
+	<string>testproject-c0d84.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -29,6 +29,8 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:991933001317:ios:bfaec80f90c00a7f6ee08c</string>
+	<string>1:823552504826:ios:ec403fa8fa00fb891c2a43</string>
+	<key>DATABASE_URL</key>
+	<string>https://testproject-c0d84-default-rtdb.europe-west1.firebasedatabase.app</string>
 </dict>
 </plist>

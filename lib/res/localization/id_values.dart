@@ -29,12 +29,17 @@ enum StringId {
   changePhone,
   resendCode,
   passwordNotEqualityError,
-  create,
-  manage,
+  find,
+  participate,
   explore,
   onboarding1,
   onboarding2,
   onboarding3,
+  additionalInfo,
+  male,
+  female,
+  gender,
+  dateOfBirth,
 }
 
 class ForIdValues {
@@ -70,12 +75,17 @@ class ForIdValues {
       StringId.changePhone: 'Change phone',
       StringId.resendCode: 'Resend code',
       StringId.passwordNotEqualityError: 'The confirmation password doesn\'t match',
-      StringId.create: 'Create',
-      StringId.manage: 'Manage',
+      StringId.find: 'Find',
+      StringId.participate: 'Participate',
       StringId.explore: 'Explore',
-      StringId.onboarding1: 'Create different surveys for getting answers from your students',
-      StringId.onboarding2: 'Manage the answers with convenient tables',
-      StringId.onboarding3: 'Study the statistics of your students\' answers',
+      StringId.onboarding1: 'Find interesting surveys of your favorite subjects and teachers',
+      StringId.onboarding2: 'Take part in surveys on various topics',
+      StringId.onboarding3: 'Explore your results and improve your knowledge',
+      StringId.additionalInfo: 'Additional Information',
+      StringId.male: 'Male',
+      StringId.female: 'Female',
+      StringId.gender: 'Gender',
+      StringId.dateOfBirth: 'Date of Birth',
     }
   };
 

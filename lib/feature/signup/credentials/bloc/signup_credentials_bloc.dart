@@ -126,21 +126,11 @@ class SignUpCredentialsBloc extends Bloc<SignUpCredentialsEvent, SignUpCredentia
     SignUpPerformEvent event,
     Emitter<SignUpCredentialsState> emit,
   ) {
-    print(state.firstNameValue +
-        state.lastNameValue +
-        state.emailValue +
-        state.phoneValue +
-        state.countryNameValue +
-        state.passwordValue +
-        state.confirmValue);
     var newState = validationFields(state);
     if (newState.isFieldError()) {
       emit(newState);
     } else {
-      emit(state.copyWith(status: BaseScreenStatus.lock));
-      add(SignUpSuccessEvent(verificationToken: 'verificationToken'));
-
-      ///Add sign up logic
+      emit(state.copyWith(status: BaseScreenStatus.next));
     }
   }
 

@@ -76,10 +76,13 @@ class RootRouterState extends State<RootRouter> with AutomaticKeepAliveClientMix
     });
   }
 
-  Future<Object?> push(ScreenInfo info) {
+  Future<Object?> push(ScreenInfo info, {bool replacement = false}) {
     Log.info('RootRouter PUSH',
         params: {'info': Log.screenInfoToLog(info)}, metadata: _logMetadata);
     setState(() {
+      if (replacement) {
+        infoList.clear();
+      }
       infoList.add(info);
     });
     if (info.resultCompleter != null && !info.resultCompleter!.isCompleted) {

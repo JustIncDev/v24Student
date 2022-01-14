@@ -30,12 +30,12 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   int currentPage = 0;
   List<Map<String, Object>> onboardingData = [
     {
-      'title': StringId.create,
+      'title': StringId.find,
       'description': StringId.onboarding1,
       'image': AppImages.firstOnboardingAsset,
     },
     {
-      'title': StringId.manage,
+      'title': StringId.participate,
       'description': StringId.onboarding2,
       'image': AppImages.secondOnboardingAsset,
     },

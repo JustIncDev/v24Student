@@ -7,6 +7,11 @@ class SignUpCodeState extends BaseBlocState {
     this.secondCodeValue = '',
     this.thirdCodeValue = '',
     this.fourthCodeValue = '',
+    this.fifthCodeValue = '',
+    this.sixthCodeValue = '',
+    this.status = BaseScreenStatus.input,
+    this.verificationCode = '',
+    this.token,
   });
 
   final int currentCodePosition;
@@ -14,6 +19,11 @@ class SignUpCodeState extends BaseBlocState {
   final String secondCodeValue;
   final String thirdCodeValue;
   final String fourthCodeValue;
+  final String fifthCodeValue;
+  final String sixthCodeValue;
+  final BaseScreenStatus status;
+  final String? verificationCode;
+  final int? token;
 
   SignUpCodeState copyWith({
     int? currentCodePosition,
@@ -21,6 +31,11 @@ class SignUpCodeState extends BaseBlocState {
     String? secondCodeValue,
     String? thirdCodeValue,
     String? fourthCodeValue,
+    String? fifthCodeValue,
+    String? sixthCodeValue,
+    BaseScreenStatus? status,
+    String? verificationCode,
+    int? token,
   }) {
     return SignUpCodeState(
       currentCodePosition: currentCodePosition ?? this.currentCodePosition,
@@ -28,6 +43,11 @@ class SignUpCodeState extends BaseBlocState {
       secondCodeValue: secondCodeValue ?? this.secondCodeValue,
       thirdCodeValue: thirdCodeValue ?? this.thirdCodeValue,
       fourthCodeValue: fourthCodeValue ?? this.fourthCodeValue,
+      fifthCodeValue: fifthCodeValue ?? this.fifthCodeValue,
+      sixthCodeValue: sixthCodeValue ?? this.sixthCodeValue,
+      status: status ?? this.status,
+      verificationCode: verificationCode ?? this.verificationCode,
+      token: token ?? this.token,
     );
   }
 
@@ -52,5 +72,8 @@ class SignUpCodeState extends BaseBlocState {
         secondCodeValue,
         thirdCodeValue,
         fourthCodeValue,
+        fifthCodeValue,
+        sixthCodeValue,
+        status,
       ];
 }

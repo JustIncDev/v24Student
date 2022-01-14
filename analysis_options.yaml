@@ -62,5 +62,4 @@ linter:
     - avoid_unnecessary_containers
     - file_names
     - prefer_single_quotes
-    - sort_constructors_first
     - unnecessary_new

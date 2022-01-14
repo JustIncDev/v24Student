@@ -121,8 +121,14 @@ class _SignUpCredentialsScreenState extends State<SignUpCredentialsScreen> {
       },
       listener: (context, state) {
         if (state.status == BaseScreenStatus.next) {
-          RootRouter.of(context)
-              ?.push(ScreenInfo(name: ScreenName.signUpCode, params: {'phone': state.phoneValue}));
+          RootRouter.of(context)?.push(ScreenInfo(name: ScreenName.signUpAdditional, params: {
+            'firstName': state.firstNameValue,
+            'lastName': state.lastNameValue,
+            'email': state.emailValue,
+            'phoneNumber': state.phoneValue,
+            'country': state.countryNameValue,
+            'password': state.passwordValue,
+          }));
         }
         FocusNode? needFocus;
         TextEditingController? needController;
@@ -280,9 +286,9 @@ class _SignUpCredentialsScreenState extends State<SignUpCredentialsScreen> {
                                 ),
                                 const VerticalSpace(28.0),
                                 PrimaryButton(
-                                  titleId: StringId.finish,
+                                  titleId: StringId.continueText,
                                   onPressed: state.isFillAllFields()
-                                      ? () => _onFinishButtonTap(state)
+                                      ? () => _onContinueButtonTap(state)
                                       : null,
                                 ),
                                 const Spacer(),
@@ -331,7 +337,7 @@ class _SignUpCredentialsScreenState extends State<SignUpCredentialsScreen> {
     );
   }
 
-  void _onFinishButtonTap(SignUpCredentialsState state) {
+  void _onContinueButtonTap(SignUpCredentialsState state) {
     BlocProvider.of<SignUpCredentialsBloc>(context).add(SignUpPerformEvent());
   }
 

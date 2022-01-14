@@ -41,20 +41,22 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyB5uyl2G5OduAyE23LNQheYPoVSiAicRdg',
-    appId: '1:991933001317:android:36087a85fcf69e986ee08c',
-    messagingSenderId: '991933001317',
-    projectId: 'v24service',
-    storageBucket: 'v24service.appspot.com',
+    apiKey: 'AIzaSyD34Ur-ufQBbGjc-Vu-qdwcNmpMZaUSJa4',
+    appId: '1:823552504826:android:24cdafc65fb55dbc1c2a43',
+    messagingSenderId: '823552504826',
+    projectId: 'testproject-c0d84',
+    databaseURL: 'https://testproject-c0d84-default-rtdb.europe-west1.firebasedatabase.app',
+    storageBucket: 'testproject-c0d84.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyAYdPUsqhoHwhzBcQdEH33iMSlLG7PULX8',
-    appId: '1:991933001317:ios:bfaec80f90c00a7f6ee08c',
-    messagingSenderId: '991933001317',
-    projectId: 'v24service',
-    storageBucket: 'v24service.appspot.com',
-    iosClientId: '991933001317-od9shb1flnffebl184juatfrkc2b8796.apps.googleusercontent.com',
-    iosBundleId: 'com.v24TeacherApp.ios',
+    apiKey: 'AIzaSyDoQpTHGQXw9ZguMKSQ9WIEbxcPqYrv238',
+    appId: '1:823552504826:ios:ec403fa8fa00fb891c2a43',
+    messagingSenderId: '823552504826',
+    projectId: 'testproject-c0d84',
+    databaseURL: 'https://testproject-c0d84-default-rtdb.europe-west1.firebasedatabase.app',
+    storageBucket: 'testproject-c0d84.appspot.com',
+    iosClientId: '823552504826-s1gkh6pedt1tmeg01g14lqcuatp49lt9.apps.googleusercontent.com',
+    iosBundleId: 'com.v24StudentApp.ios',
   );
 }

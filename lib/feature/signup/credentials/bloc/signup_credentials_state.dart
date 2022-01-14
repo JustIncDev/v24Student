@@ -8,7 +8,7 @@ class SignUpCredentialsState extends BaseBlocState {
     this.lastNameError = const FieldError.none(),
     this.emailValue = '',
     this.emailError = const FieldError.none(),
-    this.countryNameValue = '',
+    this.countryNameValue = 'United States',
     this.phoneValue = '',
     this.phoneError = const FieldError.none(),
     this.passwordValue = '',

@@ -1,6 +1,7 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
 const String DISPLAY_ONBOARDING = 'DISPLAY_ONBOARDING';
+const String USER_ID = 'USER_ID';
 
 class SessionState {
   SessionState._();
@@ -21,5 +22,18 @@ class SessionState {
 
   bool getOnboardingFlag() {
     return _sharedPreferences.getBool(DISPLAY_ONBOARDING) ?? false;
+  }
+
+  Future<void> checkUserId(String userId) {
+    if (userId != _sharedPreferences.getString(USER_ID)) {
+      return Future.wait([
+        setUserId(userId),
+      ]);
+    }
+    return Future.value();
+  }
+
+  Future<void> setUserId(String userId) {
+    return _sharedPreferences.setString(USER_ID, userId);
   }
 }

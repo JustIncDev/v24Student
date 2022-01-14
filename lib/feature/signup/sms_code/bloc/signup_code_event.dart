@@ -18,4 +18,26 @@ class SignUpCodeClearEvent extends SignUpCodeEvent {}
 
 class SignUpCodePerformEvent extends SignUpCodeEvent {}
 
-class SignUpCodeErrorEvent extends SignUpCodeEvent {}
+class SignUpCodeSuccessEvent extends SignUpCodeEvent {}
+
+class SignUpCodeFailedEvent extends SignUpCodeEvent {
+  SignUpCodeFailedEvent(this.error);
+
+  final Exception error;
+}
+
+class FirebaseCodeEvent extends SignUpCodeEvent {}
+
+class FirebaseCodeSentEvent extends FirebaseCodeEvent {
+  FirebaseCodeSentEvent({required this.verificationId, this.resendCode});
+
+  final String verificationId;
+  final int? resendCode;
+}
+
+class FirebaseCodeResendCodeEvent extends FirebaseCodeEvent {
+  FirebaseCodeResendCodeEvent(this.phoneNumber, this.token);
+
+  final String phoneNumber;
+  final int? token;
+}
