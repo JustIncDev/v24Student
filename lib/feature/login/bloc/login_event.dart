@@ -34,16 +34,28 @@ class LoginFieldValidateEvent extends LoginEvent {
   }
 }
 
-class LoginPerformEvent extends LoginEvent {}
+abstract class LoginPerformEvent extends LoginEvent {}
 
-class LoginWithApplePerformEvent extends LoginPerformEvent {
-  LoginWithApplePerformEvent(this.credentials);
+class LoginWithEmailPerformEvent extends LoginPerformEvent {
+  LoginWithEmailPerformEvent({
+    required this.email,
+    required this.password,
+  });
 
-  final AuthorizationCredentialAppleID credentials;
+  final String email;
+  final String password;
 }
+
+class LoginWithApplePerformEvent extends LoginPerformEvent {}
+
+class LoginWithGooglePerformEvent extends LoginPerformEvent {}
+
+class LoginWithFacebookPerformEvent extends LoginPerformEvent {}
 
 class LoginFailedEvent extends LoginEvent {
   LoginFailedEvent(this.exception);
 
   final Exception exception;
 }
+
+class LoginSuccessEvent extends LoginPerformEvent {}

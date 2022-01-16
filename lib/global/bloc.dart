@@ -5,7 +5,8 @@ import 'package:v24_student_app/feature/signup/additonal_credentials/bloc/sign_u
 import 'package:v24_student_app/feature/signup/credentials/bloc/signup_credentials_bloc.dart';
 import 'package:v24_student_app/feature/signup/sms_code/bloc/signup_code_bloc.dart';
 import 'package:v24_student_app/global/data_blocs/auth/auth_bloc.dart';
-import 'package:v24_student_app/repo/signup_repo.dart';
+import 'package:v24_student_app/repo/sign_in_repo.dart';
+import 'package:v24_student_app/repo/sign_up_repo.dart';
 
 abstract class BaseBlocEvent extends Equatable {
   @override
@@ -30,7 +31,7 @@ class BlocFactory {
   final AuthBloc authBloc;
 
   LoginBloc createLoginBloc() {
-    return LoginBloc();
+    return LoginBloc(authBloc: authBloc, signInRepo: SignInRepo());
   }
 
   SignUpCredentialsBloc createSignUpCredentialsBloc() {

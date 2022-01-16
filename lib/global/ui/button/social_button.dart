@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 import 'package:v24_student_app/res/colors.dart';
 import 'package:v24_student_app/res/icons.dart';
+import 'package:v24_student_app/utils/device.dart';
 
 const _appleIconSizeScale = 28 / 44;
 const _appleButtonHeight = 44.0;
@@ -17,9 +18,11 @@ class SocialButton extends StatelessWidget {
   const SocialButton({
     Key? key,
     this.type = SocialMediaType.apple,
+    this.onTap,
   }) : super(key: key);
 
   final SocialMediaType type;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -30,10 +33,12 @@ class SocialButton extends StatelessWidget {
         borderRadius: BorderRadius.circular(6.0),
       ),
       child: InkWell(
+        onTap: onTap,
         borderRadius: BorderRadius.circular(6.0),
         child: Center(
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 40.0),
+            padding:
+                EdgeInsets.symmetric(horizontal: DeviceUtils.isThinScreen(context) ? 30.0 : 40.0),
             child: _getSocialIcon(),
           ),
         ),

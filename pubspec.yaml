@@ -32,6 +32,9 @@ dependencies:
   liquid_swipe: ^2.1.1
   flutter_holo_date_picker: ^1.0.1+2
   freezed_annotation: ^1.1.0
+  flutter_facebook_auth: ^4.0.1
+  crypto: ^3.0.1
+  google_sign_in: ^5.2.3
 
 dev_dependencies:
   flutter_test:

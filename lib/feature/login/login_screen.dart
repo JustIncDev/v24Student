@@ -76,9 +76,14 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return BlocConsumer<LoginBloc, LoginState>(
       listenWhen: (previous, current) {
-        return (previous.needFocusField != current.needFocusField);
+        return (previous.needFocusField != current.needFocusField) ||
+            (previous.status != current.status);
       },
       listener: (context, state) {
+        if (state.status == BaseScreenStatus.next) {
+          RootRouter.of(context)
+              ?.push(const ScreenInfo(name: ScreenName.surveys), replacement: true);
+        }
         FocusNode? needFocus;
         TextEditingController? needController;
         if (!state.emailError.isNone() && state.loginType == LoginType.email) {
@@ -168,8 +173,13 @@ class _LoginScreenState extends State<LoginScreen> {
                                   const VerticalSpace(28.0),
                                   PrimaryButton(
                                     titleId: StringId.login,
-                                    onPressed: () => VoidCallback,
-                                    // onPressed: state.isFillAllFields() ? () => BlocProvider.of<LoginBloc>(context).add(LoginPerformEvent()) : null,
+                                    onPressed: state.isFillAllFields()
+                                        ? () => BlocProvider.of<LoginBloc>(context)
+                                                .add(LoginWithEmailPerformEvent(
+                                              email: state.emailValue,
+                                              password: state.passwordValue,
+                                            ))
+                                        : null,
                                   ),
                                   const VerticalSpace(35.0),
                                   Row(
@@ -202,9 +212,18 @@ class _LoginScreenState extends State<LoginScreen> {
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
-                                      const SocialButton(type: SocialMediaType.apple),
-                                      const SocialButton(type: SocialMediaType.facebook),
-                                      const SocialButton(type: SocialMediaType.google),
+                                      SocialButton(
+                                        type: SocialMediaType.apple,
+                                        onTap: () => _onSocialButtonTap(SocialMediaType.apple),
+                                      ),
+                                      SocialButton(
+                                        type: SocialMediaType.facebook,
+                                        onTap: () => _onSocialButtonTap(SocialMediaType.facebook),
+                                      ),
+                                      SocialButton(
+                                        type: SocialMediaType.google,
+                                        onTap: () => _onSocialButtonTap(SocialMediaType.google),
+                                      ),
                                     ],
                                   ),
                                   const Spacer(),
@@ -246,7 +265,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
             ),
-            state.status == LoginStatus.perform ? const ProgressWall() : const Offstage(),
+            state.status == BaseScreenStatus.lock ? const ProgressWall() : const Offstage(),
           ],
         );
       },
@@ -266,6 +285,20 @@ class _LoginScreenState extends State<LoginScreen> {
   void _updateController(LoginState state) {
     if (_passwordController.text != state.passwordValue) {
       _passwordController.text = state.passwordValue;
+    }
+  }
+
+  void _onSocialButtonTap(SocialMediaType type) {
+    switch (type) {
+      case SocialMediaType.apple:
+        BlocProvider.of<LoginBloc>(context).add(LoginWithApplePerformEvent());
+        break;
+      case SocialMediaType.facebook:
+        BlocProvider.of<LoginBloc>(context).add(LoginWithFacebookPerformEvent());
+        break;
+      case SocialMediaType.google:
+        BlocProvider.of<LoginBloc>(context).add(LoginWithGooglePerformEvent());
+        break;
     }
   }
 }

@@ -33,12 +33,4 @@ class SignUpRepo extends BaseRepo {
       throw e;
     }
   }
-
-  // Future<String?> verifyPhoneNumber(String phoneNumber) {
-  //   try {
-  //     return _signUpRemoteProvider.verifyPhoneNumberInitiate(phoneNumber);
-  //   } on Exception catch (e) {
-  //     throw e;
-  //   }
-  // }
 }

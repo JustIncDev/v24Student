@@ -3,11 +3,9 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:v24_student_app/domain/base.dart';
-import 'package:v24_student_app/feature/signup/credentials/bloc/signup_credentials_bloc.dart';
 import 'package:v24_student_app/global/bloc.dart';
 import 'package:v24_student_app/global/data_blocs/auth/auth_bloc.dart';
-import 'package:v24_student_app/repo/signup_repo.dart';
+import 'package:v24_student_app/repo/sign_up_repo.dart';
 
 part 'signup_code_event.dart';
 part 'signup_code_state.dart';

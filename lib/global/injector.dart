@@ -6,11 +6,9 @@ class Injector {
 
   Future<Injector> init() async {
     _authBloc = AuthBloc();
-
-    return Future.wait([
-      SessionState().initialize(),
-      _authBloc.init(),
-    ]).then((value) => this);
+    await SessionState().initialize();
+    await _authBloc.init();
+    return this;
   }
 
   AuthBloc get authBloc => _authBloc;

@@ -1,7 +1,5 @@
 part of 'login_bloc.dart';
 
-enum LoginStatus { input, perform, success }
-
 enum LoginType { email, social }
 
 class LoginState extends BaseBlocState {
@@ -11,7 +9,7 @@ class LoginState extends BaseBlocState {
     this.passwordValue = '',
     this.passwordError = const FieldError.none(),
     this.needFocusField = '',
-    this.status = LoginStatus.input,
+    this.status = BaseScreenStatus.input,
     this.loginType = LoginType.email,
   });
 
@@ -20,7 +18,7 @@ class LoginState extends BaseBlocState {
   final String passwordValue;
   final FieldError passwordError;
   final String needFocusField;
-  final LoginStatus status;
+  final BaseScreenStatus status;
   final LoginType loginType;
 
   LoginState copyWith({
@@ -29,7 +27,7 @@ class LoginState extends BaseBlocState {
     String? passwordValue,
     FieldError? passwordError,
     String? needFocusField,
-    LoginStatus? status,
+    BaseScreenStatus? status,
     LoginType? loginType,
   }) {
     return LoginState(

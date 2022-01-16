@@ -1,11 +1,8 @@
-import 'dart:async';
-
 import 'package:bloc/bloc.dart';
-import 'package:meta/meta.dart';
 import 'package:v24_student_app/global/bloc.dart';
 import 'package:v24_student_app/global/data_blocs/auth/auth_bloc.dart';
 import 'package:v24_student_app/global/logger/logger.dart';
-import 'package:v24_student_app/repo/signup_repo.dart';
+import 'package:v24_student_app/repo/sign_up_repo.dart';
 import 'package:v24_student_app/utils/session_state.dart';
 
 part 'sign_up_additional_credentials_event.dart';
@@ -83,6 +80,7 @@ class SignUpAdditionalCredentialsBloc
       }
     }).then((_) {
       add(SignUpAdditionalCredentialsSuccessEvent());
+      _authBloc.add(AuthUpdateEvent());
     }).catchError((e, s) {
       Log.error('SignUpCodeBloc', exc: e, stackTrace: s);
       add(SignUpAdditionalCredentialsFailedEvent(e));

@@ -48,7 +48,7 @@ class _V24StudentApplicationState extends State<V24StudentApplication> {
           // if (authState.isNotInit()) return Container();
           ScreenInfo _initScreenInfo;
           if (authState.active) {
-            _initScreenInfo = const ScreenInfo(name: ScreenName.login);
+            _initScreenInfo = const ScreenInfo(name: ScreenName.surveys);
           } else {
             if (!SessionState().getOnboardingFlag()) {
               _initScreenInfo = const ScreenInfo(name: ScreenName.onboarding);

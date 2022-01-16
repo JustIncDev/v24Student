@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:v24_student_app/global/logger/logger.dart';
+import 'package:v24_student_app/utils/session_state.dart';
 
 import '../../bloc.dart';
 
@@ -54,38 +55,31 @@ class AuthState extends BaseBlocState {
 }
 
 class AuthBloc extends DataBloc<AuthEvent, AuthState> {
-  // AuthBloc({required this.appParamRepo, required this.database}) : super(AuthState.empty());
-  AuthBloc() : super(AuthState.empty());
-
-  // final AppParamRepo appParamRepo;
-  // final AppDatabase database;
+  AuthBloc() : super(AuthState.empty()) {
+    on<AuthEvent>((event, emit) {
+      if (event is AuthInitedEvent) {
+        emit(AuthState.toChange(active: _isActive()));
+      } else if (event is AuthUpdateEvent) {
+        emit(AuthState.toChange(active: _isActive()));
+      } else if (event is AuthLogoutPerformEvent) {
+        _logout();
+      }
+    });
+  }
 
   @override
   Future<void> init() async {
-    // Authorizer.init(
-    //   appParamRepo: appParamRepo,
-    //   onUnauthorized: () => add(AuthLogoutPerformEvent()),
-    // ).then(
-    //       (authorizer) => add(AuthInitedEvent()),
-    // );
+    add(AuthInitedEvent());
   }
 
-  // Stream<AuthState> mapEventToState(AuthEvent event) async* {
-  //   if (event is AuthInitedEvent) {
-  //     yield AuthState.toChange(active: Authorizer.instance.isActive());
-  //   } else if (event is AuthUpdateEvent) {
-  //     yield AuthState.toChange(active: Authorizer.instance.isActive(), afterSignUp: event.afterSignUp);
-  //   } else if (event is AuthLogoutPerformEvent) {
-  //     _logout();
-  //   }
-  // }
+  bool _isActive() {
+    var userId = SessionState().getUserId();
+    return userId != null && userId.isNotEmpty;
+  }
 
   void _logout() {
-    Future.wait<dynamic>([
-      // Authorizer.instance.clearTokens(),
-      // appParamRepo.remove(AppParamId.firstLaunched),
-      // appParamRepo.remove(AppParamId.apnsToken),
-      // appParamRepo.remove(AppParamId.pendingNotifications),
+    Future.wait<Object?>([
+      SessionState().clearSessionData(),
     ]).then((values) {
       Log.info('logout success');
       add(AuthUpdateEvent());

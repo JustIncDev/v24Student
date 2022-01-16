@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">V24Student</string>
+    <string name="facebook_app_id">5065581486786822</string>
+    <string name="fb_login_protocol_scheme">fb5065581486786822</string>
+    <string name="facebook_client_token">08bfde7c8e921e28051d36f5fee0f278</string>
+</resources>

@@ -6,9 +6,9 @@ const String USER_ID = 'USER_ID';
 class SessionState {
   SessionState._();
 
-  factory SessionState() => instance;
+  factory SessionState() => _instance;
 
-  static final instance = SessionState._();
+  static final _instance = SessionState._();
 
   late SharedPreferences _sharedPreferences;
 
@@ -35,5 +35,13 @@ class SessionState {
 
   Future<void> setUserId(String userId) {
     return _sharedPreferences.setString(USER_ID, userId);
+  }
+
+  String? getUserId() {
+    return _sharedPreferences.getString(USER_ID);
+  }
+
+  Future<bool> clearSessionData() {
+    return _sharedPreferences.clear();
   }
 }

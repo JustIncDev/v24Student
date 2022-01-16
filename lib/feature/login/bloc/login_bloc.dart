@@ -1,21 +1,44 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 import 'package:v24_student_app/global/bloc.dart';
+import 'package:v24_student_app/global/data_blocs/auth/auth_bloc.dart';
+import 'package:v24_student_app/global/logger/logger.dart';
 import 'package:v24_student_app/global/ui/text_field/field_error.dart';
 import 'package:v24_student_app/global/ui/text_field/input_field_type.dart';
+import 'package:v24_student_app/repo/sign_in_repo.dart';
 import 'package:v24_student_app/res/localization/id_values.dart';
+import 'package:v24_student_app/utils/session_state.dart';
 
 part 'login_event.dart';
 part 'login_state.dart';
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
-  LoginBloc() : super(LoginState()) {
+  final SignInRepo _signInRepo;
+  final AuthBloc _authBloc;
+
+  LoginBloc({
+    required SignInRepo signInRepo,
+    required AuthBloc authBloc,
+  })  : _signInRepo = signInRepo,
+        _authBloc = authBloc,
+        super(LoginState()) {
     on<LoginEvent>((event, emit) {
       if (event is LoginFieldInputEvent) {
         _handleInputEvent(event, emit);
       } else if (event is LoginFieldValidateEvent) {
         _handleValidateEvent(event, emit);
+      } else if (event is LoginWithEmailPerformEvent) {
+        _handlePerformEvent(event, emit);
+      } else if (event is LoginWithFacebookPerformEvent) {
+        _handleFacebookPerformEvent(event, emit);
+      } else if (event is LoginWithApplePerformEvent) {
+        _handleApplePerformEvent(event, emit);
+      } else if (event is LoginWithGooglePerformEvent) {
+        _handleGooglePerformEvent(event, emit);
+      } else if (event is LoginSuccessEvent) {
+        _handleSuccessEvent(event, emit);
+      } else if (event is LoginFailedEvent) {
+        _handleFailedEvent(event, emit);
       }
     });
   }
@@ -60,6 +83,94 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       default:
         break;
     }
+  }
+
+  void _handlePerformEvent(
+    LoginWithEmailPerformEvent event,
+    Emitter<LoginState> emit,
+  ) {
+    emit(state.copyWith(status: BaseScreenStatus.lock));
+    _signInRepo.loginWithEmail(email: event.email, password: event.password).then((userId) async {
+      if (userId != null) {
+        return await SessionState().checkUserId(userId);
+      }
+    }).then((_) {
+      add(LoginSuccessEvent());
+      _authBloc.add(AuthUpdateEvent());
+    }).catchError((e, s) {
+      Log.error('Login error:', exc: e, stackTrace: s);
+      add(LoginFailedEvent(e));
+    });
+  }
+
+  void _handleFacebookPerformEvent(
+    LoginWithFacebookPerformEvent event,
+    Emitter<LoginState> emit,
+  ) {
+    emit(state.copyWith(status: BaseScreenStatus.lock));
+    _signInRepo.signInWithFacebook().then((userId) async {
+      if (userId != null) {
+        return await SessionState().checkUserId(userId);
+      }
+    }).then((_) {
+      add(LoginSuccessEvent());
+      _authBloc.add(AuthUpdateEvent());
+    }).catchError((e, s) {
+      Log.error('Facebook login error:', exc: e, stackTrace: s);
+      add(LoginFailedEvent(e));
+    });
+  }
+
+  void _handleApplePerformEvent(
+    LoginWithApplePerformEvent event,
+    Emitter<LoginState> emit,
+  ) {
+    emit(state.copyWith(status: BaseScreenStatus.lock));
+    _signInRepo.signInWithApple().then((userId) async {
+      if (userId != null) {
+        return await SessionState().checkUserId(userId);
+      }
+    }).then((_) {
+      add(LoginSuccessEvent());
+      _authBloc.add(AuthUpdateEvent());
+    }).catchError((e, s) {
+      Log.error('Apple login error:', exc: e, stackTrace: s);
+      add(LoginFailedEvent(e));
+    });
+    ;
+  }
+
+  void _handleGooglePerformEvent(
+    LoginWithGooglePerformEvent event,
+    Emitter<LoginState> emit,
+  ) {
+    emit(state.copyWith(status: BaseScreenStatus.lock));
+    _signInRepo.signInWithGoogle().then((userId) async {
+      if (userId != null) {
+        return await SessionState().checkUserId(userId);
+      }
+    }).then((_) {
+      add(LoginSuccessEvent());
+      _authBloc.add(AuthUpdateEvent());
+    }).catchError((e, s) {
+      Log.error('Google login error:', exc: e, stackTrace: s);
+      add(LoginFailedEvent(e));
+    });
+    ;
+  }
+
+  void _handleSuccessEvent(
+    LoginSuccessEvent event,
+    Emitter<LoginState> emit,
+  ) {
+    emit(state.copyWith(status: BaseScreenStatus.next));
+  }
+
+  void _handleFailedEvent(
+    LoginFailedEvent event,
+    Emitter<LoginState> emit,
+  ) {
+    emit(state.copyWith(status: BaseScreenStatus.input));
   }
 
   FieldError validateEmail(String emailValue) {
