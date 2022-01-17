@@ -40,6 +40,13 @@ enum StringId {
   female,
   gender,
   dateOfBirth,
+  myFavoriteSubjects,
+  selectSubjects,
+  next,
+  ok,
+  selectAllSubjects,
+  myFavoriteTeachers,
+  selectTeachers,
 }
 
 class ForIdValues {
@@ -86,6 +93,13 @@ class ForIdValues {
       StringId.female: 'Female',
       StringId.gender: 'Gender',
       StringId.dateOfBirth: 'Date of Birth',
+      StringId.myFavoriteSubjects: 'My favorite subjects',
+      StringId.selectSubjects: 'Select your favorite subjects',
+      StringId.next: 'Next',
+      StringId.ok: 'Ok',
+      StringId.selectAllSubjects: 'Select all subjects',
+      StringId.myFavoriteTeachers: 'My favorite teachers',
+      StringId.selectTeachers: 'Select your favorite teachers',
     }
   };
 

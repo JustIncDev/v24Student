@@ -1,5 +1,5 @@
 import 'package:v24_student_app/repo/base_repo.dart';
-import 'package:v24_student_app/repo/provider/remote/signup_remote_provider.dart';
+import 'package:v24_student_app/repo/provider/remote/sign_up_remote_provider.dart';
 
 class SignUpRepo extends BaseRepo {
   SignUpRepo()

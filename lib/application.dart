@@ -56,6 +56,8 @@ class _V24StudentApplicationState extends State<V24StudentApplication> {
               _initScreenInfo = const ScreenInfo(name: ScreenName.login);
             }
           }
+          ///For testing favorite screen
+          _initScreenInfo = const ScreenInfo(name: ScreenName.favorite);
           return Provider<BlocFactory>(
             key: providerKey,
             create: (ctx) => BlocFactory(

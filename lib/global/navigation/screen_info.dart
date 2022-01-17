@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
+import 'package:v24_student_app/feature/favorite/favorite_screen.dart';
 import 'package:v24_student_app/feature/login/login_screen.dart';
 import 'package:v24_student_app/feature/onboarding/onboarding_screen.dart';
 import 'package:v24_student_app/feature/signup/additonal_credentials/signup_additional_credentials_screen.dart';
@@ -17,6 +18,7 @@ enum ScreenName {
   signUpCode,
   onboarding,
   surveys,
+  favorite,
 }
 
 class ScreenInfo {
@@ -51,6 +53,11 @@ Page<void> toPage(ScreenInfo info, BuildContext context) {
       return OnboardingScreen.buildPage(params: info.params);
     case ScreenName.surveys:
       return SurveysScreen.buildPage(
+        params: info.params,
+        blocFactory: Provider.of<BlocFactory>(context),
+      );
+    case ScreenName.favorite:
+      return FavoriteScreen.buildPage(
         params: info.params,
         blocFactory: Provider.of<BlocFactory>(context),
       );

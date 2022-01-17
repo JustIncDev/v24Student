@@ -25,6 +25,15 @@ enum Gender {
   female,
 }
 
+abstract class FavoriteObject {
+  const FavoriteObject(this.id, this.title, this.imagePath, this.color);
+
+  final String id;
+  final String title;
+  final String imagePath;
+  final int color;
+}
+
 @JsonSerializable()
 @immutable
 class FirebaseEmail {
