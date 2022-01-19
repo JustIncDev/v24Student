@@ -16,7 +16,7 @@ class AppIcons {
   static const faceIdIcon = 'icons/faceIdIcon.svg';
   static const sampleSubjectIcon = 'icons/subjectIcon.svg';
   static const sampleTeacherIcon = 'icons/teacherIcon.svg';
-
+  static const selectIcon = 'icons/selectIcon.svg';
 
   static const eyeOpenAsset = AssetImage(eyeOpen);
   static const eyeCloseAsset = AssetImage(eyeClose);

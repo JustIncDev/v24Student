@@ -1,10 +1,9 @@
-import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:v24_student_app/domain/base.dart';
 
 part 'subject.g.dart';
 
-@JsonSerializable(explicitToJson: true)
+@JsonSerializable()
 @immutable
 class FavoriteSubject extends FavoriteObject {
   FavoriteSubject(
@@ -12,7 +11,10 @@ class FavoriteSubject extends FavoriteObject {
     String title,
     String imagePath,
     String color,
+    this.subjects,
   ) : super(id, title, imagePath, color);
+
+  final List<SubSubject>? subjects;
 
   factory FavoriteSubject.fromJson(Map<String, Object?> json) => _$FavoriteSubjectFromJson(json);
 

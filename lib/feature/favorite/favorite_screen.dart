@@ -6,6 +6,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:v24_student_app/feature/favorite/widgets/favorite_grid_widget.dart';
 import 'package:v24_student_app/global/bloc.dart';
 import 'package:v24_student_app/global/ui/button/primary_button.dart';
+import 'package:v24_student_app/global/ui/progress/progress_wall.dart';
 import 'package:v24_student_app/global/ui/space.dart';
 import 'package:v24_student_app/res/colors.dart';
 import 'package:v24_student_app/res/fonts.dart';
@@ -49,7 +50,7 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
   Widget build(BuildContext context) {
     return BlocConsumer<FavoriteBloc, FavoriteState>(
       listenWhen: (previous, current) {
-        return (previous.status != current.status && current.status == BaseScreenStatus.next);
+        return (previous.status != current.status && current.status == FavoriteScreenStatus.next);
       },
       listener: (context, state) {
         // if (state.status == BaseScreenStatus.next) {
@@ -118,7 +119,6 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                                     ),
                                   ],
                                 ),
-                                const VerticalSpace(14.5),
                                 Center(
                                   child: Text(
                                     getStringById(
@@ -200,7 +200,7 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                 },
               ),
             ),
-            // state.status == BaseScreenStatus.lock ? const ProgressWall() : const Offstage(),
+            state.status == FavoriteScreenStatus.lock ? const ProgressWall() : const Offstage(),
           ],
         );
       },

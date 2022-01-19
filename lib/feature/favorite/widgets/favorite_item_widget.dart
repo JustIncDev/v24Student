@@ -17,6 +17,7 @@ class FavoriteItemWidget extends StatelessWidget {
     required this.itemType,
     this.subSubjectsCount,
     required this.selected,
+    this.bottomSheet = false,
     this.onTap,
   }) : super(key: key);
 
@@ -26,6 +27,7 @@ class FavoriteItemWidget extends StatelessWidget {
   final FavoriteItemType itemType;
   final int? subSubjectsCount;
   final bool selected;
+  final bool bottomSheet;
   final VoidCallback? onTap;
 
   @override
@@ -41,6 +43,13 @@ class FavoriteItemWidget extends StatelessWidget {
                 ? BorderRadius.circular(70.0)
                 : BorderRadius.circular(20.0),
             color: Color(backgroundColor),
+            boxShadow: [
+              BoxShadow(
+                color: Color(backgroundColor).withOpacity(0.15),
+                blurRadius: 20.0,
+                offset: const Offset(0, 10.0),
+              ),
+            ],
           ),
           child: Padding(
             padding: const EdgeInsets.all(21.0),
@@ -110,13 +119,13 @@ class FavoriteItemWidget extends StatelessWidget {
               child: Text(
                 title,
                 textAlign: TextAlign.center,
-                style: const TextStyle(fontSize: 12.0, color: AppColors.black)
+                style: TextStyle(fontSize: bottomSheet ? 14.0 : 12.0, color: AppColors.black)
                     .montserrat(fontWeight: AppFonts.semiBold),
               ),
             ),
           ],
         ),
-        if (subSubjectsCount != null && subSubjectsCount! > 0)
+        if (subSubjectsCount != null && subSubjectsCount! > 0 && !bottomSheet)
           Container(
             width: 24.0,
             height: 24.0,

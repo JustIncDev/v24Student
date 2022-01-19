@@ -1,11 +1,12 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:v24_student_app/domain/base.dart';
+import 'package:v24_student_app/domain/subject.dart';
 import 'package:v24_student_app/feature/favorite/bloc/favorite_bloc.dart';
 import 'package:v24_student_app/feature/favorite/widgets/favorite_item_widget.dart';
 import 'package:v24_student_app/utils/color.dart';
+
+import 'favorite_subjects_modal_widget.dart';
 
 enum FavoriteItemType {
   subject,
@@ -22,11 +23,13 @@ class FavoriteGridWidget extends StatelessWidget {
 
   final FavoriteItemType type;
   final List<FavoriteObject>? favoriteItems;
-  final List<String>? selectedItems;
+  final Object? selectedItems;
 
   @override
   Widget build(BuildContext context) {
     var safeItems = favoriteItems;
+    var state = BlocProvider.of<FavoriteBloc>(context).state;
+
     if (safeItems != null && safeItems.isNotEmpty) {
       return CustomScrollView(
         primary: false,
@@ -43,14 +46,11 @@ class FavoriteGridWidget extends StatelessWidget {
                 (index) => FavoriteItemWidget(
                   title: safeItems[index].title,
                   iconPath: safeItems[index].imagePath ?? '',
-                  backgroundColor: _getColorCode(safeItems[index].color ?? '0xFFFFFFFF'),
+                  backgroundColor: _getColorCode(safeItems[index].color ?? '0xFFFFFFFF', index),
                   itemType: type,
-                  // subSubjectsCount: type == FavoriteItemType.subject
-                  //     ? (safeItems[index] as FavoriteSubject).subSubjects?.length
-                  //     : null,
-                  subSubjectsCount: null,
-                  selected: selectedItems?.contains(safeItems[index].id) ?? false,
-                  onTap: () => _onItemTap(safeItems[index].id, context),
+                  subSubjectsCount: state.selectedSubSubjectsCount(safeItems[index].id),
+                  selected: state.isSelected(safeItems[index].id, type),
+                  onTap: () => _onItemTap(safeItems[index], context),
                 ),
               ),
             ),
@@ -62,20 +62,56 @@ class FavoriteGridWidget extends StatelessWidget {
     }
   }
 
-  int _getColorCode(String? color) {
+  int _getColorCode(String? color, int index) {
     if (type == FavoriteItemType.teacher) {
       var colors = ColorUtils.getTeachersColorsCodes();
-      return colors[Random().nextInt(colors.length)];
+      return colors[index % colors.length];
     } else {
       return int.parse(color ?? '0xFFFFFFFF');
     }
   }
 
-  void _onItemTap(String itemId, BuildContext context) {
-    if (type == FavoriteItemType.subject) {
-      BlocProvider.of<FavoriteBloc>(context).add(FavoriteLoadSubSubjectEvent(itemId));
+  void _onItemTap(FavoriteObject item, BuildContext context) {
+    if (type == FavoriteItemType.subject && item is FavoriteSubject) {
+      if (item.subjects != null && item.subjects!.isNotEmpty) {
+        BlocProvider.of<FavoriteBloc>(context).add(FavoritePrepareLocalEvent(item.id));
+        _showModalSheet(item, context);
+      } else {
+        BlocProvider.of<FavoriteBloc>(context)
+            .add(FavoriteSelectSubjectEvent(mainSubjectId: item.id));
+      }
     } else {
-      BlocProvider.of<FavoriteBloc>(context).add(FavoriteSelectEvent(type, itemId));
+      BlocProvider.of<FavoriteBloc>(context).add(FavoriteSelectTeacherEvent(item.id));
     }
+  }
+
+  void _showModalSheet(FavoriteSubject item, BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      isDismissible: false,
+      enableDrag: false,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(20.0),
+      ),
+      builder: (ctx) {
+        return FavoriteSubjectsModalSheet(
+          item: item,
+          state: BlocProvider.of<FavoriteBloc>(context).state,
+          onSubSubjectTapped: (String id) {
+            BlocProvider.of<FavoriteBloc>(context).add(FavoriteSelectSubSubjectLocalEvent(id));
+          },
+          onSelectAllTapped: () {
+            BlocProvider.of<FavoriteBloc>(context)
+                .add(FavoriteSelectAllSubSubjectsLocalEvent(item));
+          },
+          onOkButtonTapped: () {
+            BlocProvider.of<FavoriteBloc>(context)
+                .add(FavoriteSelectSubjectEvent(mainSubjectId: item.id));
+            Navigator.of(context).pop();
+          },
+        );
+      },
+    );
   }
 }

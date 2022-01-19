@@ -22,34 +22,37 @@ class ProgressWall extends StatelessWidget {
         child: Container(
           height: 120,
           width: 120,
-          child: Stack(children: [
-            BackdropFilter(
-              filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
-              child: Container(
-                height: 120,
-                width: 120,
-                color: progressWallType == ProgressWallType.lite
-                    ? AppColors.white30
-                    : AppColors.black.withOpacity(0.7),
+          child: Stack(
+            children: [
+              BackdropFilter(
+                filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
+                child: Container(
+                  height: 120,
+                  width: 120,
+                  color: progressWallType == ProgressWallType.lite
+                      ? AppColors.white30
+                      : AppColors.black.withOpacity(0.7),
+                ),
               ),
-            ),
-            Center(
-              child: Theme(
-                data: Theme.of(context).copyWith(accentColor: Colors.white),
-                child: SizedBox(
-                  height: 58,
-                  width: 58,
-                  child: CircularProgressIndicator(
-                    backgroundColor: progressWallType == ProgressWallType.lite
-                        ? AppColors.black30
-                        : AppColors.white30,
-                    strokeWidth: 6,
-                    valueColor: const AlwaysStoppedAnimation<Color>(AppColors.white),
+              Center(
+                child: Theme(
+                  data: Theme.of(context).copyWith(
+                      colorScheme: ColorScheme.fromSwatch().copyWith(secondary: Colors.white)),
+                  child: SizedBox(
+                    height: 58,
+                    width: 58,
+                    child: CircularProgressIndicator(
+                      backgroundColor: progressWallType == ProgressWallType.lite
+                          ? AppColors.black30
+                          : AppColors.white30,
+                      strokeWidth: 6,
+                      valueColor: const AlwaysStoppedAnimation<Color>(AppColors.white),
+                    ),
                   ),
                 ),
               ),
-            ),
-          ]),
+            ],
+          ),
         ),
       ),
     );

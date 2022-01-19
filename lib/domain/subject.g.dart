@@ -12,6 +12,9 @@ FavoriteSubject _$FavoriteSubjectFromJson(Map<String, dynamic> json) =>
       json['title'] as String,
       json['imagePath'] as String,
       json['color'] as String,
+      (json['subjects'] as List<dynamic>?)
+          ?.map((e) => SubSubject.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
 
 Map<String, dynamic> _$FavoriteSubjectToJson(FavoriteSubject instance) =>
@@ -20,6 +23,7 @@ Map<String, dynamic> _$FavoriteSubjectToJson(FavoriteSubject instance) =>
       'title': instance.title,
       'imagePath': instance.imagePath,
       'color': instance.color,
+      'subjects': instance.subjects,
     };
 
 SubSubject _$SubSubjectFromJson(Map<String, dynamic> json) => SubSubject(

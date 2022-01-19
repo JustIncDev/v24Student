@@ -10,15 +10,27 @@ class FavoriteRepo extends BaseRepo {
 
   final FavoriteRemoteProvider _favoriteRemoteProvider;
 
-  Future<List<FavoriteSubject>> getSubjectsList() {
+  Future<List<FavoriteSubject>> getSubjectsList() async {
     try {
-      return _favoriteRemoteProvider.getMainSubjects();
+      var mainSubjects = await _favoriteRemoteProvider.getMainSubjects();
+      var finalSubjectList = <FavoriteSubject>[];
+      mainSubjects.forEach((element) async {
+        var subSubjects = await _favoriteRemoteProvider.getSubSubjectList(element.id);
+        finalSubjectList.add(FavoriteSubject(
+          element.id,
+          element.title,
+          element.imagePath ?? '',
+          element.color ?? '',
+          subSubjects,
+        ));
+      });
+      return finalSubjectList;
     } on Exception catch (e) {
       throw e;
     }
   }
 
-  Future<List<FavoriteTeacher>> getTeachersList() async {
+  Future<List<FavoriteTeacher>> getTeachersList() {
     try {
       return _favoriteRemoteProvider.getTeachersList();
     } on Exception catch (e) {

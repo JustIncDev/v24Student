@@ -43,4 +43,21 @@ class FavoriteRemoteProvider {
       throw e;
     }
   }
+
+  Future<List<SubSubject>> getSubSubjectList(String mainSubjectId) async {
+    return FirebaseFirestore.instance
+        .collection('mainSubjects')
+        .doc(mainSubjectId)
+        .collection('subjects')
+        .get()
+        .then((response) {
+      return response.docs.map((element) {
+        var dataMap = <String, Object?>{
+          'id': element.id,
+        };
+        dataMap.addAll(element.data());
+        return SubSubject.fromJson(dataMap);
+      }).toList();
+    });
+  }
 }

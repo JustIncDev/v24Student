@@ -7,20 +7,39 @@ abstract class FavoriteEvent extends BaseBlocEvent {
 
 class FavoriteInitEvent extends FavoriteEvent {}
 
-class FavoriteSelectEvent extends FavoriteEvent {
-  FavoriteSelectEvent(this.itemType, this.id);
+class FavoriteSelectTeacherEvent extends FavoriteEvent {
+  FavoriteSelectTeacherEvent(this.id);
 
-  final FavoriteItemType itemType;
   final String id;
 
   @override
-  List<Object> get props => [id, itemType];
+  List<Object> get props => [id];
 }
 
-class FavoriteLoadSubSubjectEvent extends FavoriteEvent {
-  FavoriteLoadSubSubjectEvent(this.mainSubjectId);
+class FavoriteSelectSubjectEvent extends FavoriteEvent {
+  FavoriteSelectSubjectEvent({
+    required this.mainSubjectId,
+  });
 
   final String mainSubjectId;
+}
+
+class FavoritePrepareLocalEvent extends FavoriteEvent {
+  FavoritePrepareLocalEvent(this.mainSubjectId);
+
+  final String mainSubjectId;
+}
+
+class FavoriteSelectSubSubjectLocalEvent extends FavoriteEvent {
+  FavoriteSelectSubSubjectLocalEvent(this.id);
+
+  final String id;
+}
+
+class FavoriteSelectAllSubSubjectsLocalEvent extends FavoriteEvent {
+  FavoriteSelectAllSubSubjectsLocalEvent(this.item);
+
+  final FavoriteSubject item;
 }
 
 class FavoritePerformEvent extends FavoriteEvent {}
