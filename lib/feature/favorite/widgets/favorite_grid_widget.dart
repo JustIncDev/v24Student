@@ -1,7 +1,9 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:v24_student_app/domain/base.dart';
+import 'package:v24_student_app/feature/favorite/bloc/favorite_bloc.dart';
 import 'package:v24_student_app/feature/favorite/widgets/favorite_item_widget.dart';
 import 'package:v24_student_app/utils/color.dart';
 
@@ -32,9 +34,10 @@ class FavoriteGridWidget extends StatelessWidget {
           SliverPadding(
             padding: const EdgeInsets.symmetric(horizontal: 10.0),
             sliver: SliverGrid.count(
+              childAspectRatio:
+                  MediaQuery.of(context).size.width / (MediaQuery.of(context).size.height / 1.4),
               crossAxisCount: 3,
               crossAxisSpacing: 25.0,
-              mainAxisSpacing: 18.0,
               children: List.generate(
                 favoriteItems?.length ?? 0,
                 (index) => FavoriteItemWidget(
@@ -47,6 +50,7 @@ class FavoriteGridWidget extends StatelessWidget {
                   //     : null,
                   subSubjectsCount: null,
                   selected: selectedItems?.contains(safeItems[index].id) ?? false,
+                  onTap: () => _onItemTap(safeItems[index].id, context),
                 ),
               ),
             ),
@@ -64,6 +68,14 @@ class FavoriteGridWidget extends StatelessWidget {
       return colors[Random().nextInt(colors.length)];
     } else {
       return int.parse(color ?? '0xFFFFFFFF');
+    }
+  }
+
+  void _onItemTap(String itemId, BuildContext context) {
+    if (type == FavoriteItemType.subject) {
+      BlocProvider.of<FavoriteBloc>(context).add(FavoriteLoadSubSubjectEvent(itemId));
+    } else {
+      BlocProvider.of<FavoriteBloc>(context).add(FavoriteSelectEvent(type, itemId));
     }
   }
 }

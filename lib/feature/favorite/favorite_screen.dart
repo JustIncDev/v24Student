@@ -2,12 +2,14 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:v24_student_app/feature/favorite/widgets/favorite_grid_widget.dart';
 import 'package:v24_student_app/global/bloc.dart';
 import 'package:v24_student_app/global/ui/button/primary_button.dart';
 import 'package:v24_student_app/global/ui/space.dart';
 import 'package:v24_student_app/res/colors.dart';
 import 'package:v24_student_app/res/fonts.dart';
+import 'package:v24_student_app/res/icons.dart';
 import 'package:v24_student_app/res/localization/id_values.dart';
 import 'package:v24_student_app/utils/ui.dart';
 
@@ -75,24 +77,55 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                             padding: const EdgeInsets.symmetric(horizontal: 30),
                             child: Column(
                               mainAxisSize: MainAxisSize.max,
-                              mainAxisAlignment: MainAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.stretch,
                               children: [
                                 const VerticalSpace(58.5),
-                                Center(
-                                  child: Text(
-                                    getStringById(context, StringId.myFavoriteSubjects),
-                                    style: const TextStyle(
-                                      color: AppColors.black,
-                                      fontSize: 18.0,
-                                      letterSpacing: -0.3,
-                                    ).montserrat(fontWeight: AppFonts.semiBold),
-                                  ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    IconButton(
+                                      icon: SvgPicture.asset(
+                                        AppIcons.arrowLeftIcon,
+                                        color: _currentPage == 1
+                                            ? AppColors.black
+                                            : AppColors.transparent,
+                                        width: 18.0,
+                                        height: 18.0,
+                                      ),
+                                      iconSize: 18.0,
+                                      onPressed: _currentPage == 0 ? null : _onBackButtonPressed,
+                                    ),
+                                    Center(
+                                      child: Text(
+                                        getStringById(
+                                          context,
+                                          _currentPage == 0
+                                              ? StringId.myFavoriteSubjects
+                                              : StringId.myFavoriteTeachers,
+                                        ),
+                                        style: const TextStyle(
+                                          color: AppColors.black,
+                                          fontSize: 18.0,
+                                          letterSpacing: -0.3,
+                                        ).montserrat(fontWeight: AppFonts.semiBold),
+                                      ),
+                                    ),
+                                    IconButton(
+                                      icon: SvgPicture.asset(AppIcons.arrowLeftIcon),
+                                      onPressed: null,
+                                      color: AppColors.transparent,
+                                    ),
+                                  ],
                                 ),
                                 const VerticalSpace(14.5),
                                 Center(
                                   child: Text(
-                                    getStringById(context, StringId.selectSubjects),
+                                    getStringById(
+                                        context,
+                                        _currentPage == 0
+                                            ? StringId.selectSubjects
+                                            : StringId.selectTeachers),
                                     style: const TextStyle(
                                       color: AppColors.black30,
                                       fontSize: 12.0,
@@ -101,7 +134,7 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                                   ),
                                 ),
                                 const VerticalSpace(18.0),
-                                Flexible(
+                                Expanded(
                                   child: Container(
                                     height: MediaQuery.of(context).size.height * 0.35,
                                     child: PageView(
@@ -127,12 +160,12 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                                     ),
                                   ),
                                 ),
-                                const Spacer(),
+                                // const Spacer(),
                                 ClipRect(
                                   child: BackdropFilter(
                                     filter: ImageFilter.blur(
-                                      sigmaX: 5.0,
-                                      sigmaY: 5.0,
+                                      sigmaX: 15.0,
+                                      sigmaY: 15.0,
                                     ),
                                     child: Container(
                                       color: AppColors.white.withOpacity(0.8),
@@ -148,7 +181,8 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                                           ),
                                           const VerticalSpace(20.0),
                                           PrimaryButton(
-                                            titleId: StringId.next,
+                                            titleId:
+                                                _currentPage == 0 ? StringId.next : StringId.finish,
                                             onPressed: () => _onFinishButtonTap(state),
                                           ),
                                         ],
@@ -183,6 +217,14 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
     } else {
       //Finish
     }
+  }
+
+  void _onBackButtonPressed() {
+    _pageController.animateToPage(
+      0,
+      duration: const Duration(milliseconds: 200),
+      curve: Curves.linear,
+    );
   }
 
   Container buildDot({int? index}) {

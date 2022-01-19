@@ -8,7 +8,7 @@ import 'package:v24_student_app/res/colors.dart';
 import 'package:v24_student_app/res/fonts.dart';
 import 'package:v24_student_app/res/icons.dart';
 
-class FavoriteItemWidget extends StatefulWidget {
+class FavoriteItemWidget extends StatelessWidget {
   const FavoriteItemWidget({
     Key? key,
     required this.title,
@@ -16,7 +16,8 @@ class FavoriteItemWidget extends StatefulWidget {
     required this.backgroundColor,
     required this.itemType,
     this.subSubjectsCount,
-    this.selected = false,
+    required this.selected,
+    this.onTap,
   }) : super(key: key);
 
   final String title;
@@ -25,12 +26,8 @@ class FavoriteItemWidget extends StatefulWidget {
   final FavoriteItemType itemType;
   final int? subSubjectsCount;
   final bool selected;
+  final VoidCallback? onTap;
 
-  @override
-  State<FavoriteItemWidget> createState() => _FavoriteItemWidgetState();
-}
-
-class _FavoriteItemWidgetState extends State<FavoriteItemWidget> {
   @override
   Widget build(BuildContext context) {
     var itemBoxContainer = Stack(
@@ -40,17 +37,17 @@ class _FavoriteItemWidgetState extends State<FavoriteItemWidget> {
           width: 80.0,
           height: 80.0,
           decoration: BoxDecoration(
-            borderRadius: widget.itemType == FavoriteItemType.teacher
+            borderRadius: itemType == FavoriteItemType.teacher
                 ? BorderRadius.circular(70.0)
                 : BorderRadius.circular(20.0),
-            color: Color(widget.backgroundColor),
+            color: Color(backgroundColor),
           ),
           child: Padding(
             padding: const EdgeInsets.all(21.0),
             child: _getIconImage(),
           ),
         ),
-        if (widget.itemType == FavoriteItemType.teacher)
+        if (itemType == FavoriteItemType.teacher)
           Container(
             width: 80.0,
             height: 80.0,
@@ -58,7 +55,7 @@ class _FavoriteItemWidgetState extends State<FavoriteItemWidget> {
               borderRadius: BorderRadius.circular(70.0),
               image: DecorationImage(
                 fit: BoxFit.cover,
-                image: NetworkImage(widget.iconPath),
+                image: NetworkImage(iconPath),
                 onError: (_, __) {},
               ),
             ),
@@ -66,17 +63,32 @@ class _FavoriteItemWidgetState extends State<FavoriteItemWidget> {
       ],
     );
 
-    var itemWidget = widget.selected
+    var itemWidget = selected
         ? Stack(
             alignment: Alignment.center,
             children: [
-              const Image(image: AppIcons.checkIconAsset),
+              itemBoxContainer,
               ClipRect(
-                child: BackdropFilter(
-                  filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-                  child: itemBoxContainer,
+                child: Container(
+                  width: 80,
+                  height: 80,
+                  child: BackdropFilter(
+                    filter: ImageFilter.blur(sigmaX: 2, sigmaY: 2),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: itemType == FavoriteItemType.teacher
+                            ? BorderRadius.circular(70.0)
+                            : BorderRadius.circular(20.0),
+                        color: Colors.black.withOpacity(0.3),
+                      ),
+                    ),
+                  ),
                 ),
-              )
+              ),
+              const Image(
+                image: AppIcons.checkIconAsset,
+                color: AppColors.white,
+              ),
             ],
           )
         : itemBoxContainer;
@@ -86,17 +98,25 @@ class _FavoriteItemWidgetState extends State<FavoriteItemWidget> {
       children: [
         Column(
           children: [
-            itemWidget,
+            InkWell(
+              child: itemWidget,
+              onTap: onTap,
+              borderRadius: itemType == FavoriteItemType.teacher
+                  ? BorderRadius.circular(70.0)
+                  : BorderRadius.circular(20.0),
+            ),
             const VerticalSpace(10.0),
-            Text(
-              widget.title,
-              textAlign: TextAlign.center,
-              style: const TextStyle(fontSize: 12.0, color: AppColors.black)
-                  .montserrat(fontWeight: AppFonts.semiBold),
+            Expanded(
+              child: Text(
+                title,
+                textAlign: TextAlign.center,
+                style: const TextStyle(fontSize: 12.0, color: AppColors.black)
+                    .montserrat(fontWeight: AppFonts.semiBold),
+              ),
             ),
           ],
         ),
-        if (widget.subSubjectsCount != null && widget.subSubjectsCount! > 0)
+        if (subSubjectsCount != null && subSubjectsCount! > 0)
           Container(
             width: 24.0,
             height: 24.0,
@@ -106,7 +126,7 @@ class _FavoriteItemWidgetState extends State<FavoriteItemWidget> {
               shape: BoxShape.circle,
             ),
             child: Text(
-              widget.subSubjectsCount.toString(),
+              subSubjectsCount.toString(),
               style: const TextStyle(fontSize: 11.0, color: AppColors.white)
                   .montserrat(fontWeight: AppFonts.semiBold),
             ),
@@ -116,11 +136,11 @@ class _FavoriteItemWidgetState extends State<FavoriteItemWidget> {
   }
 
   Widget _getIconImage() {
-    switch (widget.itemType) {
+    switch (itemType) {
       case FavoriteItemType.subject:
-        if (widget.iconPath.contains('.svg')) {
+        if (iconPath.contains('.svg')) {
           return SvgPicture.network(
-            widget.iconPath,
+            iconPath,
             width: 38.0,
             height: 38.0,
             color: AppColors.white,

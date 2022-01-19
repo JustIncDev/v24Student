@@ -1,5 +1,4 @@
 import 'package:bloc/bloc.dart';
-import 'package:v24_student_app/domain/base.dart';
 import 'package:v24_student_app/domain/subject.dart';
 import 'package:v24_student_app/domain/teacher.dart';
 import 'package:v24_student_app/feature/favorite/widgets/favorite_grid_widget.dart';
@@ -51,7 +50,18 @@ class FavoriteBloc extends Bloc<FavoriteEvent, FavoriteState> {
   void _handleSelectEvent(
     FavoriteSelectEvent event,
     Emitter<FavoriteState> emit,
-  ) {}
+  ) {
+    var newItemList = <String>[];
+    if (event.itemType == FavoriteItemType.teacher) {
+      newItemList.addAll(state.selectedTeachers);
+      newItemList.contains(event.id) ? newItemList.remove(event.id) : newItemList.add(event.id);
+      emit(state.copyWith(selectedTeachers: newItemList));
+    } else {
+      newItemList.addAll(state.selectedSubjects);
+      newItemList.contains(event.id) ? newItemList.remove(event.id) : newItemList.add(event.id);
+      emit(state.copyWith(selectedSubjects: newItemList));
+    }
+  }
 
   void _handlePerformEvent(
     FavoritePerformEvent event,
