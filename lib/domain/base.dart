@@ -30,8 +30,8 @@ abstract class FavoriteObject {
 
   final String id;
   final String title;
-  final String imagePath;
-  final int color;
+  final String? imagePath;
+  final String? color;
 }
 
 @JsonSerializable()

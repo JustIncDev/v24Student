@@ -8,7 +8,7 @@ import 'package:v24_student_app/res/colors.dart';
 import 'package:v24_student_app/res/fonts.dart';
 import 'package:v24_student_app/res/icons.dart';
 
-class FavoriteItemWidget extends StatelessWidget {
+class FavoriteItemWidget extends StatefulWidget {
   const FavoriteItemWidget({
     Key? key,
     required this.title,
@@ -27,24 +27,46 @@ class FavoriteItemWidget extends StatelessWidget {
   final bool selected;
 
   @override
+  State<FavoriteItemWidget> createState() => _FavoriteItemWidgetState();
+}
+
+class _FavoriteItemWidgetState extends State<FavoriteItemWidget> {
+  @override
   Widget build(BuildContext context) {
-    Widget itemBoxContainer = Container(
-      decoration: BoxDecoration(
-        shape: itemType == FavoriteItemType.teacher ? BoxShape.circle : BoxShape.rectangle,
-        borderRadius: itemType == FavoriteItemType.teacher
-            ? BorderRadius.circular(70.0)
-            : BorderRadius.circular(20.0),
-        color: Color(backgroundColor),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(21.0),
-        child: SvgPicture.network(
-          iconPath,
+    var itemBoxContainer = Stack(
+      alignment: Alignment.center,
+      children: [
+        Container(
+          width: 80.0,
+          height: 80.0,
+          decoration: BoxDecoration(
+            borderRadius: widget.itemType == FavoriteItemType.teacher
+                ? BorderRadius.circular(70.0)
+                : BorderRadius.circular(20.0),
+            color: Color(widget.backgroundColor),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(21.0),
+            child: _getIconImage(),
+          ),
         ),
-      ),
+        if (widget.itemType == FavoriteItemType.teacher)
+          Container(
+            width: 80.0,
+            height: 80.0,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(70.0),
+              image: DecorationImage(
+                fit: BoxFit.cover,
+                image: NetworkImage(widget.iconPath),
+                onError: (_, __) {},
+              ),
+            ),
+          ),
+      ],
     );
 
-    var itemWidget = selected
+    var itemWidget = widget.selected
         ? Stack(
             alignment: Alignment.center,
             children: [
@@ -63,18 +85,18 @@ class FavoriteItemWidget extends StatelessWidget {
       alignment: Alignment.topRight,
       children: [
         Column(
-          mainAxisSize: MainAxisSize.min,
           children: [
             itemWidget,
             const VerticalSpace(10.0),
             Text(
-              title,
+              widget.title,
+              textAlign: TextAlign.center,
               style: const TextStyle(fontSize: 12.0, color: AppColors.black)
                   .montserrat(fontWeight: AppFonts.semiBold),
             ),
           ],
         ),
-        if (subSubjectsCount != null && subSubjectsCount! > 0)
+        if (widget.subSubjectsCount != null && widget.subSubjectsCount! > 0)
           Container(
             width: 24.0,
             height: 24.0,
@@ -84,12 +106,40 @@ class FavoriteItemWidget extends StatelessWidget {
               shape: BoxShape.circle,
             ),
             child: Text(
-              subSubjectsCount.toString(),
+              widget.subSubjectsCount.toString(),
               style: const TextStyle(fontSize: 11.0, color: AppColors.white)
                   .montserrat(fontWeight: AppFonts.semiBold),
             ),
           ),
       ],
     );
+  }
+
+  Widget _getIconImage() {
+    switch (widget.itemType) {
+      case FavoriteItemType.subject:
+        if (widget.iconPath.contains('.svg')) {
+          return SvgPicture.network(
+            widget.iconPath,
+            width: 38.0,
+            height: 38.0,
+            color: AppColors.white,
+          );
+        } else {
+          return SvgPicture.asset(
+            AppIcons.sampleSubjectIcon,
+            color: AppColors.white,
+            width: 38.0,
+            height: 38.0,
+          );
+        }
+      case FavoriteItemType.teacher:
+        return SvgPicture.asset(
+          AppIcons.sampleTeacherIcon,
+          color: AppColors.white,
+          width: 38.0,
+          height: 38.0,
+        );
+    }
   }
 }

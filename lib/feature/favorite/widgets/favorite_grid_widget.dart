@@ -1,7 +1,9 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:v24_student_app/domain/base.dart';
-import 'package:v24_student_app/domain/subject.dart';
 import 'package:v24_student_app/feature/favorite/widgets/favorite_item_widget.dart';
+import 'package:v24_student_app/utils/color.dart';
 
 enum FavoriteItemType {
   subject,
@@ -12,15 +14,17 @@ class FavoriteGridWidget extends StatelessWidget {
   const FavoriteGridWidget({
     Key? key,
     this.type = FavoriteItemType.subject,
-    this.favoriteItemsMap,
+    this.favoriteItems,
+    this.selectedItems,
   }) : super(key: key);
 
   final FavoriteItemType type;
-  final Map<FavoriteObject, bool>? favoriteItemsMap;
+  final List<FavoriteObject>? favoriteItems;
+  final List<String>? selectedItems;
 
   @override
   Widget build(BuildContext context) {
-    var safeItems = favoriteItemsMap?.keys.toList();
+    var safeItems = favoriteItems;
     if (safeItems != null && safeItems.isNotEmpty) {
       return CustomScrollView(
         primary: false,
@@ -32,16 +36,17 @@ class FavoriteGridWidget extends StatelessWidget {
               crossAxisSpacing: 25.0,
               mainAxisSpacing: 18.0,
               children: List.generate(
-                favoriteItemsMap?.length ?? 0,
+                favoriteItems?.length ?? 0,
                 (index) => FavoriteItemWidget(
                   title: safeItems[index].title,
-                  iconPath: safeItems[index].imagePath,
-                  backgroundColor: safeItems[index].color,
+                  iconPath: safeItems[index].imagePath ?? '',
+                  backgroundColor: _getColorCode(safeItems[index].color ?? '0xFFFFFFFF'),
                   itemType: type,
-                  subSubjectsCount: type == FavoriteItemType.subject
-                      ? (safeItems[index] as FavoriteSubject).subSubjects?.length
-                      : null,
-                  selected: favoriteItemsMap?[index] ?? false,
+                  // subSubjectsCount: type == FavoriteItemType.subject
+                  //     ? (safeItems[index] as FavoriteSubject).subSubjects?.length
+                  //     : null,
+                  subSubjectsCount: null,
+                  selected: selectedItems?.contains(safeItems[index].id) ?? false,
                 ),
               ),
             ),
@@ -50,6 +55,15 @@ class FavoriteGridWidget extends StatelessWidget {
       );
     } else {
       return const Offstage();
+    }
+  }
+
+  int _getColorCode(String? color) {
+    if (type == FavoriteItemType.teacher) {
+      var colors = ColorUtils.getTeachersColorsCodes();
+      return colors[Random().nextInt(colors.length)];
+    } else {
+      return int.parse(color ?? '0xFFFFFFFF');
     }
   }
 }

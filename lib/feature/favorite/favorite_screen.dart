@@ -24,7 +24,7 @@ class FavoriteScreen extends StatefulWidget {
       key: const ValueKey('favorite'),
       child: BlocProvider(
         create: (ctx) {
-          return blocFactory.createFavoriteBloc();
+          return blocFactory.createFavoriteBloc()..add(FavoriteInitEvent());
         },
         child: const FavoriteScreen(),
         lazy: false,
@@ -35,13 +35,19 @@ class FavoriteScreen extends StatefulWidget {
 
 class _FavoriteScreenState extends State<FavoriteScreen> {
   int _currentPage = 0;
+  late PageController _pageController;
+
+  @override
+  void initState() {
+    super.initState();
+    _pageController = PageController();
+  }
 
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<FavoriteBloc, FavoriteState>(
       listenWhen: (previous, current) {
-        return true;
-        // return (previous.status != current.status && current.status == BaseScreenStatus.next);
+        return (previous.status != current.status && current.status == BaseScreenStatus.next);
       },
       listener: (context, state) {
         // if (state.status == BaseScreenStatus.next) {
@@ -95,20 +101,32 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                                   ),
                                 ),
                                 const VerticalSpace(18.0),
-                                // Flexible(
-                                //   child: PageView(
-                                //     physics: const NeverScrollableScrollPhysics(),
-                                //     onPageChanged: (value) {
-                                //       setState(() {
-                                //         _currentPage = value;
-                                //       });
-                                //     },
-                                //     children: [
-                                //       FavoriteGridWidget(),
-                                //       FavoriteGridWidget(),
-                                //     ],
-                                //   ),
-                                // ),
+                                Flexible(
+                                  child: Container(
+                                    height: MediaQuery.of(context).size.height * 0.35,
+                                    child: PageView(
+                                      physics: const NeverScrollableScrollPhysics(),
+                                      onPageChanged: (value) {
+                                        setState(() {
+                                          _currentPage = value;
+                                        });
+                                      },
+                                      controller: _pageController,
+                                      children: [
+                                        FavoriteGridWidget(
+                                          type: FavoriteItemType.subject,
+                                          favoriteItems: state.favoriteSubjects,
+                                          selectedItems: state.selectedSubjects,
+                                        ),
+                                        FavoriteGridWidget(
+                                          type: FavoriteItemType.teacher,
+                                          favoriteItems: state.favoriteTeachers,
+                                          selectedItems: state.selectedTeachers,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
                                 const Spacer(),
                                 ClipRect(
                                   child: BackdropFilter(
@@ -155,7 +173,17 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
     );
   }
 
-  void _onFinishButtonTap(FavoriteState state) {}
+  void _onFinishButtonTap(FavoriteState state) {
+    if (_currentPage == 0) {
+      _pageController.animateToPage(
+        1,
+        duration: const Duration(milliseconds: 200),
+        curve: Curves.linear,
+      );
+    } else {
+      //Finish
+    }
+  }
 
   Container buildDot({int? index}) {
     return Container(

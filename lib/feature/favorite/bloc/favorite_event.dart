@@ -14,6 +14,12 @@ class FavoriteSelectEvent extends FavoriteEvent {
   final FavoriteObject favoriteObject;
 }
 
+class FavoriteLoadSubSubjectEvent extends FavoriteEvent {
+  FavoriteLoadSubSubjectEvent(this.mainSubjectId);
+
+  final String mainSubjectId;
+}
+
 class FavoritePerformEvent extends FavoriteEvent {}
 
 class FavoriteSuccessEvent extends FavoriteEvent {}

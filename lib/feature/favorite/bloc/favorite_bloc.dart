@@ -15,10 +15,11 @@ class FavoriteBloc extends Bloc<FavoriteEvent, FavoriteState> {
   FavoriteBloc({required FavoriteRepo favoriteRepo})
       : _favoriteRepo = favoriteRepo,
         super(FavoriteState.init()) {
-    _init();
     on<FavoriteEvent>(
-      (event, emit) {
-        if (event is FavoriteSelectEvent) {
+      (event, emit) async {
+        if (event is FavoriteInitEvent) {
+          await _handleInitEvent(event, emit);
+        } else if (event is FavoriteSelectEvent) {
           _handleSelectEvent(event, emit);
         } else if (event is FavoritePerformEvent) {
           _handlePerformEvent(event, emit);
@@ -31,9 +32,20 @@ class FavoriteBloc extends Bloc<FavoriteEvent, FavoriteState> {
     );
   }
 
-  Future<void> _init() async {
+  Future<void> _handleInitEvent(
+    FavoriteInitEvent event,
+    Emitter<FavoriteState> emit,
+  ) async {
+    emit(state.copyWith(status: BaseScreenStatus.lock));
     var subjects = await _favoriteRepo.getSubjectsList();
     var teachers = await _favoriteRepo.getTeachersList();
+    emit(
+      state.copyWith(
+        favoriteSubjects: subjects,
+        favoriteTeachers: teachers,
+        status: BaseScreenStatus.input,
+      ),
+    );
   }
 
   void _handleSelectEvent(

@@ -6,6 +6,7 @@ class AppIcons {
   static const facebookIcon = 'icons/facebookIcon.png';
   static const googleIcon = 'icons/googleIcon.png';
   static const checkIcon = 'icons/checkIcon.png';
+  static const subjectIcon = 'icons/subjectIcon.png';
 
   static const arrowDownIcon = 'icons/arrowDownIcon.svg';
   static const arrowUpIcon = 'icons/arrowUpIcon.svg';
@@ -13,6 +14,8 @@ class AppIcons {
   static const phoneSmsIcon = 'icons/phoneSmsIcon.svg';
   static const clearIcon = 'icons/clearIcon.svg';
   static const faceIdIcon = 'icons/faceIdIcon.svg';
+  static const sampleSubjectIcon = 'icons/subjectIcon.svg';
+  static const sampleTeacherIcon = 'icons/teacherIcon.svg';
 
 
   static const eyeOpenAsset = AssetImage(eyeOpen);
@@ -20,4 +23,5 @@ class AppIcons {
   static const facebookIconAsset = AssetImage(facebookIcon);
   static const googleIconAsset = AssetImage(googleIcon);
   static const checkIconAsset = AssetImage(checkIcon);
+  static const subjectIconAsset = AssetImage(subjectIcon);
 }
