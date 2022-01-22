@@ -74,7 +74,6 @@ class FavoriteGridWidget extends StatelessWidget {
   void _onItemTap(FavoriteObject item, BuildContext context) {
     if (type == FavoriteItemType.subject && item is FavoriteSubject) {
       if (item.subjects != null && item.subjects!.isNotEmpty) {
-        BlocProvider.of<FavoriteBloc>(context).add(FavoritePrepareLocalEvent(item.id));
         _showModalSheet(item, context);
       } else {
         BlocProvider.of<FavoriteBloc>(context)
@@ -89,27 +88,34 @@ class FavoriteGridWidget extends StatelessWidget {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
-      isDismissible: false,
-      enableDrag: false,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(20.0),
       ),
       builder: (ctx) {
-        return FavoriteSubjectsModalSheet(
-          item: item,
-          state: BlocProvider.of<FavoriteBloc>(context).state,
-          onSubSubjectTapped: (String id) {
-            BlocProvider.of<FavoriteBloc>(context).add(FavoriteSelectSubSubjectLocalEvent(id));
-          },
-          onSelectAllTapped: () {
-            BlocProvider.of<FavoriteBloc>(context)
-                .add(FavoriteSelectAllSubSubjectsLocalEvent(item));
-          },
-          onOkButtonTapped: () {
-            BlocProvider.of<FavoriteBloc>(context)
-                .add(FavoriteSelectSubjectEvent(mainSubjectId: item.id));
-            Navigator.of(context).pop();
-          },
+        return BlocProvider.value(
+          value: BlocProvider.of<FavoriteBloc>(context),
+          child: FavoriteSubjectsModalSheet(
+            item: item,
+            onSubSubjectTapped: (String subSubjectId) {
+              BlocProvider.of<FavoriteBloc>(context).add(
+                FavoriteSelectSubjectEvent(
+                  mainSubjectId: item.id,
+                  subSubjectId: subSubjectId,
+                ),
+              );
+            },
+            onSelectAllTapped: () {
+              BlocProvider.of<FavoriteBloc>(context).add(
+                FavoriteSelectSubjectEvent(
+                  mainSubjectId: item.id,
+                  selectAll: true,
+                ),
+              );
+            },
+            onOkButtonTapped: () {
+              Navigator.of(context).pop();
+            },
+          ),
         );
       },
     );

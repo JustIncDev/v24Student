@@ -23,17 +23,11 @@ class FavoriteBloc extends Bloc<FavoriteEvent, FavoriteState> {
         } else if (event is FavoriteSelectSubjectEvent) {
           _handleSelectSubjectEvent(event, emit);
         } else if (event is FavoritePerformEvent) {
-          _handlePerformEvent(event, emit);
+          await _handlePerformEvent(event, emit);
         } else if (event is FavoriteSuccessEvent) {
           _handleSuccessEvent(event, emit);
         } else if (event is FavoriteFailedEvent) {
           _handleFailedEvent(event, emit);
-        } else if (event is FavoritePrepareLocalEvent) {
-          _handlePrepareLocalEvent(event, emit);
-        } else if (event is FavoriteSelectSubSubjectLocalEvent) {
-          _handleSelectLocalEvent(event, emit);
-        } else if (event is FavoriteSelectAllSubSubjectsLocalEvent) {
-          _handleSelectAllLocalEvent(event, emit);
         }
       },
     );
@@ -46,13 +40,15 @@ class FavoriteBloc extends Bloc<FavoriteEvent, FavoriteState> {
     emit(state.copyWith(status: FavoriteScreenStatus.lock));
     var subjects = await _favoriteRepo.getSubjectsList();
     var teachers = await _favoriteRepo.getTeachersList();
-    emit(
-      state.copyWith(
-        favoriteSubjects: subjects,
-        favoriteTeachers: teachers,
-        status: FavoriteScreenStatus.input,
-      ),
-    );
+    if (subjects.isNotEmpty) {
+      emit(
+        state.copyWith(
+          favoriteSubjects: subjects,
+          favoriteTeachers: teachers,
+          status: FavoriteScreenStatus.input,
+        ),
+      );
+    }
   }
 
   void _handleSelectTeacherEvent(
@@ -71,26 +67,62 @@ class FavoriteBloc extends Bloc<FavoriteEvent, FavoriteState> {
   ) {
     var newItemMap = <String, List<String>>{};
     newItemMap.addAll(state.selectedSubjects);
-    if (newItemMap.containsKey(event.mainSubjectId)) {
-      var subSubjects = <String>[];
-      subSubjects.addAll(newItemMap[event.mainSubjectId]?.toList() ?? []);
-      state.subjectSelection.forEach((element) {
-        if (subSubjects.contains(element)) {
-          subSubjects.remove(element);
-        } else {
-          subSubjects.add(element);
+    if (!event.selectAll) {
+      if (newItemMap.containsKey(event.mainSubjectId) && event.subSubjectId != null) {
+        if (newItemMap[event.mainSubjectId] != null &&
+            newItemMap[event.mainSubjectId]!.isNotEmpty) {
+          var subjectList = <String>[];
+
+          subjectList.addAll(newItemMap[event.mainSubjectId]!.toList());
+
+          subjectList.contains(event.subSubjectId)
+              ? subjectList.remove(event.subSubjectId)
+              : subjectList.add(event.subSubjectId!);
+
+          var newSubjectMap = <String, List<String>>{
+            event.mainSubjectId: subjectList,
+          };
+          newItemMap.addEntries(newSubjectMap.entries);
+
+          if (subjectList.isEmpty) {
+            newItemMap.remove(event.mainSubjectId);
+          }
+        }
+      } else if (newItemMap.containsKey(event.mainSubjectId)) {
+        newItemMap.remove(event.mainSubjectId);
+      } else if (!newItemMap.containsKey(event.mainSubjectId)) {
+        var newSubjectMap = <String, List<String>>{
+          event.mainSubjectId: event.subSubjectId != null ? [event.subSubjectId!] : [],
+        };
+        newItemMap.addEntries(newSubjectMap.entries);
+      }
+    } else {
+      var itemList = <String>[];
+      state.favoriteSubjects.forEach((element) {
+        if (element.id == event.mainSubjectId && element.subjects != null) {
+          itemList.addAll(element.subjects!.map((e) => e.id));
         }
       });
-    } else {
-      newItemMap.addAll({event.mainSubjectId: state.subjectSelection});
+      newItemMap[event.mainSubjectId] = itemList;
     }
-    emit(state.copyWith(selectedSubjects: newItemMap, subjectSelection: []));
+    emit(state.copyWith(selectedSubjects: newItemMap));
   }
 
-  void _handlePerformEvent(
+  Future<void> _handlePerformEvent(
     FavoritePerformEvent event,
     Emitter<FavoriteState> emit,
-  ) {}
+  ) async {
+    emit(state.copyWith(status: FavoriteScreenStatus.lock));
+    var response = await _favoriteRepo.saveFavoriteData(
+      state.selectedSubjects,
+      state.selectedTeachers,
+    );
+    if (response) {
+      emit(state.copyWith(status: FavoriteScreenStatus.next));
+    } else {
+      add(FavoriteFailedEvent());
+    }
+  }
 
   void _handleSuccessEvent(
     FavoriteSuccessEvent event,
@@ -101,35 +133,4 @@ class FavoriteBloc extends Bloc<FavoriteEvent, FavoriteState> {
     FavoriteFailedEvent event,
     Emitter<FavoriteState> emit,
   ) {}
-
-  void _handlePrepareLocalEvent(
-    FavoritePrepareLocalEvent event,
-    Emitter<FavoriteState> emit,
-  ) {
-    emit(state.copyWith(subjectSelection: state.selectedSubjects[event.mainSubjectId]));
-  }
-
-  void _handleSelectLocalEvent(
-    FavoriteSelectSubSubjectLocalEvent event,
-    Emitter<FavoriteState> emit,
-  ) {
-    var newItemList = <String>[];
-    newItemList.addAll(state.subjectSelection);
-    newItemList.contains(event.id) ? newItemList.remove(event.id) : newItemList.add(event.id);
-    emit(state.copyWith(subjectSelection: newItemList));
-  }
-
-  void _handleSelectAllLocalEvent(
-    FavoriteSelectAllSubSubjectsLocalEvent event,
-    Emitter<FavoriteState> emit,
-  ) {
-    var newItemList = <String>[];
-    newItemList.addAll(state.subjectSelection);
-    event.item.subjects?.forEach((element) {
-      if (!newItemList.contains(element.id)) {
-        newItemList.add(element.id);
-      }
-    });
-    emit(state.copyWith(subjectSelection: newItemList));
-  }
 }

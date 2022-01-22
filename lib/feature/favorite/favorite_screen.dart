@@ -5,6 +5,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:v24_student_app/feature/favorite/widgets/favorite_grid_widget.dart';
 import 'package:v24_student_app/global/bloc.dart';
+import 'package:v24_student_app/global/navigation/root_router.dart';
+import 'package:v24_student_app/global/navigation/screen_info.dart';
 import 'package:v24_student_app/global/ui/button/primary_button.dart';
 import 'package:v24_student_app/global/ui/progress/progress_wall.dart';
 import 'package:v24_student_app/global/ui/space.dart';
@@ -53,11 +55,9 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
         return (previous.status != current.status && current.status == FavoriteScreenStatus.next);
       },
       listener: (context, state) {
-        // if (state.status == BaseScreenStatus.next) {
-        //   RootRouter.of(context)?.push(
-        //       ScreenInfo(name: ScreenName.signUpCode, params: {'phone': widget.phoneNumber ?? ''}),
-        //       replacement: true);
-        // }
+        if (state.status == FavoriteScreenStatus.next) {
+          RootRouter.of(context)?.push(const ScreenInfo(name: ScreenName.surveys));
+        }
       },
       builder: (context, state) {
         return Stack(
@@ -215,7 +215,7 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
         curve: Curves.linear,
       );
     } else {
-      //Finish
+      BlocProvider.of<FavoriteBloc>(context).add(FavoritePerformEvent());
     }
   }
 

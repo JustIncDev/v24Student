@@ -8,7 +8,6 @@ class FavoriteState extends BaseBlocState {
     required this.favoriteSubjects,
     required this.selectedTeachers,
     required this.selectedSubjects,
-    required this.subjectSelection,
     this.status,
   });
 
@@ -17,14 +16,12 @@ class FavoriteState extends BaseBlocState {
         this.favoriteSubjects = [],
         this.selectedSubjects = {},
         this.selectedTeachers = [],
-        this.subjectSelection = [],
         this.status = FavoriteScreenStatus.input;
 
   final List<FavoriteSubject> favoriteSubjects;
   final List<FavoriteTeacher> favoriteTeachers;
   final Map<String, List<String>> selectedSubjects;
   final List<String> selectedTeachers;
-  final List<String> subjectSelection;
   final FavoriteScreenStatus? status;
 
   FavoriteState copyWith({
@@ -32,7 +29,6 @@ class FavoriteState extends BaseBlocState {
     List<FavoriteSubject>? favoriteSubjects,
     Map<String, List<String>>? selectedSubjects,
     List<String>? selectedTeachers,
-    List<String>? subjectSelection,
     FavoriteScreenStatus? status,
   }) {
     return FavoriteState(
@@ -40,7 +36,6 @@ class FavoriteState extends BaseBlocState {
       favoriteSubjects: favoriteSubjects ?? this.favoriteSubjects,
       selectedTeachers: selectedTeachers ?? this.selectedTeachers,
       selectedSubjects: selectedSubjects ?? this.selectedSubjects,
-      subjectSelection: subjectSelection ?? this.subjectSelection,
       status: status ?? this.status,
     );
   }
@@ -57,8 +52,8 @@ class FavoriteState extends BaseBlocState {
     return selectedSubjects[mainSubjectId]?.length ?? 0;
   }
 
-  bool isSubSubjectSelected(String id) {
-    return subjectSelection.contains(id);
+  bool isSubSubjectSelected(String mainSubjectId, String subSubjectId) {
+    return selectedSubjects[mainSubjectId]?.contains(subSubjectId) ?? false;
   }
 
   @override
@@ -67,7 +62,6 @@ class FavoriteState extends BaseBlocState {
         favoriteTeachers,
         selectedSubjects,
         selectedTeachers,
-        subjectSelection,
         status,
       ];
 }

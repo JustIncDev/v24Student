@@ -32,44 +32,48 @@ class FavoriteItemWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var itemBoxContainer = Stack(
-      alignment: Alignment.center,
-      children: [
-        Container(
-          width: 80.0,
-          height: 80.0,
-          decoration: BoxDecoration(
-            borderRadius: itemType == FavoriteItemType.teacher
-                ? BorderRadius.circular(70.0)
-                : BorderRadius.circular(20.0),
-            color: Color(backgroundColor),
-            boxShadow: [
-              BoxShadow(
-                color: Color(backgroundColor).withOpacity(0.15),
-                blurRadius: 20.0,
-                offset: const Offset(0, 10.0),
-              ),
-            ],
-          ),
-          child: Padding(
-            padding: const EdgeInsets.all(21.0),
-            child: _getIconImage(),
-          ),
-        ),
-        if (itemType == FavoriteItemType.teacher)
+    var itemBoxContainer = SizedBox(
+      width: 100.0,
+      height: 100.0,
+      child: Stack(
+        alignment: Alignment.center,
+        children: [
           Container(
             width: 80.0,
             height: 80.0,
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(70.0),
-              image: DecorationImage(
-                fit: BoxFit.cover,
-                image: NetworkImage(iconPath),
-                onError: (_, __) {},
-              ),
+              borderRadius: itemType == FavoriteItemType.teacher
+                  ? BorderRadius.circular(70.0)
+                  : BorderRadius.circular(20.0),
+              color: Color(backgroundColor),
+              boxShadow: [
+                BoxShadow(
+                  color: Color(backgroundColor).withOpacity(0.15),
+                  blurRadius: 20.0,
+                  offset: const Offset(0, 10.0),
+                ),
+              ],
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(21.0),
+              child: _getIconImage(),
             ),
           ),
-      ],
+          if (itemType == FavoriteItemType.teacher)
+            Container(
+              width: 80.0,
+              height: 80.0,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(70.0),
+                image: DecorationImage(
+                  fit: BoxFit.cover,
+                  image: NetworkImage(iconPath),
+                  onError: (_, __) {},
+                ),
+              ),
+            ),
+        ],
+      ),
     );
 
     var itemWidget = selected
@@ -103,7 +107,6 @@ class FavoriteItemWidget extends StatelessWidget {
         : itemBoxContainer;
 
     return Stack(
-      alignment: Alignment.topRight,
       children: [
         Column(
           children: [
@@ -126,18 +129,24 @@ class FavoriteItemWidget extends StatelessWidget {
           ],
         ),
         if (subSubjectsCount != null && subSubjectsCount! > 0 && !bottomSheet)
-          Container(
-            width: 24.0,
-            height: 24.0,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(26.0),
-              color: AppColors.black,
-              shape: BoxShape.circle,
-            ),
-            child: Text(
-              subSubjectsCount.toString(),
-              style: const TextStyle(fontSize: 11.0, color: AppColors.white)
-                  .montserrat(fontWeight: AppFonts.semiBold),
+          Align(
+            alignment: const Alignment(1, -1),
+            child: Container(
+              width: 24.0,
+              height: 24.0,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(26.0),
+                color: AppColors.black,
+              ),
+              child: Center(
+                child: Text(
+                  subSubjectsCount.toString(),
+                  textAlign: TextAlign.center,
+                  overflow: TextOverflow.clip,
+                  style: const TextStyle(fontSize: 11.0, color: AppColors.white)
+                      .montserrat(fontWeight: AppFonts.semiBold),
+                ),
+              ),
             ),
           ),
       ],

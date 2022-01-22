@@ -37,4 +37,11 @@ class FavoriteRepo extends BaseRepo {
       throw e;
     }
   }
+
+  Future<bool> saveFavoriteData(
+    Map<String, List<String>>? selectedSubjects,
+    List<String>? selectedTeachers,
+  ) {
+    return _favoriteRemoteProvider.saveFavoriteData(selectedSubjects, selectedTeachers);
+  }
 }

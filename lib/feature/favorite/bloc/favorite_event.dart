@@ -19,27 +19,13 @@ class FavoriteSelectTeacherEvent extends FavoriteEvent {
 class FavoriteSelectSubjectEvent extends FavoriteEvent {
   FavoriteSelectSubjectEvent({
     required this.mainSubjectId,
+    this.subSubjectId,
+    this.selectAll = false,
   });
 
   final String mainSubjectId;
-}
-
-class FavoritePrepareLocalEvent extends FavoriteEvent {
-  FavoritePrepareLocalEvent(this.mainSubjectId);
-
-  final String mainSubjectId;
-}
-
-class FavoriteSelectSubSubjectLocalEvent extends FavoriteEvent {
-  FavoriteSelectSubSubjectLocalEvent(this.id);
-
-  final String id;
-}
-
-class FavoriteSelectAllSubSubjectsLocalEvent extends FavoriteEvent {
-  FavoriteSelectAllSubSubjectsLocalEvent(this.item);
-
-  final FavoriteSubject item;
+  final String? subSubjectId;
+  final bool selectAll;
 }
 
 class FavoritePerformEvent extends FavoriteEvent {}
