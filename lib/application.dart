@@ -44,11 +44,13 @@ class _V24StudentApplicationState extends State<V24StudentApplication> {
           providerKey = GlobalKey();
         },
         builder: (context, authState) {
-          //Return splash screen
-          // if (authState.isNotInit()) return Container();
           ScreenInfo _initScreenInfo;
           if (authState.active) {
-            _initScreenInfo = const ScreenInfo(name: ScreenName.surveys);
+            if (authState.pinConfigured) {
+              _initScreenInfo = const ScreenInfo(name: ScreenName.pin, params: {'enter': true});
+            } else {
+              _initScreenInfo = const ScreenInfo(name: ScreenName.surveys);
+            }
           } else {
             if (!SessionState().getOnboardingFlag()) {
               _initScreenInfo = const ScreenInfo(name: ScreenName.onboarding);
@@ -56,8 +58,6 @@ class _V24StudentApplicationState extends State<V24StudentApplication> {
               _initScreenInfo = const ScreenInfo(name: ScreenName.login);
             }
           }
-          ///For testing favorite screen
-          _initScreenInfo = const ScreenInfo(name: ScreenName.favorite);
           return Provider<BlocFactory>(
             key: providerKey,
             create: (ctx) => BlocFactory(

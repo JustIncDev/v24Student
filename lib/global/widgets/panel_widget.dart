@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:v24_student_app/global/ui/space.dart';
 import 'package:v24_student_app/res/colors.dart';
 import 'package:v24_student_app/res/fonts.dart';
 import 'package:v24_student_app/res/icons.dart';
@@ -8,7 +8,8 @@ import 'package:v24_student_app/res/icons.dart';
 enum PanelButtonType {
   digit,
   clear,
-  unlock,
+  faceId,
+  fingerprint,
   empty,
 }
 
@@ -19,10 +20,12 @@ class DigitPanelWidget extends StatefulWidget {
     Key? key,
     required this.onPanelTap,
     this.smsCode = true,
+    this.unlockButton = PanelButtonType.empty,
   }) : super(key: key);
 
   final OnPanelTap onPanelTap;
   final bool smsCode;
+  final PanelButtonType unlockButton;
 
   @override
   _DigitPanelWidgetState createState() => _DigitPanelWidgetState();
@@ -31,7 +34,7 @@ class DigitPanelWidget extends StatefulWidget {
 class _DigitPanelWidgetState extends State<DigitPanelWidget> {
   @override
   Widget build(BuildContext context) {
-    return Expanded(
+    return IntrinsicHeight(
       child: Container(
         color: AppColors.white,
         padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 30),
@@ -45,6 +48,7 @@ class _DigitPanelWidgetState extends State<DigitPanelWidget> {
                 _KeyBoardButton(label: '3', onPressed: () => widget.onPanelTap(value: '3')),
               ],
             ),
+            const VerticalSpace(10.0),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
@@ -53,6 +57,7 @@ class _DigitPanelWidgetState extends State<DigitPanelWidget> {
                 _KeyBoardButton(label: '6', onPressed: () => widget.onPanelTap(value: '6')),
               ],
             ),
+            const VerticalSpace(10.0),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
@@ -61,12 +66,13 @@ class _DigitPanelWidgetState extends State<DigitPanelWidget> {
                 _KeyBoardButton(label: '9', onPressed: () => widget.onPanelTap(value: '9')),
               ],
             ),
+            const VerticalSpace(10.0),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 widget.smsCode
                     ? const _KeyBoardButton(buttonType: PanelButtonType.empty)
-                    : const _KeyBoardButton(buttonType: PanelButtonType.unlock),
+                    : _KeyBoardButton(buttonType: widget.unlockButton),
                 _KeyBoardButton(label: '0', onPressed: () => widget.onPanelTap(value: '0')),
                 _KeyBoardButton(
                     buttonType: PanelButtonType.clear,
@@ -121,8 +127,10 @@ class _KeyBoardButton extends StatelessWidget {
           AppIcons.clearIcon,
           color: AppColors.royalBlue,
         );
-      case PanelButtonType.unlock:
+      case PanelButtonType.faceId:
         return SvgPicture.asset(AppIcons.faceIdIcon, color: AppColors.royalBlue);
+      case PanelButtonType.fingerprint:
+        return SvgPicture.asset(AppIcons.fingerprintIcon, color: AppColors.royalBlue);
     }
   }
 }

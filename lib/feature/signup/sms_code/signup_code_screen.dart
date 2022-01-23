@@ -76,7 +76,7 @@ class _SignUpCodeScreenState extends State<SignUpCodeScreen> {
       listener: (context, state) {
         if (state.status == BaseScreenStatus.next) {
           RootRouter.of(context)
-              ?.push(const ScreenInfo(name: ScreenName.surveys), replacement: true);
+              ?.push(const ScreenInfo(name: ScreenName.favorite), replacement: true);
         }
         if (state.currentCodePosition == 0) {
           _firstDigitFocusNode.requestFocus();

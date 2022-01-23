@@ -47,6 +47,9 @@ enum StringId {
   selectAllSubjects,
   myFavoriteTeachers,
   selectTeachers,
+  setYourPin,
+  confirmYourPin,
+  enterYourPin,
 }
 
 class ForIdValues {
@@ -100,6 +103,9 @@ class ForIdValues {
       StringId.selectAllSubjects: 'Select all subjects',
       StringId.myFavoriteTeachers: 'My favorite teachers',
       StringId.selectTeachers: 'Select your favorite teachers',
+      StringId.setYourPin: 'Set your PIN',
+      StringId.confirmYourPin: 'Confirm your PIN',
+      StringId.enterYourPin: 'Enter your PIN',
     }
   };
 

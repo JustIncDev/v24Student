@@ -2,6 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:v24_student_app/feature/favorite/bloc/favorite_bloc.dart';
 import 'package:v24_student_app/feature/login/bloc/login_bloc.dart';
+import 'package:v24_student_app/feature/pin/bloc/pin_bloc.dart';
 import 'package:v24_student_app/feature/signup/additonal_credentials/bloc/sign_up_additional_credentials_bloc.dart';
 import 'package:v24_student_app/feature/signup/credentials/bloc/signup_credentials_bloc.dart';
 import 'package:v24_student_app/feature/signup/sms_code/bloc/signup_code_bloc.dart';
@@ -50,5 +51,9 @@ class BlocFactory {
 
   FavoriteBloc createFavoriteBloc() {
     return FavoriteBloc(favoriteRepo: FavoriteRepo());
+  }
+
+  PinBloc createPinBloc(bool? enterScreen) {
+    return PinBloc(enterScreen: enterScreen ?? false);
   }
 }

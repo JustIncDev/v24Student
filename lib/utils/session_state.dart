@@ -2,6 +2,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 const String DISPLAY_ONBOARDING = 'DISPLAY_ONBOARDING';
 const String USER_ID = 'USER_ID';
+const String PIN_CODE = 'PIN_CODE';
 
 class SessionState {
   SessionState._();
@@ -27,6 +28,7 @@ class SessionState {
   Future<void> checkUserId(String userId) {
     if (userId != _sharedPreferences.getString(USER_ID)) {
       return Future.wait([
+        clearSessionData(),
         setUserId(userId),
       ]);
     }
@@ -39,6 +41,15 @@ class SessionState {
 
   String? getUserId() {
     return _sharedPreferences.getString(USER_ID);
+  }
+
+  Future<void> setPinCode(String pinCode) {
+    return _sharedPreferences.setString(PIN_CODE, pinCode);
+  }
+
+  bool? pinConfigured() {
+    var pin = _sharedPreferences.getString(PIN_CODE);
+    return pin != null && pin.isNotEmpty;
   }
 
   Future<bool> clearSessionData() {

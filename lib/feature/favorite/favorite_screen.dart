@@ -56,7 +56,7 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
       },
       listener: (context, state) {
         if (state.status == FavoriteScreenStatus.next) {
-          RootRouter.of(context)?.push(const ScreenInfo(name: ScreenName.surveys));
+          RootRouter.of(context)?.push(const ScreenInfo(name: ScreenName.pin));
         }
       },
       builder: (context, state) {

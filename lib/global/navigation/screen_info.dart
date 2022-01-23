@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:v24_student_app/feature/favorite/favorite_screen.dart';
 import 'package:v24_student_app/feature/login/login_screen.dart';
 import 'package:v24_student_app/feature/onboarding/onboarding_screen.dart';
+import 'package:v24_student_app/feature/pin/pin_screen.dart';
 import 'package:v24_student_app/feature/signup/additonal_credentials/signup_additional_credentials_screen.dart';
 import 'package:v24_student_app/feature/signup/credentials/signup_credentials_screen.dart';
 import 'package:v24_student_app/feature/signup/sms_code/signup_code_screen.dart';
@@ -19,6 +20,7 @@ enum ScreenName {
   onboarding,
   surveys,
   favorite,
+  pin,
 }
 
 class ScreenInfo {
@@ -58,6 +60,11 @@ Page<void> toPage(ScreenInfo info, BuildContext context) {
       );
     case ScreenName.favorite:
       return FavoriteScreen.buildPage(
+        params: info.params,
+        blocFactory: Provider.of<BlocFactory>(context),
+      );
+    case ScreenName.pin:
+      return PinScreen.buildPage(
         params: info.params,
         blocFactory: Provider.of<BlocFactory>(context),
       );

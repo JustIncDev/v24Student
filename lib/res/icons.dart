@@ -14,6 +14,7 @@ class AppIcons {
   static const phoneSmsIcon = 'icons/phoneSmsIcon.svg';
   static const clearIcon = 'icons/clearIcon.svg';
   static const faceIdIcon = 'icons/faceIdIcon.svg';
+  static const fingerprintIcon = 'icons/fingerprintIcon.svg';
   static const sampleSubjectIcon = 'icons/subjectIcon.svg';
   static const sampleTeacherIcon = 'icons/teacherIcon.svg';
   static const selectIcon = 'icons/selectIcon.svg';
