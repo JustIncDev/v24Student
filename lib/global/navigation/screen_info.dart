@@ -6,11 +6,16 @@ import 'package:v24_student_app/feature/favorite/favorite_screen.dart';
 import 'package:v24_student_app/feature/login/login_screen.dart';
 import 'package:v24_student_app/feature/onboarding/onboarding_screen.dart';
 import 'package:v24_student_app/feature/pin/pin_screen.dart';
+import 'package:v24_student_app/feature/profile/profile_screen.dart';
+import 'package:v24_student_app/feature/settings/settings_screen.dart';
 import 'package:v24_student_app/feature/signup/additonal_credentials/signup_additional_credentials_screen.dart';
 import 'package:v24_student_app/feature/signup/credentials/signup_credentials_screen.dart';
 import 'package:v24_student_app/feature/signup/sms_code/signup_code_screen.dart';
-import 'package:v24_student_app/feature/surveys/surveys/surveys_screen.dart';
+import 'package:v24_student_app/feature/surveys/all_surveys/surveys_screen.dart';
+import 'package:v24_student_app/feature/surveys/my_surveys/my_surveys_screen.dart';
 import 'package:v24_student_app/global/bloc.dart';
+import 'package:v24_student_app/global/navigation/root_router.dart';
+import 'package:v24_student_app/main/main_screen.dart';
 
 enum ScreenName {
   login,
@@ -21,6 +26,10 @@ enum ScreenName {
   surveys,
   favorite,
   pin,
+  settings,
+  mySurveys,
+  profile,
+  main,
 }
 
 class ScreenInfo {
@@ -66,6 +75,26 @@ Page<void> toPage(ScreenInfo info, BuildContext context) {
     case ScreenName.pin:
       return PinScreen.buildPage(
         params: info.params,
+        blocFactory: Provider.of<BlocFactory>(context),
+      );
+    case ScreenName.settings:
+      return SettingsScreen.buildPage(
+        params: info.params,
+        blocFactory: Provider.of<BlocFactory>(context),
+      );
+    case ScreenName.mySurveys:
+      return MySurveysScreen.buildPage(
+        params: info.params,
+        blocFactory: Provider.of<BlocFactory>(context),
+      );
+    case ScreenName.profile:
+      return ProfileScreen.buildPage(
+        params: info.params,
+        blocFactory: Provider.of<BlocFactory>(context),
+      );
+    case ScreenName.main:
+      return MainScreen.buildPage(
+        backDispatcher: RootRouter.of(context)!.rootBackButtonDispatcher,
         blocFactory: Provider.of<BlocFactory>(context),
       );
   }

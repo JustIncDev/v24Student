@@ -18,6 +18,10 @@ class AppIcons {
   static const sampleSubjectIcon = 'icons/subjectIcon.svg';
   static const sampleTeacherIcon = 'icons/teacherIcon.svg';
   static const selectIcon = 'icons/selectIcon.svg';
+  static const settingsIcon = 'icons/settingsIcon.svg';
+  static const surveysIcon = 'icons/surveysIcon.svg';
+  static const mySurveysIcon = 'icons/mySurveysIcon.svg';
+  static const myProfileIcon = 'icons/myProfileIcon.svg';
 
   static const eyeOpenAsset = AssetImage(eyeOpen);
   static const eyeCloseAsset = AssetImage(eyeClose);

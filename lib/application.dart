@@ -49,7 +49,7 @@ class _V24StudentApplicationState extends State<V24StudentApplication> {
             if (authState.pinConfigured) {
               _initScreenInfo = const ScreenInfo(name: ScreenName.pin, params: {'enter': true});
             } else {
-              _initScreenInfo = const ScreenInfo(name: ScreenName.surveys);
+              _initScreenInfo = const ScreenInfo(name: ScreenName.main);
             }
           } else {
             if (!SessionState().getOnboardingFlag()) {

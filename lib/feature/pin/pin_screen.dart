@@ -53,7 +53,7 @@ class _PinScreenState extends State<PinScreen> {
       listener: (context, state) {
         if (state.status == BaseScreenStatus.next) {
           RootRouter.of(context)
-              ?.push(const ScreenInfo(name: ScreenName.surveys), replacement: true);
+              ?.push(const ScreenInfo(name: ScreenName.main), replacement: true);
         }
         if (state.currentCodePosition == 6) {
           if (state.page == PinPage.set) {

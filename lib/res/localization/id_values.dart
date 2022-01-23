@@ -50,6 +50,10 @@ enum StringId {
   setYourPin,
   confirmYourPin,
   enterYourPin,
+  surveys,
+  mySurveys,
+  settings,
+  myProfile,
 }
 
 class ForIdValues {
@@ -88,8 +92,8 @@ class ForIdValues {
       StringId.find: 'Find',
       StringId.participate: 'Participate',
       StringId.explore: 'Explore',
-      StringId.onboarding1: 'Find interesting surveys of your favorite subjects and teachers',
-      StringId.onboarding2: 'Take part in surveys on various topics',
+      StringId.onboarding1: 'Find interesting all_surveys of your favorite subjects and teachers',
+      StringId.onboarding2: 'Take part in all_surveys on various topics',
       StringId.onboarding3: 'Explore your results and improve your knowledge',
       StringId.additionalInfo: 'Additional Information',
       StringId.male: 'Male',
@@ -106,6 +110,10 @@ class ForIdValues {
       StringId.setYourPin: 'Set your PIN',
       StringId.confirmYourPin: 'Confirm your PIN',
       StringId.enterYourPin: 'Enter your PIN',
+      StringId.surveys: 'Surveys',
+      StringId.mySurveys: 'My surveys',
+      StringId.settings: 'Settings',
+      StringId.myProfile: 'My profile',
     }
   };
 
