@@ -43,7 +43,7 @@ class SessionState {
     return _sharedPreferences.getString(USER_ID);
   }
 
-  Future<void> setPinCode(String pinCode) {
+  Future<bool> setPinCode(String pinCode) {
     return _sharedPreferences.setString(PIN_CODE, pinCode);
   }
 

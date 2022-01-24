@@ -80,7 +80,6 @@ class SignUpAdditionalCredentialsBloc
       }
     }).then((_) {
       add(SignUpAdditionalCredentialsSuccessEvent());
-      _authBloc.add(AuthUpdateEvent());
     }).catchError((e, s) {
       Log.error('SignUpCodeBloc', exc: e, stackTrace: s);
       add(SignUpAdditionalCredentialsFailedEvent(e));

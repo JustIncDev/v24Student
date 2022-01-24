@@ -128,28 +128,13 @@ class RootRouterState extends State<RootRouter> with AutomaticKeepAliveClientMix
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    return BlocListener<AuthBloc, AuthState>(
-        listenWhen: (previous, current) {
-          return previous.active != current.active;
-        },
-        listener: (context, authState) {
-          if (authState.active) {
-            first(ScreenInfo(
-              //Change to main screen
-              name: ScreenName.login,
-              params: {'bbDispatcher': rootBackButtonDispatcher},
-            ));
-          } else {
-            first(const ScreenInfo(name: ScreenName.login));
-          }
-        },
-        child: _RootRouterScope(
-          state: this,
-          child: Router(
-            routerDelegate: RootRouterDelegate(rootNavKey),
-            backButtonDispatcher: rootBackButtonDispatcher,
-          ),
-        ));
+    return _RootRouterScope(
+      state: this,
+      child: Router(
+        routerDelegate: RootRouterDelegate(rootNavKey),
+        backButtonDispatcher: rootBackButtonDispatcher,
+      ),
+    );
   }
 
   @override

@@ -28,6 +28,22 @@
 				<string>fbAPP-ID</string>
 			</array>
 		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>app-1-823552504826-ios-ec403fa8fa00fb891c2a43</string>
+			</array>
+		</dict>
+		<dict>
+        			<key>CFBundleTypeRole</key>
+        			<string>Editor</string>
+        			<key>CFBundleURLSchemes</key>
+        			<array>
+        				<string>com.googleusercontent.apps.823552504826-s1gkh6pedt1tmeg01g14lqcuatp49lt9</string>
+        			</array>
+        		</dict>
 	</array>
 	<key>CFBundleVersion</key>
 	<string>$(FLUTTER_BUILD_NUMBER)</string>

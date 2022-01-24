@@ -58,7 +58,7 @@ class BlocFactory {
   }
 
   PinBloc createPinBloc(bool? enterScreen) {
-    return PinBloc(enterScreen: enterScreen ?? false);
+    return PinBloc(authBloc: authBloc, enterScreen: enterScreen ?? false);
   }
 
   SurveysBloc createSurveysBloc() {

@@ -2,15 +2,20 @@ import 'package:bloc/bloc.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:meta/meta.dart';
 import 'package:v24_student_app/global/bloc.dart';
+import 'package:v24_student_app/global/data_blocs/auth/auth_bloc.dart';
 import 'package:v24_student_app/utils/session_state.dart';
 
 part 'pin_event.dart';
 part 'pin_state.dart';
 
 class PinBloc extends Bloc<PinEvent, PinState> {
+  final AuthBloc _authBloc;
+
   PinBloc({
     bool enterScreen = false,
-  }) : super(PinState(page: enterScreen ? PinPage.enter : PinPage.set)) {
+    required AuthBloc authBloc,
+  })  : _authBloc = authBloc,
+        super(PinState(page: enterScreen ? PinPage.enter : PinPage.set)) {
     on<PinEvent>((event, emit) async {
       if (event is PinInitEvent) {
         await _handleInitEvent(event, emit);
@@ -21,7 +26,7 @@ class PinBloc extends Bloc<PinEvent, PinState> {
       } else if (event is PinConfirmInitEvent) {
         _handleConfirmInitEvent(event, emit);
       } else if (event is PinPerformEvent) {
-        _handlePerformEvent(event, emit);
+        await _handlePerformEvent(event, emit);
       }
     });
   }
@@ -82,17 +87,18 @@ class PinBloc extends Bloc<PinEvent, PinState> {
     emit(state.copyWith(currentCodePosition: 0, page: PinPage.confirm));
   }
 
-  void _handlePerformEvent(
+  Future<void> _handlePerformEvent(
     PinPerformEvent event,
     Emitter<PinState> emit,
-  ) {
+  ) async {
     if (state.confirmPinValue != state.pinValue) {
       add(PinFailedEvent());
       emit(state.copyWith(currentCodePosition: 0, confirmPinValue: ''));
     } else {
-      SessionState().setPinCode(state.pinValue).then((value) {
+      var value = await SessionState().setPinCode(state.pinValue);
+      if (value) {
         emit(state.copyWith(status: BaseScreenStatus.next));
-      });
+      }
     }
   }
 }
