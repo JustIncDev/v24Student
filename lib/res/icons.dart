@@ -7,6 +7,7 @@ class AppIcons {
   static const googleIcon = 'icons/googleIcon.png';
   static const checkIcon = 'icons/checkIcon.png';
   static const subjectIcon = 'icons/subjectIcon.png';
+  static const avatarIcon = 'icons/avatarIcon.png';
 
   static const arrowDownIcon = 'icons/arrowDownIcon.svg';
   static const arrowUpIcon = 'icons/arrowUpIcon.svg';
@@ -29,4 +30,5 @@ class AppIcons {
   static const googleIconAsset = AssetImage(googleIcon);
   static const checkIconAsset = AssetImage(checkIcon);
   static const subjectIconAsset = AssetImage(subjectIcon);
+  static const avatarIconAsset = AssetImage(avatarIcon);
 }

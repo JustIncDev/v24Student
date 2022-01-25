@@ -22,6 +22,7 @@ UserProfile _$UserProfileFromJson(Map<String, dynamic> json) => UserProfile(
       gender: json['gender'] as String?,
       birthdayDate: json['birthdayDate'] as String?,
       password: json['password'] as String?,
+      avatarUrl: json['avatarUrl'] as String?,
     );
 
 Map<String, dynamic> _$UserProfileToJson(UserProfile instance) =>
@@ -35,4 +36,5 @@ Map<String, dynamic> _$UserProfileToJson(UserProfile instance) =>
       'gender': instance.gender,
       'birthdayDate': instance.birthdayDate,
       'password': instance.password,
+      'avatarUrl': instance.avatarUrl,
     };

@@ -54,6 +54,9 @@ enum StringId {
   mySurveys,
   settings,
   myProfile,
+  noSurveys,
+  noSurveysDescription,
+  retry,
 }
 
 class ForIdValues {
@@ -114,6 +117,9 @@ class ForIdValues {
       StringId.mySurveys: 'My surveys',
       StringId.settings: 'Settings',
       StringId.myProfile: 'My profile',
+      StringId.noSurveys: 'No surveys',
+      StringId.noSurveysDescription: 'No surveys have been created yet',
+      StringId.retry: 'Retry',
     }
   };
 

@@ -16,6 +16,7 @@ class UserProfile extends DomainObject {
     this.gender,
     this.birthdayDate,
     this.password,
+    this.avatarUrl,
   }) : super(id);
 
   factory UserProfile.fromJson(Map<String, Object?> json) => _$UserProfileFromJson(json);
@@ -28,6 +29,7 @@ class UserProfile extends DomainObject {
   final String? gender;
   final String? birthdayDate;
   final String? password;
+  final String? avatarUrl;
 
   @override
   Map<String, Object?> toJson() => _$UserProfileToJson(this);

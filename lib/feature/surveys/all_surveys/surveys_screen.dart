@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:v24_student_app/feature/surveys/all_surveys/widgets/survey_item_widget.dart';
 import 'package:v24_student_app/global/bloc.dart';
+import 'package:v24_student_app/global/ui/placeholders/large_placeholder.dart';
+import 'package:v24_student_app/global/ui/progress/progress_wall.dart';
 import 'package:v24_student_app/global/ui/space.dart';
 import 'package:v24_student_app/res/colors.dart';
 import 'package:v24_student_app/res/fonts.dart';
@@ -57,45 +60,54 @@ class _SurveysScreenState extends State<SurveysScreen> {
               backgroundColor: AppColors.white,
               body: LayoutBuilder(
                 builder: (BuildContext context, BoxConstraints viewportConstraints) {
-                  return SingleChildScrollView(
-                    child: ConstrainedBox(
-                      constraints: BoxConstraints(
-                        minHeight: viewportConstraints.maxHeight,
-                      ),
-                      child: IntrinsicHeight(
-                        child: SafeArea(
-                          top: false,
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 30),
-                            child: Column(
-                              mainAxisSize: MainAxisSize.max,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.stretch,
-                              children: [
-                                const VerticalSpace(58.5),
-                                Center(
-                                  child: Text(
-                                    getStringById(context, StringId.surveys),
-                                    style: const TextStyle(
-                                      color: AppColors.black,
-                                      fontSize: 18.0,
-                                      letterSpacing: -0.3,
-                                    ).montserrat(fontWeight: AppFonts.semiBold),
-                                  ),
-                                ),
-                                const VerticalSpace(24.5),
-                                Spacer(),
-                              ],
+                  return ConstrainedBox(
+                    constraints: BoxConstraints(
+                      minHeight: viewportConstraints.maxHeight,
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          const VerticalSpace(58.5),
+                          Center(
+                            child: Text(
+                              getStringById(context, StringId.surveys),
+                              style: const TextStyle(
+                                color: AppColors.black,
+                                fontSize: 18.0,
+                                letterSpacing: -0.3,
+                              ).montserrat(fontWeight: AppFonts.semiBold),
                             ),
                           ),
-                        ),
+                          if (state.isSurveysEmpty())
+                            const Flexible(
+                              child: LargePlaceholder(
+                                titleId: StringId.noSurveys,
+                                descriptionId: StringId.noSurveysDescription,
+                              ),
+                            )
+                          else
+                            Flexible(
+                              child: ListView.builder(
+                                itemCount: state.surveyList.length,
+                                itemBuilder: (context, index) {
+                                  return SurveyItemWidget(
+                                    item: state.surveyList[index],
+                                  );
+                                },
+                              ),
+                            ),
+                        ],
                       ),
                     ),
                   );
                 },
               ),
             ),
-            // state.status == BaseScreenStatus.lock ? const ProgressWall() : const Offstage(),
+            state.status == SurveyScreenStatus.loading ? const ProgressWall() : const Offstage(),
           ],
         );
       },

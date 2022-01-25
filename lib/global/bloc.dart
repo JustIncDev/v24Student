@@ -14,6 +14,7 @@ import 'package:v24_student_app/global/data_blocs/auth/auth_bloc.dart';
 import 'package:v24_student_app/repo/favorites_repo.dart';
 import 'package:v24_student_app/repo/sign_in_repo.dart';
 import 'package:v24_student_app/repo/sign_up_repo.dart';
+import 'package:v24_student_app/repo/surveys_repo.dart';
 
 abstract class BaseBlocEvent extends Equatable {
   @override
@@ -62,7 +63,7 @@ class BlocFactory {
   }
 
   SurveysBloc createSurveysBloc() {
-    return SurveysBloc();
+    return SurveysBloc(surveysRepo: SurveysRepo());
   }
 
   MySurveysBloc createMySurveysBloc() {
