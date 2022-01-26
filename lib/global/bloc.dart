@@ -10,6 +10,7 @@ import 'package:v24_student_app/feature/signup/credentials/bloc/signup_credentia
 import 'package:v24_student_app/feature/signup/sms_code/bloc/signup_code_bloc.dart';
 import 'package:v24_student_app/feature/surveys/all_surveys/bloc/surveys_bloc.dart';
 import 'package:v24_student_app/feature/surveys/my_surveys/bloc/my_surveys_bloc.dart';
+import 'package:v24_student_app/feature/surveys/survey/bloc/survey_bloc.dart';
 import 'package:v24_student_app/global/data_blocs/auth/auth_bloc.dart';
 import 'package:v24_student_app/repo/favorites_repo.dart';
 import 'package:v24_student_app/repo/sign_in_repo.dart';
@@ -64,6 +65,10 @@ class BlocFactory {
 
   SurveysBloc createSurveysBloc() {
     return SurveysBloc(surveysRepo: SurveysRepo());
+  }
+
+  SurveyBloc createSurveyBloc(String surveyId) {
+    return SurveyBloc(surveysRepo: SurveysRepo(), surveyId: surveyId);
   }
 
   MySurveysBloc createMySurveysBloc() {

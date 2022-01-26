@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:v24_student_app/domain/survey.dart';
 import 'package:v24_student_app/feature/surveys/all_surveys/widgets/survey_item_widget.dart';
 import 'package:v24_student_app/global/bloc.dart';
+import 'package:v24_student_app/global/navigation/child_router.dart';
+import 'package:v24_student_app/global/navigation/screen_info.dart';
 import 'package:v24_student_app/global/ui/placeholders/large_placeholder.dart';
 import 'package:v24_student_app/global/ui/progress/progress_wall.dart';
 import 'package:v24_student_app/global/ui/space.dart';
@@ -12,11 +15,11 @@ import 'package:v24_student_app/utils/ui.dart';
 
 import 'bloc/surveys_bloc.dart';
 
-class SurveysScreen extends StatefulWidget {
-  const SurveysScreen({Key? key}) : super(key: key);
+class AllSurveysScreen extends StatefulWidget {
+  const AllSurveysScreen({Key? key}) : super(key: key);
 
   @override
-  _SurveysScreenState createState() => _SurveysScreenState();
+  _AllSurveysScreenState createState() => _AllSurveysScreenState();
 
   static Page buildPage({Map<String, Object>? params, required BlocFactory blocFactory}) {
     return UiUtils.createPlatformPage(
@@ -25,34 +28,17 @@ class SurveysScreen extends StatefulWidget {
         create: (ctx) {
           return blocFactory.createSurveysBloc();
         },
-        child: const SurveysScreen(),
+        child: const AllSurveysScreen(),
         lazy: false,
       ),
     );
   }
 }
 
-class _SurveysScreenState extends State<SurveysScreen> {
+class _AllSurveysScreenState extends State<AllSurveysScreen> {
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<SurveysBloc, SurveysState>(
-      listenWhen: (previous, current) {
-        // return (previous.needFocusField != current.needFocusField) ||
-        //     (previous.status != current.status && current.status == BaseScreenStatus.next);
-        return false;
-      },
-      listener: (context, state) {
-        // if (state.status == BaseScreenStatus.next) {
-        //   RootRouter.of(context)?.push(ScreenInfo(name: ScreenName.signUpAdditional, params: {
-        //     'firstName': state.firstNameValue,
-        //     'lastName': state.lastNameValue,
-        //     'email': state.emailValue,
-        //     'phoneNumber': state.phoneValue,
-        //     'country': state.countryNameValue,
-        //     'password': state.passwordValue,
-        //   }));
-        // }
-      },
+    return BlocBuilder<SurveysBloc, SurveysState>(
       builder: (context, state) {
         return Stack(
           children: [
@@ -94,8 +80,11 @@ class _SurveysScreenState extends State<SurveysScreen> {
                               child: ListView.builder(
                                 itemCount: state.surveyList.length,
                                 itemBuilder: (context, index) {
-                                  return SurveyItemWidget(
-                                    item: state.surveyList[index],
+                                  return GestureDetector(
+                                    onTap: () => _onSurveyItemTap(state.surveyList[index]),
+                                    child: SurveyItemWidget(
+                                      item: state.surveyList[index],
+                                    ),
                                   );
                                 },
                               ),
@@ -111,6 +100,15 @@ class _SurveysScreenState extends State<SurveysScreen> {
           ],
         );
       },
+    );
+  }
+
+  void _onSurveyItemTap(Survey item) {
+    ChildRouter.of(context)?.push(
+      ScreenInfo(
+        name: ScreenName.survey,
+        params: {'survey': item},
+      ),
     );
   }
 }

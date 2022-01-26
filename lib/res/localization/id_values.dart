@@ -50,13 +50,16 @@ enum StringId {
   setYourPin,
   confirmYourPin,
   enterYourPin,
+  survey,
   surveys,
   mySurveys,
+  questions,
   settings,
   myProfile,
   noSurveys,
   noSurveysDescription,
   retry,
+  submitAnswers,
 }
 
 class ForIdValues {
@@ -120,6 +123,9 @@ class ForIdValues {
       StringId.noSurveys: 'No surveys',
       StringId.noSurveysDescription: 'No surveys have been created yet',
       StringId.retry: 'Retry',
+      StringId.survey: 'Survey',
+      StringId.questions: 'Questions',
+      StringId.submitAnswers: 'Submit answers',
     }
   };
 

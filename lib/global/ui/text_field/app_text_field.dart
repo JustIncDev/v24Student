@@ -13,6 +13,7 @@ class AppTextField extends StatelessWidget {
     this.controller,
     this.maxLength,
     this.maxLines = 1,
+    this.minLines = 1,
     this.textInputAction,
     this.focusNode,
     this.nextFocusNode,
@@ -32,6 +33,7 @@ class AppTextField extends StatelessWidget {
     this.prefixIcon,
     this.readOnly = false,
     this.enableInteractiveSelection = false,
+    this.expandable = false,
   }) : super(key: key);
 
   final String? labelText;
@@ -40,6 +42,7 @@ class AppTextField extends StatelessWidget {
   final TextEditingController? controller;
   final int? maxLength;
   final int? maxLines;
+  final int? minLines;
   final TextInputAction? textInputAction;
   final FocusNode? focusNode;
   final FocusNode? nextFocusNode;
@@ -59,6 +62,7 @@ class AppTextField extends StatelessWidget {
   final Widget? prefixIcon;
   final bool readOnly;
   final bool enableInteractiveSelection;
+  final bool expandable;
 
   @override
   Widget build(BuildContext context) {
@@ -67,6 +71,7 @@ class AppTextField extends StatelessWidget {
       errorText: errorText,
       child: TextField(
         onTap: onTap,
+        expands: expandable,
         onChanged: onChanged,
         autofocus: autofocus,
         autocorrect: false,
@@ -81,7 +86,7 @@ class AppTextField extends StatelessWidget {
           fontSize: 13,
         ).montserrat(fontWeight: AppFonts.regular),
         controller: controller,
-        minLines: 1,
+        minLines: minLines,
         maxLines: maxLines,
         maxLength: maxLength,
         textInputAction: textInputAction,
@@ -112,7 +117,7 @@ class AppTextField extends StatelessWidget {
           ),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(borderRadius),
-            borderSide: const BorderSide(color: AppColors.disabledColor),
+            borderSide: const BorderSide(color: AppColors.shadowListColor),
           ),
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(borderRadius),

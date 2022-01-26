@@ -13,6 +13,7 @@ Survey _$SurveyFromJson(Map<String, dynamic> json) => Survey(
       json['author'] == null
           ? null
           : UserProfile.fromJson(json['author'] as Map<String, dynamic>),
+      json['status'] as String?,
     );
 
 Map<String, dynamic> _$SurveyToJson(Survey instance) => <String, dynamic>{
@@ -20,4 +21,5 @@ Map<String, dynamic> _$SurveyToJson(Survey instance) => <String, dynamic>{
       'title': instance.title,
       'startTime': instance.startTime?.toIso8601String(),
       'author': instance.author?.toJson(),
+      'status': instance.status,
     };

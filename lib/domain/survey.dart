@@ -13,12 +13,14 @@ class Survey extends DomainObject {
     this.title,
     this.startTime,
     this.author,
+    this.status,
   ) : super(id);
 
   final String? title;
   @JsonKey(fromJson: dateTimeFromTimestamp)
   final DateTime? startTime;
   final UserProfile? author;
+  final String? status;
 
   factory Survey.fromJson(Map<String, Object?> json) => _$SurveyFromJson(json);
 

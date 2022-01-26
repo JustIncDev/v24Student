@@ -1,3 +1,4 @@
+import 'package:v24_student_app/domain/question.dart';
 import 'package:v24_student_app/domain/survey.dart';
 import 'package:v24_student_app/repo/base_repo.dart';
 
@@ -12,5 +13,9 @@ class SurveysRepo extends BaseRepo {
 
   Future<List<Survey>?> getSurveyList() async {
     return _surveysRemoteProvider.getSurveyList();
+  }
+
+  Future<List<Question>?> getQuestionList(String surveyId) async {
+    return _surveysRemoteProvider.getQuestionList(surveyId);
   }
 }

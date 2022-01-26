@@ -160,14 +160,17 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                                     ),
                                   ),
                                 ),
-                                // const Spacer(),
-                                ClipRect(
-                                  child: BackdropFilter(
-                                    filter: ImageFilter.blur(
-                                      sigmaX: 15.0,
-                                      sigmaY: 15.0,
+                                Stack(
+                                  children: [
+                                    ClipRect(
+                                      child: BackdropFilter(
+                                        filter: ImageFilter.blur(
+                                          sigmaX: 15.0,
+                                          sigmaY: 15.0,
+                                        ),
+                                      ),
                                     ),
-                                    child: Container(
+                                    Container(
                                       color: AppColors.white.withOpacity(0.8),
                                       child: Column(
                                         children: [
@@ -188,7 +191,7 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                                         ],
                                       ),
                                     ),
-                                  ),
+                                  ],
                                 ),
                               ],
                             ),
