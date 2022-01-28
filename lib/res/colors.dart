@@ -42,5 +42,7 @@ class AppColors {
   static const Color facebookColor = Color(0xFF1877F2);
   static const Color googleColor = Color(0xFFCE5542);
   static const Color startedStatusColor = Color(0xFFD9F6D9);
+  static const Color creationStatusColor = Color(0xFFF6EBD9);
   static const Color startedTextColor = Color(0xFF468046);
+  static const Color creationTextColor = Color(0xFFB77C25);
 }

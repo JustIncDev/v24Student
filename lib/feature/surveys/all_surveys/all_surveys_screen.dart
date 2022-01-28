@@ -104,11 +104,17 @@ class _AllSurveysScreenState extends State<AllSurveysScreen> {
   }
 
   void _onSurveyItemTap(Survey item) {
-    ChildRouter.of(context)?.push(
-      ScreenInfo(
+    ChildRouter.of(context)
+        ?.push(
+      ScreenInfo.withResult(
         name: ScreenName.survey,
         params: {'survey': item},
       ),
-    );
+    )
+        .then((value) {
+      if (value) {
+        BlocProvider.of<SurveysBloc>(context).add(SurveysUpdateEvent());
+      }
+    });
   }
 }

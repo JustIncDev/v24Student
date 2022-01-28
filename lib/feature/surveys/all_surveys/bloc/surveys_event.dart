@@ -9,4 +9,6 @@ class SurveysInitEvent extends SurveysEvent {}
 
 class SurveysSuccessEvent extends SurveysEvent {}
 
+class SurveysUpdateEvent extends SurveysEvent {}
+
 class SurveysFailedEvent extends SurveysEvent {}

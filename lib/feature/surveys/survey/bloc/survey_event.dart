@@ -21,6 +21,8 @@ class SurveyInputQuestionEvent extends SurveyEvent {
   List<Object?> get props => [value];
 }
 
+class SurveySubmitAnswersPerformEvent extends SurveyEvent {}
+
 class SurveySuccessEvent extends SurveyEvent {}
 
 class SurveyFailedEvent extends SurveyEvent {}

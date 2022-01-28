@@ -20,6 +20,8 @@ class SurveysBloc extends Bloc<SurveysEvent, SurveysState> {
         _handleSuccessEvent(event, emit);
       } else if (event is SurveysFailedEvent) {
         _handleFailedEvent(event, emit);
+      } else if (event is SurveysUpdateEvent) {
+        await _handleUpdateEvent(event, emit);
       }
     });
     add(SurveysInitEvent());
@@ -34,6 +36,19 @@ class SurveysBloc extends Bloc<SurveysEvent, SurveysState> {
       emit(state.copyWith(surveyList: surveys, status: SurveyScreenStatus.loaded));
     } else {
       emit(state.copyWith(status: SurveyScreenStatus.loadFailed));
+    }
+  }
+
+  Future<void> _handleUpdateEvent(
+    SurveysUpdateEvent event,
+    Emitter<SurveysState> emit,
+  ) async {
+    emit(state.copyWith(status: SurveyScreenStatus.loading));
+    var surveys = await _surveysRepo.getSurveyList();
+    if (surveys != state.surveyList) {
+      emit(state.copyWith(surveyList: surveys, status: SurveyScreenStatus.loaded));
+    } else {
+      emit(state.copyWith(status: SurveyScreenStatus.loaded));
     }
   }
 

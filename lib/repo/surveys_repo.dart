@@ -18,4 +18,8 @@ class SurveysRepo extends BaseRepo {
   Future<List<Question>?> getQuestionList(String surveyId) async {
     return _surveysRemoteProvider.getQuestionList(surveyId);
   }
+
+  Future<void> submitAnswers(Map<String, String> answers, String surveyId) {
+    return _surveysRemoteProvider.submitAnswers(answers, surveyId);
+  }
 }

@@ -4,6 +4,7 @@ import 'package:flutter_countdown_timer/current_remaining_time.dart';
 import 'package:flutter_countdown_timer/flutter_countdown_timer.dart';
 import 'package:v24_student_app/domain/survey.dart';
 import 'package:v24_student_app/global/ui/space.dart';
+import 'package:v24_student_app/global/widgets/survey_status_widget.dart';
 import 'package:v24_student_app/res/colors.dart';
 import 'package:v24_student_app/res/fonts.dart';
 
@@ -99,7 +100,7 @@ class _SurveyContainerWidgetState extends State<SurveyContainerWidget>
                       endTime: (widget.item.startTime?.millisecondsSinceEpoch ?? 0) + 86400000,
                       widgetBuilder: (_, CurrentRemainingTime? time) {
                         return Text(
-                          '${time?.hours}:${time?.min}:${time?.sec}',
+                          '${time?.hours ?? 0}:${time?.min ?? 0}:${time?.sec ?? 0}',
                           style: TextStyle(
                             color: AppColors.black.withOpacity(0.4),
                             fontSize: 11.0,
@@ -112,21 +113,7 @@ class _SurveyContainerWidgetState extends State<SurveyContainerWidget>
                 ),
                 const HorizontalSpace(10.0),
                 // AvatarView.network(imageUrl: widget.item.author?.avatarUrl),
-                Container(
-                  decoration: BoxDecoration(
-                    color: AppColors.startedStatusColor,
-                    borderRadius: BorderRadius.circular(8.0),
-                  ),
-                  padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 8.0),
-                  child: Text(
-                    'Started',
-                    style: const TextStyle(
-                      color: AppColors.startedTextColor,
-                      fontSize: 12.0,
-                      letterSpacing: -0.3,
-                    ).montserrat(fontWeight: AppFonts.semiBold),
-                  ),
-                ),
+                SurveyStatusWidget(status: widget.item.status ?? ''),
               ],
             ),
           ],

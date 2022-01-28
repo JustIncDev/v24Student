@@ -19,15 +19,16 @@ class SurveyQuestionWidget extends StatefulWidget {
 }
 
 class _SurveyQuestionWidgetState extends State<SurveyQuestionWidget> {
-  final TextEditingController _textEditingController = TextEditingController();
+  late TextEditingController? _textEditingController;
 
   @override
   void initState() {
     super.initState();
-    _textEditingController.addListener(
+    _textEditingController = TextEditingController();
+    _textEditingController?.addListener(
       () {
         BlocProvider.of<SurveyBloc>(context).add(
-          SurveyInputQuestionEvent(widget.question.id, _textEditingController.text),
+          SurveyInputQuestionEvent(widget.question.id, _textEditingController?.text),
         );
       },
     );
@@ -80,9 +81,9 @@ class _SurveyQuestionWidgetState extends State<SurveyQuestionWidget> {
   }
 
   void _updateController(SurveyState state) {
-    var answer = state.answersMap[widget.question.id]?.answer;
-    if (_textEditingController.text != answer && answer != null) {
-      _textEditingController.text = answer;
+    var answer = state.answersMap[widget.question.id];
+    if (_textEditingController?.text != answer && answer != null) {
+      _textEditingController?.text = answer;
     }
   }
 }

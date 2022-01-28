@@ -3,7 +3,7 @@ part of 'survey_bloc.dart';
 class SurveyState extends BaseBlocState {
   final BaseScreenStatus? status;
   final List<Question> questions;
-  final Map<String, Answer> answersMap;
+  final Map<String, String> answersMap;
 
   SurveyState({
     this.status,
@@ -18,7 +18,7 @@ class SurveyState extends BaseBlocState {
 
   SurveyState copyWith({
     List<Question>? questions,
-    Map<String, Answer>? answersMap,
+    Map<String, String>? answersMap,
     BaseScreenStatus? status,
   }) {
     return SurveyState(
@@ -26,6 +26,11 @@ class SurveyState extends BaseBlocState {
       answersMap: answersMap ?? this.answersMap,
       status: status ?? this.status,
     );
+  }
+
+  bool isAllQuestionsAnswered() {
+    return questions.length == answersMap.length &&
+        (answersMap.values.where((element) => element.isEmpty)).isEmpty && status == BaseScreenStatus.input;
   }
 
   @override

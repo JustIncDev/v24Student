@@ -8,6 +8,7 @@ import 'package:v24_student_app/feature/surveys/survey/widgets/survey_question_w
 import 'package:v24_student_app/global/bloc.dart';
 import 'package:v24_student_app/global/navigation/child_router.dart';
 import 'package:v24_student_app/global/ui/button/primary_button.dart';
+import 'package:v24_student_app/global/ui/progress/progress_wall.dart';
 import 'package:v24_student_app/global/ui/space.dart';
 import 'package:v24_student_app/res/colors.dart';
 import 'package:v24_student_app/res/fonts.dart';
@@ -54,21 +55,12 @@ class _SurveyScreenState extends State<SurveyScreen> {
   Widget build(BuildContext context) {
     return BlocConsumer<SurveyBloc, SurveyState>(
       listenWhen: (previous, current) {
-        // return (previous.needFocusField != current.needFocusField) ||
-        //     (previous.status != current.status && current.status == BaseScreenStatus.next);
-        return false;
+        return (previous.status != current.status && current.status == BaseScreenStatus.back);
       },
       listener: (context, state) {
-        // if (state.status == BaseScreenStatus.next) {
-        //   RootRouter.of(context)?.push(ScreenInfo(name: ScreenName.signUpAdditional, params: {
-        //     'firstName': state.firstNameValue,
-        //     'lastName': state.lastNameValue,
-        //     'email': state.emailValue,
-        //     'phoneNumber': state.phoneValue,
-        //     'country': state.countryNameValue,
-        //     'password': state.passwordValue,
-        //   }));
-        // }
+        if (state.status == BaseScreenStatus.back) {
+          ChildRouter.of(context)?.pop(result: true);
+        }
       },
       builder: (context, state) {
         return Stack(
@@ -161,20 +153,19 @@ class _SurveyScreenState extends State<SurveyScreen> {
                                         viewportFraction: 0.9,
                                         initialPage: 0,
                                       ),
-                                      children: List.generate(
-                                        state.questions.length,
-                                        (index) => SurveyQuestionWidget(
-                                          key: UniqueKey(),
+                                      children: List.generate(state.questions.length, (index) {
+                                        return SurveyQuestionWidget(
                                           question: state.questions[index],
-                                        ),
-                                      ),
+                                        );
+                                      }),
                                     ),
                                   ),
                                 ),
                                 const Spacer(),
-                                const PrimaryButton(
+                                PrimaryButton(
                                   titleId: StringId.submitAnswers,
-                                  onPressed: null,
+                                  onPressed:
+                                      state.isAllQuestionsAnswered() ? _submitAnswersTap : null,
                                 ),
                                 const VerticalSpace(20.0),
                               ],
@@ -187,7 +178,7 @@ class _SurveyScreenState extends State<SurveyScreen> {
                 },
               ),
             ),
-            // state.status == BaseScreenStatus.lock ? const ProgressWall() : const Offstage(),
+            state.status == BaseScreenStatus.lock ? const ProgressWall() : const Offstage(),
           ],
         );
       },
@@ -196,6 +187,10 @@ class _SurveyScreenState extends State<SurveyScreen> {
 
   void _onBackButtonPressed() {
     ChildRouter.of(context)?.pop();
+  }
+
+  void _submitAnswersTap() {
+    BlocProvider.of<SurveyBloc>(context).add(SurveySubmitAnswersPerformEvent());
   }
 
   AnimatedContainer buildDot({int? index}) {
