@@ -70,7 +70,7 @@ class ChildRouterState extends State<ChildRouter> with AutomaticKeepAliveClientM
     });
   }
 
-  Future<dynamic> push(ScreenInfo info) {
+  Future<Object?> push(ScreenInfo info) {
     Log.info('ChildRouter(${widget.name}) PUSH', params: {'info': Log.screenInfoToLog(info)}, metadata: _logMetadata);
     setState(() {
       _addScreenInfo(info);
@@ -102,13 +102,13 @@ class ChildRouterState extends State<ChildRouter> with AutomaticKeepAliveClientM
     }
   }
 
-  void pop({dynamic result}) {
+  void pop({Object? result}) {
     Log.info('ChildRouter(${widget.name}) POP', metadata: _logMetadata);
     setState(() {
       if (infoList.isNotEmpty) {
         var info = infoList.removeLast();
         if (info.resultCompleter != null && !info.resultCompleter!.isCompleted) {
-          info.resultCompleter!.complete(result);
+          info.resultCompleter!.future;
         }
       }
     });

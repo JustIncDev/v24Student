@@ -11,11 +11,11 @@ class Answer extends DomainObject {
   Answer(
       String id,
       this.answer,
-      this.student,
+      this.author,
       ) : super(id);
 
   final String answer;
-  final UserProfile student;
+  final UserProfile author;
 
   factory Answer.fromJson(Map<String, Object?> json) => _$AnswerFromJson(json);
 

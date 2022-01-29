@@ -31,7 +31,7 @@ class SurveysBloc extends Bloc<SurveysEvent, SurveysState> {
     SurveysInitEvent event,
     Emitter<SurveysState> emit,
   ) async {
-    var surveys = await _surveysRepo.getSurveyList();
+    var surveys = await _surveysRepo.getAllSurveys();
     if (surveys != null) {
       emit(state.copyWith(surveyList: surveys, status: SurveyScreenStatus.loaded));
     } else {
@@ -44,7 +44,7 @@ class SurveysBloc extends Bloc<SurveysEvent, SurveysState> {
     Emitter<SurveysState> emit,
   ) async {
     emit(state.copyWith(status: SurveyScreenStatus.loading));
-    var surveys = await _surveysRepo.getSurveyList();
+    var surveys = await _surveysRepo.getAllSurveys();
     if (surveys != state.surveyList) {
       emit(state.copyWith(surveyList: surveys, status: SurveyScreenStatus.loaded));
     } else {

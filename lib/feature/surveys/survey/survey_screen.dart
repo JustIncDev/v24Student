@@ -20,26 +20,34 @@ class SurveyScreen extends StatefulWidget {
   const SurveyScreen({
     Key? key,
     required this.survey,
+    required this.answeredSurvey,
   }) : super(key: key);
 
   final Survey survey;
+  final bool answeredSurvey;
 
   @override
   _SurveyScreenState createState() => _SurveyScreenState();
   static Page buildPage({Map<String, Object>? params, required BlocFactory blocFactory}) {
     late Survey survey;
+    late bool answeredSurvey;
     if (params != null) {
       survey = params['survey'] as Survey;
+      answeredSurvey = (params['answeredSurvey'] as bool?) ?? false;
     }
 
     return UiUtils.createPlatformPage(
       key: const ValueKey('survey'),
       child: BlocProvider(
         create: (ctx) {
-          return blocFactory.createSurveyBloc(survey.id);
+          return blocFactory.createSurveyBloc(
+            survey.id,
+            answeredSurvey,
+          );
         },
         child: SurveyScreen(
           survey: survey,
+          answeredSurvey: answeredSurvey,
         ),
         lazy: false,
       ),
@@ -59,7 +67,7 @@ class _SurveyScreenState extends State<SurveyScreen> {
       },
       listener: (context, state) {
         if (state.status == BaseScreenStatus.back) {
-          ChildRouter.of(context)?.pop(result: true);
+          ChildRouter.of(context)?.pop();
         }
       },
       builder: (context, state) {
@@ -102,7 +110,9 @@ class _SurveyScreenState extends State<SurveyScreen> {
                                       child: Text(
                                         getStringById(
                                           context,
-                                          StringId.survey,
+                                          widget.answeredSurvey
+                                              ? StringId.answeredSurvey
+                                              : StringId.survey,
                                         ),
                                         style: const TextStyle(
                                           color: AppColors.black,
@@ -119,7 +129,10 @@ class _SurveyScreenState extends State<SurveyScreen> {
                                   ],
                                 ),
                                 const VerticalSpace(24.5),
-                                SurveyContainerWidget(item: widget.survey),
+                                SurveyContainerWidget(
+                                  item: widget.survey,
+                                  answeredSurvey: widget.answeredSurvey,
+                                ),
                                 const VerticalSpace(28.0),
                                 Center(
                                   child: Text(
@@ -156,18 +169,23 @@ class _SurveyScreenState extends State<SurveyScreen> {
                                       children: List.generate(state.questions.length, (index) {
                                         return SurveyQuestionWidget(
                                           question: state.questions[index],
+                                          answeredSurvey: widget.answeredSurvey,
+                                          answerList: state.answeredList,
                                         );
                                       }),
                                     ),
                                   ),
                                 ),
                                 const Spacer(),
-                                PrimaryButton(
-                                  titleId: StringId.submitAnswers,
-                                  onPressed:
-                                      state.isAllQuestionsAnswered() ? _submitAnswersTap : null,
-                                ),
-                                const VerticalSpace(20.0),
+                                if (!widget.answeredSurvey)
+                                  Padding(
+                                    padding: const EdgeInsets.only(bottom: 20.0),
+                                    child: PrimaryButton(
+                                      titleId: StringId.submitAnswers,
+                                      onPressed:
+                                          state.isAllQuestionsAnswered() ? _submitAnswersTap : null,
+                                    ),
+                                  ),
                               ],
                             ),
                           ),

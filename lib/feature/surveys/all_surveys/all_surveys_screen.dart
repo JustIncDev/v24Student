@@ -111,10 +111,8 @@ class _AllSurveysScreenState extends State<AllSurveysScreen> {
         params: {'survey': item},
       ),
     )
-        .then((value) {
-      if (value) {
-        BlocProvider.of<SurveysBloc>(context).add(SurveysUpdateEvent());
-      }
+        .then((_) {
+      BlocProvider.of<SurveysBloc>(context).add(SurveysUpdateEvent());
     });
   }
 }

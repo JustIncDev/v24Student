@@ -12,9 +12,11 @@ class SurveyItemWidget extends StatefulWidget {
   const SurveyItemWidget({
     Key? key,
     required this.item,
+    this.answeredSurvey = false,
   }) : super(key: key);
 
   final Survey item;
+  final bool answeredSurvey;
 
   @override
   State<SurveyItemWidget> createState() => _SurveyItemWidgetState();
@@ -71,34 +73,37 @@ class _SurveyItemWidgetState extends State<SurveyItemWidget> with TickerProvider
                     letterSpacing: -0.3,
                   ).montserrat(fontWeight: AppFonts.semiBold),
                 ),
-                const VerticalSpace(3.0),
-                Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(
-                      'Remains ',
-                      style: TextStyle(
-                        color: AppColors.black.withOpacity(0.4),
-                        fontSize: 11.0,
-                        letterSpacing: -0.3,
-                      ).montserrat(fontWeight: AppFonts.medium),
-                    ),
-                    CountdownTimer(
-                      controller: _countdownController,
-                      endTime: (widget.item.startTime?.millisecondsSinceEpoch ?? 0) + 86400000,
-                      widgetBuilder: (_, CurrentRemainingTime? time) {
-                        return Text(
-                          '${time?.hours}:${time?.min}:${time?.sec}',
+                if (!widget.answeredSurvey)
+                  Padding(
+                    padding: const EdgeInsets.only(top: 3.0),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          'Remains ',
                           style: TextStyle(
                             color: AppColors.black.withOpacity(0.4),
                             fontSize: 11.0,
                             letterSpacing: -0.3,
                           ).montserrat(fontWeight: AppFonts.medium),
-                        );
-                      },
+                        ),
+                        CountdownTimer(
+                          controller: _countdownController,
+                          endTime: (widget.item.startTime?.millisecondsSinceEpoch ?? 0) + 86400000,
+                          widgetBuilder: (_, CurrentRemainingTime? time) {
+                            return Text(
+                              '${time?.hours}:${time?.min}:${time?.sec}',
+                              style: TextStyle(
+                                color: AppColors.black.withOpacity(0.4),
+                                fontSize: 11.0,
+                                letterSpacing: -0.3,
+                              ).montserrat(fontWeight: AppFonts.medium),
+                            );
+                          },
+                        ),
+                      ],
                     ),
-                  ],
-                ),
+                  ),
               ],
             ),
             Row(

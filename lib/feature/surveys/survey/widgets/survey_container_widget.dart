@@ -3,6 +3,7 @@ import 'package:flutter_countdown_timer/countdown_timer_controller.dart';
 import 'package:flutter_countdown_timer/current_remaining_time.dart';
 import 'package:flutter_countdown_timer/flutter_countdown_timer.dart';
 import 'package:v24_student_app/domain/survey.dart';
+import 'package:v24_student_app/global/ui/image/avatar_view.dart';
 import 'package:v24_student_app/global/ui/space.dart';
 import 'package:v24_student_app/global/widgets/survey_status_widget.dart';
 import 'package:v24_student_app/res/colors.dart';
@@ -13,9 +14,11 @@ class SurveyContainerWidget extends StatefulWidget {
   const SurveyContainerWidget({
     Key? key,
     required this.item,
+    this.answeredSurvey = false,
   }) : super(key: key);
 
   final Survey item;
+  final bool answeredSurvey;
 
   @override
   State<SurveyContainerWidget> createState() => _SurveyContainerWidgetState();
@@ -74,46 +77,50 @@ class _SurveyContainerWidgetState extends State<SurveyContainerWidget>
             ),
             Row(
               children: [
-                // Text(
-                //   (widget.item.author?.firstName ?? 'Logan') +
-                //       ' ' +
-                //       (widget.item.author?.lastName ?? 'Lerman'),
-                //   style: TextStyle(
-                //     color: AppColors.black.withOpacity(0.8),
-                //     fontSize: 11.0,
-                //     letterSpacing: -0.3,
-                //   ).montserrat(fontWeight: AppFonts.medium),
-                // ),
-                Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(
-                      'Remains ',
-                      style: TextStyle(
-                        color: AppColors.black.withOpacity(0.4),
-                        fontSize: 11.0,
-                        letterSpacing: -0.3,
-                      ).montserrat(fontWeight: AppFonts.medium),
-                    ),
-                    CountdownTimer(
-                      controller: _countdownController,
-                      endTime: (widget.item.startTime?.millisecondsSinceEpoch ?? 0) + 86400000,
-                      widgetBuilder: (_, CurrentRemainingTime? time) {
-                        return Text(
-                          '${time?.hours ?? 0}:${time?.min ?? 0}:${time?.sec ?? 0}',
-                          style: TextStyle(
-                            color: AppColors.black.withOpacity(0.4),
-                            fontSize: 11.0,
-                            letterSpacing: -0.3,
-                          ).montserrat(fontWeight: AppFonts.medium),
-                        );
-                      },
-                    ),
-                  ],
-                ),
+                if (widget.answeredSurvey)
+                  Text(
+                    (widget.item.author?.firstName ?? 'Logan') +
+                        ' ' +
+                        (widget.item.author?.lastName ?? 'Lerman'),
+                    style: TextStyle(
+                      color: AppColors.black.withOpacity(0.8),
+                      fontSize: 11.0,
+                      letterSpacing: -0.3,
+                    ).montserrat(fontWeight: AppFonts.medium),
+                  )
+                else
+                  Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        'Remains ',
+                        style: TextStyle(
+                          color: AppColors.black.withOpacity(0.4),
+                          fontSize: 11.0,
+                          letterSpacing: -0.3,
+                        ).montserrat(fontWeight: AppFonts.medium),
+                      ),
+                      CountdownTimer(
+                        controller: _countdownController,
+                        endTime: (widget.item.startTime?.millisecondsSinceEpoch ?? 0) + 86400000,
+                        widgetBuilder: (_, CurrentRemainingTime? time) {
+                          return Text(
+                            '${time?.hours ?? 0}:${time?.min ?? 0}:${time?.sec ?? 0}',
+                            style: TextStyle(
+                              color: AppColors.black.withOpacity(0.4),
+                              fontSize: 11.0,
+                              letterSpacing: -0.3,
+                            ).montserrat(fontWeight: AppFonts.medium),
+                          );
+                        },
+                      ),
+                    ],
+                  ),
                 const HorizontalSpace(10.0),
-                // AvatarView.network(imageUrl: widget.item.author?.avatarUrl),
-                SurveyStatusWidget(status: widget.item.status ?? ''),
+                if (widget.answeredSurvey)
+                  AvatarView.network(imageUrl: widget.item.author?.avatarUrl)
+                else
+                  SurveyStatusWidget(status: widget.item.status ?? ''),
               ],
             ),
           ],

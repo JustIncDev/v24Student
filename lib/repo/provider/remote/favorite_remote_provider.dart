@@ -77,10 +77,7 @@ class FavoriteRemoteProvider {
         'favoriteSubjects': selectedSubjects,
         'favoriteTeachers': selectedTeachers,
       };
-      await FirebaseFirestore.instance
-          .collection('users')
-          .doc(userId)
-          .set(dataMap);
+      await FirebaseFirestore.instance.collection('users').doc(userId).set(dataMap);
       return true;
     } on Exception catch (e) {
       throw e;

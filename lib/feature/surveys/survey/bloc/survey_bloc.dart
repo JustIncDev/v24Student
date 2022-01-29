@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:v24_student_app/domain/answer.dart';
 import 'package:v24_student_app/domain/question.dart';
 import 'package:v24_student_app/global/bloc.dart';
 import 'package:v24_student_app/repo/surveys_repo.dart';
@@ -12,8 +13,11 @@ class SurveyBloc extends Bloc<SurveyEvent, SurveyState> {
   final SurveysRepo _surveysRepo;
   final String _surveyId;
 
-  SurveyBloc({required SurveysRepo surveysRepo, required String surveyId})
-      : _surveysRepo = surveysRepo,
+  SurveyBloc({
+    required SurveysRepo surveysRepo,
+    required String surveyId,
+    bool answeredSurvey = false,
+  })  : _surveysRepo = surveysRepo,
         _surveyId = surveyId,
         super(SurveyState.init()) {
     on<SurveyEvent>((event, emit) async {
@@ -25,7 +29,7 @@ class SurveyBloc extends Bloc<SurveyEvent, SurveyState> {
         await _handleSubmitAnswersPerformEvent(event, emit);
       }
     });
-    add(SurveyInitEvent(surveyId));
+    add(SurveyInitEvent(surveyId, answeredSurvey));
   }
 
   Future<void> _handleInitEvent(
@@ -33,8 +37,17 @@ class SurveyBloc extends Bloc<SurveyEvent, SurveyState> {
     Emitter<SurveyState> emit,
   ) async {
     emit(state.copyWith(status: BaseScreenStatus.lock));
-    var questions = await _surveysRepo.getQuestionList(event.surveyId);
-    emit(state.copyWith(questions: questions, status: BaseScreenStatus.input));
+    if (event.answeredSurvey) {
+      var questions = await _surveysRepo.getQuestionList(event.surveyId);
+      if (questions != null) {
+        var answers = await _surveysRepo.getUserAnswers(event.surveyId, questions);
+        emit(state.copyWith(
+            answeredList: answers, questions: questions, status: BaseScreenStatus.input));
+      }
+    } else {
+      var questions = await _surveysRepo.getQuestionList(event.surveyId);
+      emit(state.copyWith(questions: questions, status: BaseScreenStatus.input));
+    }
   }
 
   void _handleInputQuestionEvent(

@@ -67,12 +67,16 @@ class BlocFactory {
     return SurveysBloc(surveysRepo: SurveysRepo());
   }
 
-  SurveyBloc createSurveyBloc(String surveyId) {
-    return SurveyBloc(surveysRepo: SurveysRepo(), surveyId: surveyId);
+  SurveyBloc createSurveyBloc(String surveyId, bool? answeredSurvey) {
+    return SurveyBloc(
+      surveysRepo: SurveysRepo(),
+      surveyId: surveyId,
+      answeredSurvey: answeredSurvey ?? false,
+    );
   }
 
   MySurveysBloc createMySurveysBloc() {
-    return MySurveysBloc();
+    return MySurveysBloc(surveysRepo: SurveysRepo());
   }
 
   SettingsBloc createSettingsBloc() {

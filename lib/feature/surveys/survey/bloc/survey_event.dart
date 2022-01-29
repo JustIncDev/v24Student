@@ -7,8 +7,9 @@ abstract class SurveyEvent extends BaseBlocEvent {
 
 class SurveyInitEvent extends SurveyEvent {
   final String surveyId;
+  final bool answeredSurvey;
 
-  SurveyInitEvent(this.surveyId);
+  SurveyInitEvent(this.surveyId, this.answeredSurvey);
 }
 
 class SurveyInputQuestionEvent extends SurveyEvent {
