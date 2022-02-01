@@ -14,7 +14,12 @@ import 'package:v24_student_app/res/icons.dart';
 import 'package:v24_student_app/res/localization/id_values.dart';
 
 class FavoriteScreenBody extends StatefulWidget {
-  const FavoriteScreenBody({Key? key}) : super(key: key);
+  const FavoriteScreenBody({
+    Key? key,
+    required this.state,
+  }) : super(key: key);
+
+  final FavoriteState state;
 
   @override
   _FavoriteScreenBodyState createState() => _FavoriteScreenBodyState();
@@ -23,13 +28,11 @@ class FavoriteScreenBody extends StatefulWidget {
 class _FavoriteScreenBodyState extends State<FavoriteScreenBody> {
   int _currentPage = 0;
   late PageController _pageController;
-  late FavoriteState _state;
 
   @override
   void initState() {
     super.initState();
     _pageController = PageController();
-    _state = BlocProvider.of<FavoriteBloc>(context).state;
   }
 
   @override
@@ -121,13 +124,13 @@ class _FavoriteScreenBodyState extends State<FavoriteScreenBody> {
                                   children: [
                                     FavoriteGridWidget(
                                       type: FavoriteItemType.subject,
-                                      favoriteItems: _state.favoriteSubjects,
-                                      selectedItems: _state.selectedSubjects,
+                                      favoriteItems: widget.state.favoriteSubjects,
+                                      selectedItems: widget.state.selectedSubjects,
                                     ),
                                     FavoriteGridWidget(
                                       type: FavoriteItemType.teacher,
-                                      favoriteItems: _state.favoriteTeachers,
-                                      selectedItems: _state.selectedTeachers,
+                                      favoriteItems: widget.state.favoriteTeachers,
+                                      selectedItems: widget.state.selectedTeachers,
                                     ),
                                   ],
                                 ),
@@ -138,8 +141,8 @@ class _FavoriteScreenBodyState extends State<FavoriteScreenBody> {
                                 ClipRect(
                                   child: BackdropFilter(
                                     filter: ImageFilter.blur(
-                                      sigmaX: 15.0,
-                                      sigmaY: 15.0,
+                                      sigmaX: 3.0,
+                                      sigmaY: 3.0,
                                     ),
                                   ),
                                 ),
@@ -159,7 +162,7 @@ class _FavoriteScreenBodyState extends State<FavoriteScreenBody> {
                                       PrimaryButton(
                                         titleId:
                                             _currentPage == 0 ? StringId.next : StringId.finish,
-                                        onPressed: () => _onFinishButtonTap(_state),
+                                        onPressed: () => _onFinishButtonTap(widget.state),
                                       ),
                                     ],
                                   ),
@@ -176,7 +179,7 @@ class _FavoriteScreenBodyState extends State<FavoriteScreenBody> {
             },
           ),
         ),
-        _state.status == FavoriteScreenStatus.lock ? const ProgressWall() : const Offstage(),
+        widget.state.status == FavoriteScreenStatus.lock ? const ProgressWall() : const Offstage(),
       ],
     );
   }

@@ -41,7 +41,7 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
         }
       },
       builder: (context, state) {
-        return const FavoriteScreenBody();
+        return FavoriteScreenBody(state: state);
       },
     );
   }
