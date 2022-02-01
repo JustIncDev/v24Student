@@ -92,7 +92,7 @@ class _SurveyScreenState extends State<SurveyScreen> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.stretch,
                               children: [
-                                const VerticalSpace(58.5),
+                                const VerticalSpace(15.5),
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [

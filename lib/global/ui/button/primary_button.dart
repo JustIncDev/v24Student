@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:v24_student_app/global/ui/space.dart';
 import 'package:v24_student_app/res/colors.dart';
 import 'package:v24_student_app/res/fonts.dart';
 import 'package:v24_student_app/res/localization/id_values.dart';
-import 'dart:math' as math;
 
 enum PrimaryButtonStyle {
   standard,
@@ -20,6 +20,7 @@ class PrimaryButton extends StatelessWidget {
     this.disabledColor,
     this.backgroundColor,
     this.borderSide,
+    this.icon,
   }) : super(key: key);
 
   final VoidCallback? onPressed;
@@ -31,6 +32,7 @@ class PrimaryButton extends StatelessWidget {
   final Color? disabledColor;
   final Color? backgroundColor;
   final BorderSide? borderSide;
+  final Widget? icon;
 
   @override
   Widget build(BuildContext context) {
@@ -81,12 +83,19 @@ class PrimaryButton extends StatelessWidget {
                 width: MediaQuery.of(context).size.width,
                 child: Center(
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 16.5),
-                    child: Text(
-                      titleId != null ? getStringById(context, titleId!) : titleText ?? '',
-                      style: const TextStyle(
-                        fontSize: 13.0,
-                      ).montserrat(fontWeight: AppFonts.semiBold),
+                    padding: const EdgeInsets.symmetric(vertical: 16.5, horizontal: 14.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const HorizontalSpace(18.0),
+                        Text(
+                          titleId != null ? getStringById(context, titleId!) : titleText ?? '',
+                          style: const TextStyle(
+                            fontSize: 13.0,
+                          ).montserrat(fontWeight: AppFonts.semiBold),
+                        ),
+                        if (icon != null) icon! else const HorizontalSpace(18.0),
+                      ],
                     ),
                   ),
                 ),

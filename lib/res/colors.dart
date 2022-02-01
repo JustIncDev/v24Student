@@ -45,4 +45,5 @@ class AppColors {
   static const Color creationStatusColor = Color(0xFFF6EBD9);
   static const Color startedTextColor = Color(0xFF468046);
   static const Color creationTextColor = Color(0xFFB77C25);
+  static const Color linkColor = Color(0xFF222222);
 }

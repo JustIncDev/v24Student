@@ -23,6 +23,8 @@ class AppIcons {
   static const surveysIcon = 'icons/surveysIcon.svg';
   static const mySurveysIcon = 'icons/mySurveysIcon.svg';
   static const myProfileIcon = 'icons/myProfileIcon.svg';
+  static const logoutIcon = 'icons/logoutIcon.svg';
+  static const penIcon = 'icons/penIcon.svg';
 
   static const eyeOpenAsset = AssetImage(eyeOpen);
   static const eyeCloseAsset = AssetImage(eyeClose);

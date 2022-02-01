@@ -62,6 +62,11 @@ enum StringId {
   retry,
   submitAnswers,
   answeredSurvey,
+  notificationsEnabled,
+  darkMode,
+  privacyPolicy,
+  termsOfUse,
+  editProfile,
 }
 
 class ForIdValues {
@@ -130,6 +135,11 @@ class ForIdValues {
       StringId.questions: 'Questions',
       StringId.submitAnswers: 'Submit answers',
       StringId.answeredSurvey: 'Answered survey',
+      StringId.notificationsEnabled: 'Notifications enabled',
+      StringId.darkMode: 'Dark mode',
+      StringId.privacyPolicy: 'Privacy policy',
+      StringId.termsOfUse: 'Terms of use',
+      StringId.editProfile: 'Edit Profile',
     }
   };
 
