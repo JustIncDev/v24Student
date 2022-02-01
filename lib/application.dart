@@ -58,7 +58,7 @@ class _V24StudentApplicationState extends State<V24StudentApplication> {
               _initScreenInfo = const ScreenInfo(name: ScreenName.login);
             }
           }
-          _initScreenInfo = const ScreenInfo(name: ScreenName.main);
+          // _initScreenInfo = const ScreenInfo(name: ScreenName.main);
           return Provider<BlocFactory>(
             key: providerKey,
             create: (ctx) => BlocFactory(

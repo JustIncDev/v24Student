@@ -303,6 +303,7 @@ class _IntlPhoneFieldState extends State<IntlPhoneField> {
               child: Expanded(
                 child: ListView.builder(
                   itemCount: filteredCountries.length,
+                  padding: const EdgeInsets.symmetric(vertical: 10.0),
                   itemBuilder: (ctx, index) => Column(
                     children: [
                       InkWell(

@@ -52,6 +52,9 @@ class _SignUpCredentialsScreenState extends State<SignUpCredentialsScreen> {
   final _passwordController = TextEditingController();
   final confirmPasswordController = TextEditingController();
 
+  var _passwordVisible = false;
+  var _confirmPasswordVisible = false;
+
   @override
   void initState() {
     super.initState();
@@ -111,9 +114,6 @@ class _SignUpCredentialsScreenState extends State<SignUpCredentialsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    var _passwordVisible = false;
-    var _confirmPasswordVisible = false;
-
     return BlocConsumer<SignUpCredentialsBloc, SignUpCredentialsState>(
       listenWhen: (previous, current) {
         return (previous.needFocusField != current.needFocusField) ||
@@ -252,9 +252,9 @@ class _SignUpCredentialsScreenState extends State<SignUpCredentialsScreen> {
                                             color: AppColors.borderColor,
                                           ),
                                     onPressed: () {
-                                      // setState(() {
-                                      //   _passwordVisible = !_passwordVisible;
-                                      // });
+                                      setState(() {
+                                        _passwordVisible = !_passwordVisible;
+                                      });
                                     },
                                   ),
                                 ),
@@ -268,7 +268,7 @@ class _SignUpCredentialsScreenState extends State<SignUpCredentialsScreen> {
                                   keyboardType: TextInputType.visiblePassword,
                                   suffixIcon: IconButton(
                                     padding: const EdgeInsets.all(0),
-                                    icon: !_passwordVisible
+                                    icon: !_confirmPasswordVisible
                                         ? const Image(
                                             image: AppIcons.eyeOpenAsset,
                                             color: AppColors.borderColor,
@@ -278,9 +278,9 @@ class _SignUpCredentialsScreenState extends State<SignUpCredentialsScreen> {
                                             color: AppColors.borderColor,
                                           ),
                                     onPressed: () {
-                                      // setState(() {
-                                      //   _confirmPasswordVisible = !_confirmPasswordVisible;
-                                      // });
+                                      setState(() {
+                                        _confirmPasswordVisible = !_confirmPasswordVisible;
+                                      });
                                     },
                                   ),
                                 ),
