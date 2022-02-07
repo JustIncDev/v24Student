@@ -1,4 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:uuid/uuid.dart';
 import 'package:v24_student_app/domain/base.dart';
 
 part 'user_profile.g.dart';
@@ -7,7 +8,7 @@ part 'user_profile.g.dart';
 @immutable
 class UserProfile extends DomainObject {
   UserProfile({
-    required String id,
+    required String? id,
     this.firstName,
     this.lastName,
     this.firebaseEmail,
@@ -16,8 +17,8 @@ class UserProfile extends DomainObject {
     this.gender,
     this.birthdayDate,
     this.password,
-    this.avatarUrl,
-  }) : super(id);
+    this.profilePicture,
+  }) : super(id ?? const Uuid().v4());
 
   factory UserProfile.fromJson(Map<String, Object?> json) => _$UserProfileFromJson(json);
 
@@ -29,7 +30,7 @@ class UserProfile extends DomainObject {
   final String? gender;
   final String? birthdayDate;
   final String? password;
-  final String? avatarUrl;
+  final String? profilePicture;
 
   @override
   Map<String, Object?> toJson() => _$UserProfileToJson(this);

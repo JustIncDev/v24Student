@@ -39,8 +39,8 @@ class AvatarView extends StatelessWidget {
         child: CachedNetworkImage(
           fit: BoxFit.cover,
           imageUrl: imageUrl!,
-          width: 36.0,
-          height: 36.0,
+          width: size,
+          height: size,
           placeholder: (_, __) {
             return _buildImagePlaceholder();
           },

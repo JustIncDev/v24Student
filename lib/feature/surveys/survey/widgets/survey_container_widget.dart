@@ -118,7 +118,7 @@ class _SurveyContainerWidgetState extends State<SurveyContainerWidget>
                   ),
                 const HorizontalSpace(10.0),
                 if (widget.answeredSurvey)
-                  AvatarView.network(imageUrl: widget.item.author?.avatarUrl)
+                  AvatarView.network(imageUrl: widget.item.author?.profilePicture)
                 else
                   SurveyStatusWidget(status: widget.item.status ?? ''),
               ],

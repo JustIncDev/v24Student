@@ -7,7 +7,7 @@ part of 'user_profile.dart';
 // **************************************************************************
 
 UserProfile _$UserProfileFromJson(Map<String, dynamic> json) => UserProfile(
-      id: json['id'] as String,
+      id: json['id'] as String?,
       firstName: json['firstName'] as String?,
       lastName: json['lastName'] as String?,
       firebaseEmail: json['firebaseEmail'] == null
@@ -22,7 +22,7 @@ UserProfile _$UserProfileFromJson(Map<String, dynamic> json) => UserProfile(
       gender: json['gender'] as String?,
       birthdayDate: json['birthdayDate'] as String?,
       password: json['password'] as String?,
-      avatarUrl: json['avatarUrl'] as String?,
+      profilePicture: json['profilePicture'] as String?,
     );
 
 Map<String, dynamic> _$UserProfileToJson(UserProfile instance) =>
@@ -36,5 +36,5 @@ Map<String, dynamic> _$UserProfileToJson(UserProfile instance) =>
       'gender': instance.gender,
       'birthdayDate': instance.birthdayDate,
       'password': instance.password,
-      'avatarUrl': instance.avatarUrl,
+      'profilePicture': instance.profilePicture,
     };

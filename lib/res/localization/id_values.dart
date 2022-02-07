@@ -67,6 +67,12 @@ enum StringId {
   privacyPolicy,
   termsOfUse,
   editProfile,
+  logout,
+  logoutDescription,
+  yes,
+  no,
+  uploadPhoto,
+  save,
 }
 
 class ForIdValues {
@@ -140,6 +146,12 @@ class ForIdValues {
       StringId.privacyPolicy: 'Privacy policy',
       StringId.termsOfUse: 'Terms of use',
       StringId.editProfile: 'Edit Profile',
+      StringId.logout: 'Logout',
+      StringId.logoutDescription: 'Do you really want to log out?',
+      StringId.yes: 'Yes',
+      StringId.no: 'No',
+      StringId.uploadPhoto: 'Upload photo',
+      StringId.save: 'Save',
     }
   };
 

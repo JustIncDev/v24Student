@@ -119,7 +119,7 @@ class _SurveyItemWidgetState extends State<SurveyItemWidget> with TickerProvider
                   ).montserrat(fontWeight: AppFonts.medium),
                 ),
                 const HorizontalSpace(10.0),
-                AvatarView.network(imageUrl: widget.item.author?.avatarUrl),
+                AvatarView.network(imageUrl: widget.item.author?.profilePicture),
               ],
             )
           ],

@@ -6,7 +6,8 @@ import 'package:v24_student_app/feature/favorite/favorite_screen.dart';
 import 'package:v24_student_app/feature/login/login_screen.dart';
 import 'package:v24_student_app/feature/onboarding/onboarding_screen.dart';
 import 'package:v24_student_app/feature/pin/pin_screen.dart';
-import 'package:v24_student_app/feature/profile/profile_screen.dart';
+import 'package:v24_student_app/feature/profile/edit_profile/edit_profile_screen.dart';
+import 'package:v24_student_app/feature/profile/user_profile/profile_screen.dart';
 import 'package:v24_student_app/feature/settings/settings_screen.dart';
 import 'package:v24_student_app/feature/signup/additonal_credentials/signup_additional_credentials_screen.dart';
 import 'package:v24_student_app/feature/signup/credentials/signup_credentials_screen.dart';
@@ -32,6 +33,7 @@ enum ScreenName {
   profile,
   main,
   survey,
+  editProfile,
 }
 
 class ScreenInfo {
@@ -101,6 +103,11 @@ Page<void> toPage(ScreenInfo info, BuildContext context) {
       );
     case ScreenName.survey:
       return SurveyScreen.buildPage(
+        blocFactory: Provider.of<BlocFactory>(context),
+        params: info.params,
+      );
+    case ScreenName.editProfile:
+      return EditProfileScreen.buildPage(
         blocFactory: Provider.of<BlocFactory>(context),
         params: info.params,
       );
