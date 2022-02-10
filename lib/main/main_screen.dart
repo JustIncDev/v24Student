@@ -110,7 +110,7 @@ class _MainScreenState extends State<MainScreen> {
               BottomNavigationBarItem(
                 icon: SizedBox(
                   width: 50.0,
-                  height: 50.0,
+                  height: 71.0,
                   child: Column(
                     children: [
                       const VerticalSpace(15.0),
@@ -124,7 +124,7 @@ class _MainScreenState extends State<MainScreen> {
               BottomNavigationBarItem(
                 icon: SizedBox(
                   width: 50.0,
-                  height: 50.0,
+                  height: 71.0,
                   child: Column(
                     children: [
                       const VerticalSpace(15.0),
@@ -138,7 +138,7 @@ class _MainScreenState extends State<MainScreen> {
               BottomNavigationBarItem(
                 icon: SizedBox(
                   width: 50.0,
-                  height: 50.0,
+                  height: 71.0,
                   child: Column(
                     children: [
                       const VerticalSpace(15.0),
@@ -152,7 +152,7 @@ class _MainScreenState extends State<MainScreen> {
               BottomNavigationBarItem(
                 icon: SizedBox(
                   width: 50.0,
-                  height: 50.0,
+                  height: 71.0,
                   child: Column(
                     children: [
                       const VerticalSpace(15.0),

@@ -6,6 +6,7 @@ import 'package:v24_student_app/res/localization/id_values.dart';
 
 enum PrimaryButtonStyle {
   standard,
+  disabled,
 }
 
 class PrimaryButton extends StatelessWidget {
@@ -73,7 +74,7 @@ class PrimaryButton extends StatelessWidget {
           },
         ),
       ),
-      child: onPressed != null
+      child: onPressed != null && style != PrimaryButtonStyle.disabled
           ? Ink(
               decoration: BoxDecoration(
                 gradient: _getGradientColor(),
@@ -114,7 +115,7 @@ class PrimaryButton extends StatelessWidget {
 
   Gradient _getGradientColor() {
     switch (style) {
-      case PrimaryButtonStyle.standard:
+      default:
         return const LinearGradient(
           begin: Alignment.bottomLeft,
           end: Alignment.topRight,
@@ -134,6 +135,8 @@ class PrimaryButton extends StatelessWidget {
     switch (style) {
       case PrimaryButtonStyle.standard:
         return AppColors.transparent;
+      case PrimaryButtonStyle.disabled:
+        return AppColors.disabledColor;
     }
   }
 
@@ -141,6 +144,8 @@ class PrimaryButton extends StatelessWidget {
     switch (style) {
       case PrimaryButtonStyle.standard:
         return AppColors.white;
+      case PrimaryButtonStyle.disabled:
+        return AppColors.royalBlue;
     }
   }
 
@@ -152,6 +157,8 @@ class PrimaryButton extends StatelessWidget {
     switch (style) {
       case PrimaryButtonStyle.standard:
         return AppColors.disabledColor;
+      default:
+        return AppColors.disabledColor;
     }
   }
 
@@ -159,12 +166,16 @@ class PrimaryButton extends StatelessWidget {
     switch (style) {
       case PrimaryButtonStyle.standard:
         return AppColors.royalBlue;
+      default:
+        return AppColors.royalBlue;
     }
   }
 
   Color _getOverlayColor() {
     switch (style) {
       case PrimaryButtonStyle.standard:
+        return AppColors.white10;
+      default:
         return AppColors.white10;
     }
   }

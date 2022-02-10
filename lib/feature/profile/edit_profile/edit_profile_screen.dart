@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:v24_student_app/feature/profile/edit_profile/bloc/edit_profile_bloc.dart';
 import 'package:v24_student_app/global/bloc.dart';
+import 'package:v24_student_app/global/navigation/root_router.dart';
 import 'package:v24_student_app/global/ui/button/primary_button.dart';
 import 'package:v24_student_app/global/ui/progress/progress_wall.dart';
 import 'package:v24_student_app/global/ui/space.dart';
@@ -9,6 +11,7 @@ import 'package:v24_student_app/global/ui/text_field/app_text_field.dart';
 import 'package:v24_student_app/global/ui/text_field/number_text_field.dart';
 import 'package:v24_student_app/res/colors.dart';
 import 'package:v24_student_app/res/fonts.dart';
+import 'package:v24_student_app/res/icons.dart';
 import 'package:v24_student_app/res/localization/id_values.dart';
 import 'package:v24_student_app/utils/ui.dart';
 
@@ -138,15 +141,35 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                               crossAxisAlignment: CrossAxisAlignment.stretch,
                               children: [
                                 const VerticalSpace(58.5),
-                                Center(
-                                  child: Text(
-                                    getStringById(context, StringId.editProfile),
-                                    style: const TextStyle(
-                                      color: AppColors.black,
-                                      fontSize: 18.0,
-                                      letterSpacing: -0.3,
-                                    ).montserrat(fontWeight: AppFonts.semiBold),
-                                  ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    IconButton(
+                                      icon: SvgPicture.asset(
+                                        AppIcons.arrowLeftIcon,
+                                        color: AppColors.black,
+                                        width: 18.0,
+                                        height: 18.0,
+                                      ),
+                                      iconSize: 18.0,
+                                      onPressed: _onBackButtonPressed,
+                                    ),
+                                    Center(
+                                      child: Text(
+                                        getStringById(context, StringId.editProfile),
+                                        style: const TextStyle(
+                                          color: AppColors.black,
+                                          fontSize: 18.0,
+                                          letterSpacing: -0.3,
+                                        ).montserrat(fontWeight: AppFonts.semiBold),
+                                      ),
+                                    ),
+                                    IconButton(
+                                      icon: SvgPicture.asset(AppIcons.arrowLeftIcon),
+                                      onPressed: null,
+                                      color: AppColors.transparent,
+                                    ),
+                                  ],
                                 ),
                                 const VerticalSpace(34.5),
                                 Row(
@@ -195,6 +218,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                   onPressed:
                                       state.hasChanges() ? () => _onSaveButtonTap(state) : null,
                                 ),
+                                const VerticalSpace(21.0),
                               ],
                             ),
                           ),
@@ -240,5 +264,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     if (_emailController.text != state.emailValue) {
       _emailController.text = state.emailValue;
     }
+  }
+
+  void _onBackButtonPressed() {
+    RootRouter.of(context)?.pop();
   }
 }

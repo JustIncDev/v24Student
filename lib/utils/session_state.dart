@@ -52,7 +52,10 @@ class SessionState {
     return pin != null && pin.isNotEmpty;
   }
 
-  Future<bool> clearSessionData() {
-    return _sharedPreferences.clear();
+  Future<void> clearSessionData() {
+    return Future.wait([
+      _sharedPreferences.remove(USER_ID),
+      _sharedPreferences.remove(PIN_CODE),
+    ]);
   }
 }
