@@ -4,6 +4,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:v24_student_app/global/bloc.dart';
 import 'package:v24_student_app/global/data_blocs/auth/auth_bloc.dart';
+import 'package:v24_student_app/global/global_bloc_provider.dart';
 import 'package:v24_student_app/global/injector.dart';
 import 'package:v24_student_app/global/navigation/screen_info.dart';
 import 'package:v24_student_app/global/ui/defocuser.dart';
@@ -65,9 +66,12 @@ class _V24StudentApplicationState extends State<V24StudentApplication> {
               authBloc: BlocProvider.of<AuthBloc>(ctx),
             ),
             lazy: false,
-            child: V24StudentBindingObserver(
-              screenInfo: _initScreenInfo,
-              authState: authState,
+            child: GlobalBlocProvider(
+              loggedIn: authState.active,
+              child: V24StudentBindingObserver(
+                screenInfo: _initScreenInfo,
+                authState: authState,
+              ),
             ),
           );
         },

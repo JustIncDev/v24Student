@@ -4,7 +4,6 @@ import 'package:v24_student_app/feature/favorite/bloc/favorite_bloc.dart';
 import 'package:v24_student_app/feature/login/bloc/login_bloc.dart';
 import 'package:v24_student_app/feature/pin/bloc/pin_bloc.dart';
 import 'package:v24_student_app/feature/profile/edit_profile/bloc/edit_profile_bloc.dart';
-import 'package:v24_student_app/feature/profile/user_profile/bloc/profile_bloc.dart';
 import 'package:v24_student_app/feature/settings/bloc/settings_bloc.dart';
 import 'package:v24_student_app/feature/signup/additonal_credentials/bloc/sign_up_additional_credentials_bloc.dart';
 import 'package:v24_student_app/feature/signup/credentials/bloc/signup_credentials_bloc.dart';
@@ -18,6 +17,8 @@ import 'package:v24_student_app/repo/profile_repo.dart';
 import 'package:v24_student_app/repo/sign_in_repo.dart';
 import 'package:v24_student_app/repo/sign_up_repo.dart';
 import 'package:v24_student_app/repo/surveys_repo.dart';
+
+import 'data_blocs/profile/owner_profile_bloc.dart';
 
 abstract class BaseBlocEvent extends Equatable {
   @override
@@ -37,9 +38,16 @@ abstract class DataBloc<E extends BaseBlocEvent, S extends BaseBlocState> extend
 class BlocFactory {
   BlocFactory({
     required this.authBloc,
-  });
+  }) {
+    var profileRepo = ProfileRepo();
+    _ownerProfileBloc = OwnerProfileBloc(profileRepo: profileRepo);
+  }
 
   final AuthBloc authBloc;
+
+  late OwnerProfileBloc _ownerProfileBloc;
+
+  OwnerProfileBloc get ownerProfileBloc => _ownerProfileBloc;
 
   LoginBloc createLoginBloc() {
     return LoginBloc(authBloc: authBloc, signInRepo: SignInRepo());
@@ -85,11 +93,7 @@ class BlocFactory {
     return SettingsBloc();
   }
 
-  ProfileBloc createProfileBloc() {
-    return ProfileBloc(profileRepo: ProfileRepo());
-  }
-
   EditProfileBloc createEditProfileBloc() {
-    return EditProfileBloc();
+    return EditProfileBloc(profileBloc: ownerProfileBloc, profileRepo: ProfileRepo());
   }
 }

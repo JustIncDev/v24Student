@@ -25,6 +25,7 @@ class AppIcons {
   static const myProfileIcon = 'icons/myProfileIcon.svg';
   static const logoutIcon = 'icons/logoutIcon.svg';
   static const penIcon = 'icons/penIcon.svg';
+  static const uploadIcon = 'icons/uploadIcon.svg';
 
   static const eyeOpenAsset = AssetImage(eyeOpen);
   static const eyeCloseAsset = AssetImage(eyeClose);

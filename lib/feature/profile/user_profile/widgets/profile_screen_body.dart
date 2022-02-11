@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:v24_student_app/feature/profile/user_profile/bloc/profile_bloc.dart';
 import 'package:v24_student_app/global/data_blocs/auth/auth_bloc.dart';
+import 'package:v24_student_app/global/data_blocs/profile/owner_profile_state.dart';
 import 'package:v24_student_app/global/navigation/root_router.dart';
 import 'package:v24_student_app/global/navigation/screen_info.dart';
 import 'package:v24_student_app/global/ui/button/primary_button.dart';
@@ -19,7 +19,7 @@ class ProfileScreenBody extends StatefulWidget {
     required this.state,
   }) : super(key: key);
 
-  final ProfileState state;
+  final OwnerProfileState state;
 
   @override
   State<ProfileScreenBody> createState() => _ProfileScreenBodyState();
@@ -82,7 +82,8 @@ class _ProfileScreenBodyState extends State<ProfileScreenBody> {
                             CircleAvatar(
                               radius: 70.0,
                               backgroundColor: AppColors.royalBlue,
-                              foregroundImage: NetworkImage(widget.state.avatarUrl ?? ''),
+                              foregroundImage:
+                                  NetworkImage(widget.state.profile?.profilePicture ?? ''),
                               onForegroundImageError: (_, __) {},
                               child: SvgPicture.asset(
                                 AppIcons.myProfileIcon,
@@ -93,7 +94,9 @@ class _ProfileScreenBodyState extends State<ProfileScreenBody> {
                             const VerticalSpace(10.0),
                             Center(
                               child: Text(
-                                widget.state.firstName + ' ' + widget.state.lastName,
+                                (widget.state.profile?.firstName ?? 'Lorem') +
+                                    ' ' +
+                                    (widget.state.profile?.lastName ?? 'Ipsum'),
                                 style: const TextStyle(
                                   color: AppColors.black,
                                   fontSize: 18.0,
@@ -132,7 +135,7 @@ class _ProfileScreenBodyState extends State<ProfileScreenBody> {
                                     ).montserrat(fontWeight: AppFonts.semiBold),
                                   ),
                                   Text(
-                                    widget.state.phoneNumber,
+                                    widget.state.profile?.firebasePhone?.phoneNumber ?? '',
                                     style: const TextStyle(
                                       color: AppColors.black,
                                       fontSize: 13.0,
@@ -173,7 +176,7 @@ class _ProfileScreenBodyState extends State<ProfileScreenBody> {
                                     ).montserrat(fontWeight: AppFonts.semiBold),
                                   ),
                                   Text(
-                                    widget.state.email,
+                                    widget.state.profile?.firebaseEmail?.email ?? '',
                                     style: const TextStyle(
                                       color: AppColors.black,
                                       fontSize: 13.0,

@@ -1,4 +1,4 @@
-import 'package:v24_student_app/domain/user_profile.dart';
+import 'package:v24_student_app/global/logger/logger.dart';
 import 'package:v24_student_app/repo/base_repo.dart';
 import 'package:v24_student_app/repo/provider/remote/profile_remote_provider.dart';
 
@@ -9,7 +9,12 @@ class ProfileRepo extends BaseRepo {
 
   final ProfileRemoteProvider _profileRemoteProvider;
 
-  Future<UserProfile?> getUserProfile() {
-    return _profileRemoteProvider.getUserProfile();
+  Future<void> fetchProfile() {
+    return _profileRemoteProvider.fetchProfile().then((profile) {
+      emitDataNotification(OwnerProfileDataNotification(profile: profile));
+      return null;
+    }).catchError((e, s) {
+      Log.error('Get profile error', exc: e, stackTrace: s);
+    });
   }
 }

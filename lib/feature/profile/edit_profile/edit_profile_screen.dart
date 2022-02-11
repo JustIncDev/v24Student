@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
@@ -140,7 +141,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.stretch,
                               children: [
-                                const VerticalSpace(58.5),
+                                const VerticalSpace(26.5),
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
@@ -172,6 +173,16 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                   ],
                                 ),
                                 const VerticalSpace(34.5),
+                                _AvatarWidget(avatar: state.avatar),
+                                const VerticalSpace(18.0),
+                                PrimaryButton(
+                                  titleId: StringId.uploadPhoto,
+                                  onPressed:
+                                      state.hasChanges() ? () => _onUploadButtonTap(state) : null,
+                                  icon: SvgPicture.asset(AppIcons.uploadIcon),
+                                  style: PrimaryButtonStyle.disabled,
+                                ),
+                                const VerticalSpace(18.0),
                                 Row(
                                   children: [
                                     Expanded(
@@ -240,6 +251,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     // BlocProvider.of<EditProfileBloc>(context).add(EditProfilePerformEvent());
   }
 
+  void _onUploadButtonTap(EditProfileState state) {}
+
   void _changeFieldCursorPosition(FocusNode focusNode, EditProfileField field) {
     if (!focusNode.hasFocus) {
       BlocProvider.of<EditProfileBloc>(context).add(EditProfileFieldValidateEvent(field: field));
@@ -268,5 +281,40 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
   void _onBackButtonPressed() {
     RootRouter.of(context)?.pop();
+  }
+}
+
+class _AvatarWidget extends StatelessWidget {
+  const _AvatarWidget({
+    Key? key,
+    required this.avatar,
+  }) : super(key: key);
+
+  final Avatar avatar;
+
+  @override
+  Widget build(BuildContext context) {
+    var avatarUrl = avatar.url;
+    var avatarFile = avatar.file;
+
+    ImageProvider? avatarImageProvider;
+
+    if (avatarUrl != null) {
+      avatarImageProvider = CachedNetworkImageProvider(avatarUrl);
+    } else if (avatarFile != null) {
+      avatarImageProvider = FileImage(avatarFile);
+    }
+
+    return CircleAvatar(
+      radius: 70.0,
+      backgroundColor: AppColors.royalBlue,
+      foregroundImage: avatarImageProvider,
+      onForegroundImageError: (_, __) {},
+      child: SvgPicture.asset(
+        AppIcons.myProfileIcon,
+        width: 72,
+        height: 72,
+      ),
+    );
   }
 }

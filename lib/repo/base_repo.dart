@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/widgets.dart';
+import 'package:v24_student_app/domain/user_profile.dart';
 
 StreamController<DataNotification> _dataNotificationsStream = StreamController.broadcast();
 
@@ -20,6 +21,12 @@ abstract class BaseRepo<N extends DataNotification> {
 }
 
 abstract class DataNotification {}
+
+class OwnerProfileDataNotification extends DataNotification {
+  OwnerProfileDataNotification({this.profile});
+
+  final UserProfile? profile;
+}
 
 DataNotification _notificationFabric<N extends DataNotification>() {
   throw ArgumentError();

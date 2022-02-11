@@ -1,10 +1,9 @@
 part of 'edit_profile_bloc.dart';
 
 class Avatar {
-  const Avatar({this.url, this.file, this.id});
+  const Avatar({this.url, this.file});
 
   final String? url;
-  final String? id;
   final File? file;
 }
 

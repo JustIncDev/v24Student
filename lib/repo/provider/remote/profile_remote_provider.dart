@@ -5,7 +5,7 @@ import 'package:v24_student_app/domain/user_profile.dart';
 class ProfileRemoteProvider {
   ProfileRemoteProvider();
 
-  Future<UserProfile?> getUserProfile() async {
+  Future<UserProfile?> fetchProfile() async {
     try {
       return FirebaseFirestore.instance
           .collection('users')
