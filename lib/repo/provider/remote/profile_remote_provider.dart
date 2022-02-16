@@ -19,4 +19,18 @@ class ProfileRemoteProvider {
       throw e;
     }
   }
+
+  Future<UserProfile?> editProfile(UserProfile requestProfile) async {
+    try {
+      return FirebaseFirestore.instance
+          .collection('users')
+          .doc(FirebaseAuth.instance.currentUser?.uid)
+          .update(requestProfile.toJson())
+          .then((value) async {
+        return fetchProfile();
+      });
+    } on Exception catch (e) {
+      throw e;
+    }
+  }
 }

@@ -13,6 +13,7 @@ import 'package:v24_student_app/feature/surveys/my_surveys/bloc/my_surveys_bloc.
 import 'package:v24_student_app/feature/surveys/survey/bloc/survey_bloc.dart';
 import 'package:v24_student_app/global/data_blocs/auth/auth_bloc.dart';
 import 'package:v24_student_app/repo/favorites_repo.dart';
+import 'package:v24_student_app/repo/file_repo.dart';
 import 'package:v24_student_app/repo/profile_repo.dart';
 import 'package:v24_student_app/repo/sign_in_repo.dart';
 import 'package:v24_student_app/repo/sign_up_repo.dart';
@@ -94,6 +95,10 @@ class BlocFactory {
   }
 
   EditProfileBloc createEditProfileBloc() {
-    return EditProfileBloc(profileBloc: ownerProfileBloc, profileRepo: ProfileRepo());
+    return EditProfileBloc(
+      fileRepo: FileRepo(),
+      profileBloc: ownerProfileBloc,
+      profileRepo: ProfileRepo(),
+    );
   }
 }

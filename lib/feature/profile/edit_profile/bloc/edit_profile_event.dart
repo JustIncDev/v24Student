@@ -66,13 +66,12 @@ class EditProfileUploadAvatarImageEvent extends EditProfileEvent {
 }
 
 class EditProfileUploadAvatarImageSuccessEvent extends EditProfileEvent {
-  EditProfileUploadAvatarImageSuccessEvent({this.file, required this.id});
+  EditProfileUploadAvatarImageSuccessEvent({this.file});
 
   final File? file;
-  final String id;
 
   @override
-  List<Object?> get props => [file, id];
+  List<Object?> get props => [file];
 }
 
 class EditProfileUploadImageFailedEvent extends EditProfileEvent {}
