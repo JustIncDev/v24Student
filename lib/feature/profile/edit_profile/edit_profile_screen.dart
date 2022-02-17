@@ -91,33 +91,10 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<EditProfileBloc, EditProfileState>(
-      listenWhen: (previous, current) {
-        // return (previous.needFocusField != current.needFocusField) ||
-        //     (previous.status != current.status && current.status == BaseScreenStatus.next);
-        return false;
-      },
-      listener: (context, state) {
-        FocusNode? needFocus;
-        TextEditingController? needController;
-        if (!state.firstNameError.isNone()) {
-          needFocus = _firstNameFocusNode;
-          needController = _firstNameController;
-        } else if (!state.lastNameError.isNone()) {
-          needFocus = _lastNameFocusNode;
-          needController = _lastNameController;
-        } else if (!state.phoneError.isNone()) {
-          needFocus = _phoneFocusNode;
-          needController = _phoneController;
-        } else if (!state.emailError.isNone()) {
-          needFocus = _emailFocusNode;
-          needController = _emailController;
-        }
-        if (needFocus != null && !needFocus.hasFocus) {
-          needController?.selection =
-              TextSelection.fromPosition(TextPosition(offset: needController.text.length));
-          needFocus.requestFocus();
-        }
-      },
+      listenWhen: (previous, current) =>
+          previous.needFocusField != current.needFocusField ||
+          current.status == BaseScreenStatus.next,
+      listener: _listenEditProfileBloc,
       builder: (context, state) {
         _updateController(state);
         return Stack(
@@ -245,6 +222,30 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         );
       },
     );
+  }
+
+  void _listenEditProfileBloc(BuildContext context, EditProfileState state) {
+    if (state.status == BaseScreenStatus.next) {
+      RootRouter.of(context)?.pop();
+    } else {
+      if (!state.firstNameError.isNone()) {
+        _focusFieldWithError(_firstNameController, _firstNameFocusNode);
+      } else if (!state.lastNameError.isNone()) {
+        _focusFieldWithError(_lastNameController, _lastNameFocusNode);
+      } else if (!state.emailError.isNone()) {
+        _focusFieldWithError(_emailController, _emailFocusNode);
+      } else if (!state.phoneError.isNone()) {
+        _focusFieldWithError(_phoneController, _phoneFocusNode);
+      }
+    }
+  }
+
+  void _focusFieldWithError(TextEditingController controller, FocusNode focusNode) {
+    if (!focusNode.hasFocus) {
+      controller.selection =
+          TextSelection.fromPosition(TextPosition(offset: controller.text.length));
+      focusNode.requestFocus();
+    }
   }
 
   void _onSaveButtonTap(EditProfileState state) {
