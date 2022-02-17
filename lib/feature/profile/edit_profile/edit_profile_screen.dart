@@ -1,10 +1,14 @@
+import 'dart:io';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:image_cropper/image_cropper.dart';
 import 'package:v24_student_app/feature/profile/edit_profile/bloc/edit_profile_bloc.dart';
 import 'package:v24_student_app/global/bloc.dart';
 import 'package:v24_student_app/global/navigation/root_router.dart';
+import 'package:v24_student_app/global/ui/bottom_sheet/image_picker_action_sheet.dart';
 import 'package:v24_student_app/global/ui/button/primary_button.dart';
 import 'package:v24_student_app/global/ui/progress/progress_wall.dart';
 import 'package:v24_student_app/global/ui/space.dart';
@@ -154,8 +158,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                 const VerticalSpace(18.0),
                                 PrimaryButton(
                                   titleId: StringId.uploadPhoto,
-                                  onPressed:
-                                      state.hasChanges() ? () => _onUploadButtonTap(state) : null,
+                                  onPressed: () => _onUploadButtonTap(state),
                                   icon: SvgPicture.asset(AppIcons.uploadIcon),
                                   style: PrimaryButtonStyle.disabled,
                                 ),
@@ -249,10 +252,31 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   }
 
   void _onSaveButtonTap(EditProfileState state) {
-    // BlocProvider.of<EditProfileBloc>(context).add(EditProfilePerformEvent());
+    if (!state.isFieldError() && state.hasChanges()) {
+      BlocProvider.of<EditProfileBloc>(context).add(EditProfilePerformEvent());
+    }
+    return null;
   }
 
-  void _onUploadButtonTap(EditProfileState state) {}
+  void _onUploadButtonTap(EditProfileState state) {
+    var onDeleted =
+        _emptyImage(state.avatar.url, state.avatar.file) ? _onDeleteAvatarButtonTap : null;
+    showImagePickerActionSheet(context, cropStyle: CropStyle.circle, onDeleted: onDeleted)
+        .then((file) {
+      if (file != null) {
+        BlocProvider.of<EditProfileBloc>(context)
+            .add(EditProfileUploadAvatarImageEvent(file: file));
+      }
+    });
+  }
+
+  bool _emptyImage(String? url, File? file) {
+    return (url != null && file == null) || file != null;
+  }
+
+  void _onDeleteAvatarButtonTap() {
+    BlocProvider.of<EditProfileBloc>(context).add(EditProfileUploadAvatarImageEvent());
+  }
 
   void _changeFieldCursorPosition(FocusNode focusNode, EditProfileField field) {
     if (!focusNode.hasFocus) {

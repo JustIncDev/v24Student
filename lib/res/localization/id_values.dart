@@ -73,6 +73,14 @@ enum StringId {
   no,
   uploadPhoto,
   save,
+  allowAccessCamera,
+  allowAccessCameraRoll,
+  takePhoto,
+  choosePhoto,
+  deletePhoto,
+  cancel,
+  confirmDeleteAvatarDialog,
+  delete,
 }
 
 class ForIdValues {
@@ -152,6 +160,14 @@ class ForIdValues {
       StringId.no: 'No',
       StringId.uploadPhoto: 'Upload photo',
       StringId.save: 'Save',
+      StringId.allowAccessCamera: 'Please allow access to the camera first',
+      StringId.allowAccessCameraRoll: 'Please allow access to the camera roll first',
+      StringId.takePhoto: 'Take photo',
+      StringId.choosePhoto: 'Choose photo',
+      StringId.deletePhoto: 'Delete photo',
+      StringId.cancel: 'Cancel',
+      StringId.confirmDeleteAvatarDialog: 'Are you sure you want to delete the avatar?',
+      StringId.delete: 'Delete',
     }
   };
 

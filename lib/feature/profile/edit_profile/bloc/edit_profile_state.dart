@@ -99,6 +99,20 @@ class EditProfileState extends BaseBlocState {
         avatarHasChanges;
   }
 
+  bool isFieldError() {
+    return !firstNameError.isNone() ||
+        !lastNameError.isNone() ||
+        !emailError.isNone() ||
+        !phoneError.isNone();
+  }
+
+  bool isFillAllRequiredFields() {
+    return (firstNameValue.trim().isNotEmpty) &&
+        (lastNameValue.trim().isNotEmpty) &&
+        (emailValue.trim().isNotEmpty) &&
+        (phoneValue.trim().isNotEmpty);
+  }
+
   @override
   List<Object?> get props => [
         firstNameValue,

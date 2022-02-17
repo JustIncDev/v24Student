@@ -40,6 +40,9 @@ dependencies:
   flutter_countdown_timer: ^4.1.0
   cached_network_image: ^3.2.0
   flutter_switch: ^0.3.2
+  image_cropper: ^1.4.1
+  image_picker: ^0.8.4+9
+  permission_handler: ^9.1.0
 
 dev_dependencies:
   flutter_test:

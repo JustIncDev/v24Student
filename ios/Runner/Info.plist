@@ -92,5 +92,16 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+	</dict>
+	<key>NSCameraUsageDescription</key>
+	<string>This lets you take photos for your profile</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>“V24” Would Like to Access the Microphone</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>This lets you select photos for your profile</string>
 </dict>
 </plist>
