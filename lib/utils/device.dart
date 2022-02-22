@@ -8,4 +8,8 @@ class DeviceUtils {
   static bool isThinScreen(BuildContext context) {
     return MediaQuery.of(context).size.width < 365;
   }
+
+  static bool isDeviceWithStroke(BuildContext context) {
+    return MediaQuery.of(context).viewPadding.bottom > 0;
+  }
 }

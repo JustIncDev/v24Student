@@ -20,9 +20,6 @@ class EditProfileState extends BaseBlocState {
     this.emailHasChanges = false,
     this.countryNameValue = '',
     this.countryNameHasChanges = false,
-    this.phoneValue = '',
-    this.phoneError = const FieldError.none(),
-    this.phoneHasChanges = false,
     required this.avatar,
     this.avatarHasChanges = false,
     this.needFocusField = '',
@@ -40,9 +37,6 @@ class EditProfileState extends BaseBlocState {
   final bool emailHasChanges;
   final String countryNameValue;
   final bool countryNameHasChanges;
-  final String phoneValue;
-  final FieldError phoneError;
-  final bool phoneHasChanges;
   final Avatar avatar;
   final bool avatarHasChanges;
   final String needFocusField;
@@ -60,9 +54,6 @@ class EditProfileState extends BaseBlocState {
     bool? emailHasChanges,
     String? countryNameValue,
     bool? countryNameHasChanges,
-    String? phoneValue,
-    FieldError? phoneError,
-    bool? phoneHasChanges,
     Avatar? avatar,
     bool? avatarHasChanges,
     String? needFocusField,
@@ -80,9 +71,6 @@ class EditProfileState extends BaseBlocState {
       emailHasChanges: emailHasChanges ?? this.emailHasChanges,
       countryNameValue: countryNameValue ?? this.countryNameValue,
       countryNameHasChanges: countryNameHasChanges ?? this.countryNameHasChanges,
-      phoneValue: phoneValue ?? this.phoneValue,
-      phoneError: phoneError ?? this.phoneError,
-      phoneHasChanges: phoneHasChanges ?? this.phoneHasChanges,
       avatar: avatar ?? this.avatar,
       avatarHasChanges: avatarHasChanges ?? this.avatarHasChanges,
       needFocusField: needFocusField ?? this.needFocusField,
@@ -95,22 +83,19 @@ class EditProfileState extends BaseBlocState {
         lastNameHasChanges ||
         emailHasChanges ||
         countryNameHasChanges ||
-        phoneHasChanges ||
         avatarHasChanges;
   }
 
   bool isFieldError() {
     return !firstNameError.isNone() ||
         !lastNameError.isNone() ||
-        !emailError.isNone() ||
-        !phoneError.isNone();
+        !emailError.isNone();
   }
 
   bool isFillAllRequiredFields() {
     return (firstNameValue.trim().isNotEmpty) &&
         (lastNameValue.trim().isNotEmpty) &&
-        (emailValue.trim().isNotEmpty) &&
-        (phoneValue.trim().isNotEmpty);
+        (emailValue.trim().isNotEmpty);
   }
 
   @override
@@ -126,9 +111,6 @@ class EditProfileState extends BaseBlocState {
         emailHasChanges,
         countryNameValue,
         countryNameHasChanges,
-        phoneValue,
-        phoneError,
-        phoneHasChanges,
         avatar,
         avatarHasChanges,
         needFocusField,

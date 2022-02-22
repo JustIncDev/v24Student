@@ -6,6 +6,7 @@ import 'package:v24_student_app/global/navigation/screen_info.dart';
 import 'package:v24_student_app/global/ui/space.dart';
 import 'package:v24_student_app/res/colors.dart';
 import 'package:v24_student_app/res/icons.dart';
+import 'package:v24_student_app/utils/device.dart';
 import 'package:v24_student_app/utils/ui.dart';
 
 class MainScreenScope extends InheritedWidget {
@@ -110,7 +111,7 @@ class _MainScreenState extends State<MainScreen> {
               BottomNavigationBarItem(
                 icon: SizedBox(
                   width: 50.0,
-                  height: 71.0,
+                  height: DeviceUtils.isDeviceWithStroke(context) ? 50.0 : 71.0,
                   child: Column(
                     children: [
                       const VerticalSpace(15.0),
@@ -124,7 +125,7 @@ class _MainScreenState extends State<MainScreen> {
               BottomNavigationBarItem(
                 icon: SizedBox(
                   width: 50.0,
-                  height: 71.0,
+                  height: DeviceUtils.isDeviceWithStroke(context) ? 50.0 : 71.0,
                   child: Column(
                     children: [
                       const VerticalSpace(15.0),
@@ -138,7 +139,7 @@ class _MainScreenState extends State<MainScreen> {
               BottomNavigationBarItem(
                 icon: SizedBox(
                   width: 50.0,
-                  height: 71.0,
+                  height: DeviceUtils.isDeviceWithStroke(context) ? 50.0 : 71.0,
                   child: Column(
                     children: [
                       const VerticalSpace(15.0),
@@ -152,7 +153,7 @@ class _MainScreenState extends State<MainScreen> {
               BottomNavigationBarItem(
                 icon: SizedBox(
                   width: 50.0,
-                  height: 71.0,
+                  height: DeviceUtils.isDeviceWithStroke(context) ? 50.0 : 71.0,
                   child: Column(
                     children: [
                       const VerticalSpace(15.0),

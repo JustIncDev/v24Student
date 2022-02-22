@@ -25,7 +25,6 @@ class ProfileRepo extends BaseRepo {
     String? firstName,
     String? lastName,
     String? email,
-    String? phoneNumber,
     String? country,
     String? avatar,
   }) {
@@ -33,7 +32,6 @@ class ProfileRepo extends BaseRepo {
       firstName: firstName,
       lastName: lastName,
       firebaseEmail: FirebaseEmail(email, false),
-      firebasePhone: FirebasePhone(phoneNumber, false),
       country: country,
       profilePicture: avatar,
       id: FirebaseAuth.instance.currentUser?.uid,

@@ -26,7 +26,7 @@ class ImageUtils {
             },
           ),
         );
-        _picker.getImage(source: imageSource).then((pickedFile) {
+        _picker.pickImage(source: imageSource).then((pickedFile) {
           if (pickedFile != null) {
             ImageCropper.cropImage(
               sourcePath: pickedFile.path,

@@ -24,6 +24,10 @@ class EditProfileBloc extends Bloc<EditProfileEvent, EditProfileState> {
         _profileBloc = profileBloc,
         _profileRepo = profileRepo,
         super(EditProfileState(
+          firstNameValue: profileBloc.state.profile?.firstName ?? '',
+          lastNameValue: profileBloc.state.profile?.lastName ?? '',
+          emailValue: profileBloc.state.profile?.firebaseEmail?.email ?? '',
+          countryNameValue: profileBloc.state.profile?.country ?? '',
           avatar: Avatar(url: profileBloc.state.profile?.profilePicture),
         )) {
     on<EditProfileEvent>((event, emit) {
@@ -88,17 +92,6 @@ class EditProfileBloc extends Bloc<EditProfileEvent, EditProfileState> {
           );
         }
         break;
-      case EditProfileField.phone:
-        if (event.value != state.phoneValue) {
-          emit(
-            state.copyWith(
-              phoneValue: event.value,
-              phoneError: const FieldError.none(),
-              phoneHasChanges: event.value != oldProfile?.firebasePhone?.phoneNumber,
-            ),
-          );
-        }
-        break;
       case EditProfileField.country:
         if (event.value != state.countryNameValue) {
           emit(
@@ -131,9 +124,6 @@ class EditProfileBloc extends Bloc<EditProfileEvent, EditProfileState> {
           EditProfileField.lastName,
         )));
         break;
-      case EditProfileField.phone:
-        emit(state.copyWith(phoneError: validatePhone(state.phoneValue)));
-        break;
       case EditProfileField.email:
         emit(state.copyWith(emailError: validateEmail(state.emailValue)));
         break;
@@ -155,9 +145,6 @@ class EditProfileBloc extends Bloc<EditProfileEvent, EditProfileState> {
         break;
       case EditProfileField.email:
         emit(state.copyWith(emailError: const FieldError.none()));
-        break;
-      case EditProfileField.phone:
-        emit(state.copyWith(phoneError: const FieldError.none()));
         break;
       case EditProfileField.country:
         break;
@@ -212,15 +199,12 @@ class EditProfileBloc extends Bloc<EditProfileEvent, EditProfileState> {
     var firstNameValidate = validateName(state.firstNameValue, EditProfileField.firstName);
     var lastNameValidate = validateName(state.lastNameValue, EditProfileField.lastName);
     var emailValidate = validateEmail(state.emailValue);
-    var phoneValidate = validatePhone(state.phoneValue);
     if (!firstNameValidate.isNone()) {
       emit(state.copyWith(firstNameError: firstNameValidate));
     } else if (!lastNameValidate.isNone()) {
       emit(state.copyWith(lastNameError: lastNameValidate));
     } else if (!emailValidate.isNone()) {
       emit(state.copyWith(emailError: emailValidate));
-    } else if (!phoneValidate.isNone()) {
-      emit(state.copyWith(phoneError: phoneValidate));
     } else {
       emit(state.copyWith(status: BaseScreenStatus.lock));
       _profileRepo
@@ -228,7 +212,6 @@ class EditProfileBloc extends Bloc<EditProfileEvent, EditProfileState> {
         firstName: state.firstNameValue,
         lastName: state.lastNameValue,
         email: state.emailValue,
-        phoneNumber: state.phoneValue,
         avatar: state.avatar.url,
         country: state.countryNameValue,
       )

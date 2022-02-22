@@ -13,7 +13,6 @@ import 'package:v24_student_app/global/ui/button/primary_button.dart';
 import 'package:v24_student_app/global/ui/progress/progress_wall.dart';
 import 'package:v24_student_app/global/ui/space.dart';
 import 'package:v24_student_app/global/ui/text_field/app_text_field.dart';
-import 'package:v24_student_app/global/ui/text_field/number_text_field.dart';
 import 'package:v24_student_app/res/colors.dart';
 import 'package:v24_student_app/res/fonts.dart';
 import 'package:v24_student_app/res/icons.dart';
@@ -44,12 +43,10 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   final _firstNameFocusNode = FocusNode();
   final _lastNameFocusNode = FocusNode();
   final _emailFocusNode = FocusNode();
-  final _phoneFocusNode = FocusNode();
 
   final _firstNameController = TextEditingController();
   final _lastNameController = TextEditingController();
   final _emailController = TextEditingController();
-  final _phoneController = TextEditingController();
 
   @override
   void initState() {
@@ -61,9 +58,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     _lastNameController
         .addListener(() => _listenInputField(EditProfileField.lastName, _lastNameController.text));
 
-    _phoneController
-        .addListener(() => _listenInputField(EditProfileField.phone, _phoneController.text));
-
     _emailController
         .addListener(() => _listenInputField(EditProfileField.email, _emailController.text));
 
@@ -72,9 +66,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
     _lastNameFocusNode.addListener(
         () => _changeFieldCursorPosition(_lastNameFocusNode, EditProfileField.lastName));
-
-    _phoneFocusNode
-        .addListener(() => _changeFieldCursorPosition(_phoneFocusNode, EditProfileField.phone));
 
     _emailFocusNode
         .addListener(() => _changeFieldCursorPosition(_emailFocusNode, EditProfileField.email));
@@ -85,10 +76,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     _firstNameFocusNode.dispose();
     _lastNameFocusNode.dispose();
     _emailFocusNode.dispose();
-    _phoneFocusNode.dispose();
     _firstNameController.dispose();
     _lastNameController.dispose();
-    _phoneController.dispose();
     super.dispose();
   }
 
@@ -193,16 +182,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                   errorText: state.emailError.getMessage(context),
                                   keyboardType: TextInputType.emailAddress,
                                 ),
-                                const VerticalSpace(18.0),
-                                PhoneNumberTextField(
-                                  controller: _phoneController,
-                                  focusNode: _phoneFocusNode,
-                                  labelText: getStringById(context, StringId.phoneNumber),
-                                  errorText: state.phoneError.getMessage(context),
-                                  onCountryChanged: (String countryName) {
-                                    _listenInputField(EditProfileField.country, countryName);
-                                  },
-                                ),
                                 const Spacer(),
                                 PrimaryButton(
                                   titleId: StringId.save,
@@ -237,8 +216,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         _focusFieldWithError(_lastNameController, _lastNameFocusNode);
       } else if (!state.emailError.isNone()) {
         _focusFieldWithError(_emailController, _emailFocusNode);
-      } else if (!state.phoneError.isNone()) {
-        _focusFieldWithError(_phoneController, _phoneFocusNode);
       }
     }
   }
@@ -296,9 +273,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     if (_lastNameController.text != state.lastNameValue) {
       _lastNameController.text = state.lastNameValue;
     }
-    if (_phoneController.text != state.phoneValue) {
-      _phoneController.text = state.phoneValue;
-    }
     if (_emailController.text != state.emailValue) {
       _emailController.text = state.emailValue;
     }
@@ -334,7 +308,6 @@ class _AvatarWidget extends StatelessWidget {
       radius: 70.0,
       backgroundColor: AppColors.royalBlue,
       foregroundImage: avatarImageProvider,
-      onForegroundImageError: (_, __) {},
       child: SvgPicture.asset(
         AppIcons.myProfileIcon,
         width: 72,

@@ -4,7 +4,6 @@ enum EditProfileField {
   firstName,
   lastName,
   email,
-  phone,
   country,
 }
 

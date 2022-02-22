@@ -41,51 +41,9 @@ class SettingsScreenBody extends StatelessWidget {
                         ),
                       ),
                       const VerticalSpace(24.5),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            getStringById(context, StringId.notificationsEnabled),
-                            style: const TextStyle(
-                              color: AppColors.royalBlue,
-                              fontSize: 13.0,
-                              letterSpacing: -0.3,
-                            ).montserrat(fontWeight: AppFonts.semiBold),
-                          ),
-                          FlutterSwitch(
-                            width: 44.0,
-                            height: 24.0,
-                            value: true,
-                            padding: 3.0,
-                            onToggle: (value) {},
-                            activeColor: AppColors.royalBlue,
-                            toggleSize: 18.0,
-                          ),
-                        ],
-                      ),
+                      const _SettingSwitchItem(title: StringId.notificationsEnabled),
                       const VerticalSpace(18.0),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            getStringById(context, StringId.darkMode),
-                            style: const TextStyle(
-                              color: AppColors.royalBlue,
-                              fontSize: 13.0,
-                              letterSpacing: -0.3,
-                            ).montserrat(fontWeight: AppFonts.semiBold),
-                          ),
-                          FlutterSwitch(
-                            width: 44.0,
-                            height: 24.0,
-                            padding: 3.0,
-                            toggleSize: 18.0,
-                            value: false,
-                            onToggle: (value) {},
-                            activeColor: AppColors.royalBlue,
-                          ),
-                        ],
-                      ),
+                      const _SettingSwitchItem(title: StringId.darkMode),
                       const VerticalSpace(18.0),
                       TextButton(
                         onPressed: null,
@@ -133,6 +91,52 @@ class SettingsScreenBody extends StatelessWidget {
           ),
         );
       },
+    );
+  }
+}
+
+class _SettingSwitchItem extends StatefulWidget {
+  const _SettingSwitchItem({
+    Key? key,
+    required this.title,
+  }) : super(key: key);
+
+  final StringId title;
+
+  @override
+  State<_SettingSwitchItem> createState() => _SettingSwitchItemState();
+}
+
+class _SettingSwitchItemState extends State<_SettingSwitchItem> {
+  @override
+  Widget build(BuildContext context) {
+    var _toggleValue = false;
+
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(
+          getStringById(context, widget.title),
+          style: const TextStyle(
+            color: AppColors.royalBlue,
+            fontSize: 13.0,
+            letterSpacing: -0.3,
+          ).montserrat(fontWeight: AppFonts.semiBold),
+        ),
+        FlutterSwitch(
+          width: 44.0,
+          height: 24.0,
+          value: _toggleValue,
+          padding: 3.0,
+          onToggle: (value) {
+            setState(() {
+              _toggleValue = !_toggleValue;
+            });
+          },
+          activeColor: AppColors.royalBlue,
+          toggleSize: 18.0,
+        ),
+      ],
     );
   }
 }
