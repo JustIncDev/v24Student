@@ -21,7 +21,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     required AuthBloc authBloc,
   })  : _signInRepo = signInRepo,
         _authBloc = authBloc,
-        super(LoginState()) {
+        super(LoginState(showOnboarding: !SessionState().getOnboardingFlag())) {
     on<LoginEvent>((event, emit) {
       if (event is LoginFieldInputEvent) {
         _handleInputEvent(event, emit);
@@ -39,6 +39,8 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         _handleSuccessEvent(event, emit);
       } else if (event is LoginFailedEvent) {
         _handleFailedEvent(event, emit);
+      } else if (event is LoginCloseOnboardingEvent) {
+        _handleCloseOnboardingEvent(event, emit);
       }
     });
   }
@@ -171,6 +173,14 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     Emitter<LoginState> emit,
   ) {
     emit(state.copyWith(status: BaseScreenStatus.input));
+  }
+
+  void _handleCloseOnboardingEvent(
+    LoginCloseOnboardingEvent event,
+    Emitter<LoginState> emit,
+  ) {
+    SessionState().setOnboardingFlag(true);
+    emit(state.copyWith(showOnboarding: false));
   }
 
   FieldError validateEmail(String emailValue) {

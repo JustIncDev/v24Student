@@ -24,7 +24,6 @@ enum ScreenName {
   signUpCredentials,
   signUpAdditional,
   signUpCode,
-  onboarding,
   surveys,
   favorite,
   pin,
@@ -64,8 +63,6 @@ Page<void> toPage(ScreenInfo info, BuildContext context) {
         params: info.params,
         blocFactory: Provider.of<BlocFactory>(context),
       );
-    case ScreenName.onboarding:
-      return OnboardingScreen.buildPage(params: info.params);
     case ScreenName.surveys:
       return AllSurveysScreen.buildPage(
         params: info.params,

@@ -173,7 +173,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                     ),
                                   ],
                                 ),
-                                const VerticalSpace(18.0),
                                 AppTextField(
                                   controller: _emailController,
                                   focusNode: _emailFocusNode,

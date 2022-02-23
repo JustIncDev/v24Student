@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:v24_student_app/domain/user_profile.dart';
+import 'package:v24_student_app/repo/remote/request/profile_request.dart';
 
 class ProfileRemoteProvider {
   ProfileRemoteProvider();
@@ -20,7 +21,7 @@ class ProfileRemoteProvider {
     }
   }
 
-  Future<UserProfile?> editProfile(UserProfile requestProfile) async {
+  Future<UserProfile?> editProfile(EditProfileRequest requestProfile) async {
     try {
       return FirebaseFirestore.instance
           .collection('users')

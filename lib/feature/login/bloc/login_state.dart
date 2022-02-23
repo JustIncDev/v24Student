@@ -11,6 +11,7 @@ class LoginState extends BaseBlocState {
     this.needFocusField = '',
     this.status = BaseScreenStatus.input,
     this.loginType = LoginType.email,
+    this.showOnboarding = false,
   });
 
   final String emailValue;
@@ -20,6 +21,7 @@ class LoginState extends BaseBlocState {
   final String needFocusField;
   final BaseScreenStatus status;
   final LoginType loginType;
+  final bool showOnboarding;
 
   LoginState copyWith({
     String? emailValue,
@@ -29,6 +31,7 @@ class LoginState extends BaseBlocState {
     String? needFocusField,
     BaseScreenStatus? status,
     LoginType? loginType,
+    bool? showOnboarding,
   }) {
     return LoginState(
       emailValue: emailValue ?? this.emailValue,
@@ -38,6 +41,7 @@ class LoginState extends BaseBlocState {
       needFocusField: needFocusField ?? this.needFocusField,
       status: status ?? this.status,
       loginType: loginType ?? this.loginType,
+      showOnboarding: showOnboarding ?? this.showOnboarding,
     );
   }
 

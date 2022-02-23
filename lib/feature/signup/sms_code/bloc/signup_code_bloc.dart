@@ -152,15 +152,17 @@ class SignUpCodeBloc extends Bloc<SignUpCodeEvent, SignUpCodeState> {
     Emitter<SignUpCodeState> emit,
   ) async {
     await FirebaseAuth.instance.verifyPhoneNumber(
-        phoneNumber: event.phoneNumber,
-        verificationCompleted: (PhoneAuthCredential credential) {},
-        verificationFailed: (FirebaseException e) {
-          add(SignUpCodeFailedEvent(e));
-        },
-        codeSent: (String verificationId, int? resendToken) {
-          add(FirebaseCodeSentEvent(verificationId: verificationId, resendCode: resendToken));
-        },
-        codeAutoRetrievalTimeout: (String verificationId) {},
-        forceResendingToken: event.token);
+      phoneNumber: event.phoneNumber,
+      verificationCompleted: (PhoneAuthCredential credential) {},
+      verificationFailed: (FirebaseException e) {
+        add(SignUpCodeFailedEvent(e));
+      },
+      codeSent: (String verificationId, int? resendToken) {
+        add(FirebaseCodeSentEvent(verificationId: verificationId, resendCode: resendToken));
+      },
+      codeAutoRetrievalTimeout: (String verificationId) {},
+      forceResendingToken: state.token,
+      timeout: const Duration(seconds: 60),
+    );
   }
 }

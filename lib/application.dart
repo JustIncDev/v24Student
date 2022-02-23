@@ -53,13 +53,9 @@ class _V24StudentApplicationState extends State<V24StudentApplication> {
               _initScreenInfo = const ScreenInfo(name: ScreenName.main);
             }
           } else {
-            if (!SessionState().getOnboardingFlag()) {
-              _initScreenInfo = const ScreenInfo(name: ScreenName.onboarding);
-            } else {
-              _initScreenInfo = const ScreenInfo(name: ScreenName.login);
-            }
+            _initScreenInfo = const ScreenInfo(name: ScreenName.login);
           }
-          // _initScreenInfo = const ScreenInfo(name: ScreenName.main);
+          _initScreenInfo = const ScreenInfo(name: ScreenName.signUpCode, params: {'phone': '+79198128922'});
           return Provider<BlocFactory>(
             key: providerKey,
             create: (ctx) => BlocFactory(

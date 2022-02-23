@@ -134,12 +134,14 @@ class _SignUpCodeScreenState extends State<SignUpCodeScreen> {
                                   text: TextSpan(children: [
                                     TextSpan(
                                         text: getStringById(context, StringId.enterCodeMessage),
-                                        style: const TextStyle(fontSize: 14.0, color: AppColors.white)
-                                            .montserrat(fontWeight: AppFonts.regular)),
+                                        style:
+                                            const TextStyle(fontSize: 14.0, color: AppColors.white)
+                                                .montserrat(fontWeight: AppFonts.regular)),
                                     TextSpan(
                                         text: widget.phone,
-                                        style: const TextStyle(fontSize: 14.0, color: AppColors.white)
-                                            .montserrat(fontWeight: AppFonts.semiBold)),
+                                        style:
+                                            const TextStyle(fontSize: 14.0, color: AppColors.white)
+                                                .montserrat(fontWeight: AppFonts.semiBold)),
                                   ]),
                                 ),
                                 const VerticalSpace(60.0),
@@ -179,60 +181,7 @@ class _SignUpCodeScreenState extends State<SignUpCodeScreen> {
                                   ],
                                 ),
                                 const Spacer(),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    TextButton(
-                                      onPressed: null,
-                                      style: ButtonStyle(
-                                        padding:
-                                            MaterialStateProperty.resolveWith<EdgeInsetsGeometry>(
-                                                (states) {
-                                          return EdgeInsets.zero;
-                                        }),
-                                      ),
-                                      child: Row(
-                                        children: [
-                                          SvgPicture.asset(AppIcons.arrowLeftIcon),
-                                          const HorizontalSpace(11.0),
-                                          Text(
-                                            getStringById(context, StringId.changePhone),
-                                            style: const TextStyle(
-                                                    fontSize: 14.0, color: AppColors.white)
-                                                .montserrat(fontWeight: AppFonts.semiBold),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    TextButton(
-                                      onPressed: null,
-                                      style: ButtonStyle(
-                                        padding:
-                                            MaterialStateProperty.resolveWith<EdgeInsetsGeometry>(
-                                                (states) {
-                                          return EdgeInsets.zero;
-                                        }),
-                                      ),
-                                      child: Row(
-                                        children: [
-                                          Text(
-                                            getStringById(context, StringId.resendCode),
-                                            style: const TextStyle(
-                                                    fontSize: 14.0, color: AppColors.white)
-                                                .montserrat(fontWeight: AppFonts.semiBold),
-                                          ),
-                                          //Make timer for resend code
-                                          Text(
-                                            ' 1:31',
-                                            style: const TextStyle(
-                                                    fontSize: 14.0, color: AppColors.white)
-                                                .montserrat(fontWeight: AppFonts.semiBold),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
-                                )
+                                _ResendCodeWidget(onTap: _onResendButtonTap),
                               ],
                             ),
                           ),
@@ -257,6 +206,43 @@ class _SignUpCodeScreenState extends State<SignUpCodeScreen> {
           ],
         );
       },
+    );
+  }
+
+  void _onResendButtonTap() {
+    BlocProvider.of<SignUpCodeBloc>(context).add(FirebaseCodeResendCodeEvent(widget.phone));
+  }
+}
+
+class _ResendCodeWidget extends StatefulWidget {
+  const _ResendCodeWidget({
+    Key? key,
+    this.onTap,
+  }) : super(key: key);
+
+  final VoidCallback? onTap;
+
+  @override
+  _ResendCodeWidgetState createState() => _ResendCodeWidgetState();
+}
+
+class _ResendCodeWidgetState extends State<_ResendCodeWidget> with TickerProviderStateMixin {
+  @override
+  Widget build(BuildContext context) {
+    var textWidget = Text(
+      getStringById(context, StringId.resendCode),
+      style: const TextStyle(fontSize: 14.0, color: AppColors.white)
+          .montserrat(fontWeight: AppFonts.semiBold),
+    );
+
+    return TextButton(
+      onPressed: widget.onTap,
+      style: ButtonStyle(
+        padding: MaterialStateProperty.resolveWith<EdgeInsetsGeometry>((states) {
+          return EdgeInsets.zero;
+        }),
+      ),
+      child: textWidget,
     );
   }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:v24_student_app/feature/onboarding/onboarding_screen.dart';
 import 'package:v24_student_app/global/bloc.dart';
 import 'package:v24_student_app/global/navigation/root_router.dart';
 import 'package:v24_student_app/global/navigation/screen_info.dart';
@@ -14,6 +15,7 @@ import 'package:v24_student_app/res/colors.dart';
 import 'package:v24_student_app/res/fonts.dart';
 import 'package:v24_student_app/res/icons.dart';
 import 'package:v24_student_app/res/localization/id_values.dart';
+import 'package:v24_student_app/utils/session_state.dart';
 import 'package:v24_student_app/utils/ui.dart';
 
 import 'bloc/login_bloc.dart';
@@ -266,6 +268,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
             ),
             state.status == BaseScreenStatus.lock ? const ProgressWall() : const Offstage(),
+            if (state.showOnboarding) const OnboardingWidget(),
           ],
         );
       },

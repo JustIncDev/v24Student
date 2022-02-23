@@ -32,7 +32,6 @@ class PhoneNumberTextField extends StatelessWidget {
       labelText: labelText,
       errorText: errorText,
       child: IntlPhoneField(
-        controller: controller,
         focusNode: focusNode,
         style: const TextStyle(color: AppColors.black, fontSize: 13.0)
             .montserrat(fontWeight: AppFonts.regular),

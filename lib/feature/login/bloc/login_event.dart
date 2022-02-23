@@ -59,3 +59,5 @@ class LoginFailedEvent extends LoginEvent {
 }
 
 class LoginSuccessEvent extends LoginPerformEvent {}
+
+class LoginCloseOnboardingEvent extends LoginEvent {}

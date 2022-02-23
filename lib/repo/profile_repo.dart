@@ -4,6 +4,7 @@ import 'package:v24_student_app/domain/user_profile.dart';
 import 'package:v24_student_app/global/logger/logger.dart';
 import 'package:v24_student_app/repo/base_repo.dart';
 import 'package:v24_student_app/repo/provider/remote/profile_remote_provider.dart';
+import 'package:v24_student_app/repo/remote/request/profile_request.dart';
 
 class ProfileRepo extends BaseRepo {
   ProfileRepo()
@@ -28,13 +29,12 @@ class ProfileRepo extends BaseRepo {
     String? country,
     String? avatar,
   }) {
-    var requestData = UserProfile(
+    var requestData = EditProfileRequest(
       firstName: firstName,
       lastName: lastName,
       firebaseEmail: FirebaseEmail(email, false),
       country: country,
       profilePicture: avatar,
-      id: FirebaseAuth.instance.currentUser?.uid,
     );
     return _profileRemoteProvider.editProfile(requestData).then((profile) async {
       Log.info('Edit profile success');

@@ -36,8 +36,7 @@ class FirebaseCodeSentEvent extends FirebaseCodeEvent {
 }
 
 class FirebaseCodeResendCodeEvent extends FirebaseCodeEvent {
-  FirebaseCodeResendCodeEvent(this.phoneNumber, this.token);
+  FirebaseCodeResendCodeEvent(this.phoneNumber);
 
   final String phoneNumber;
-  final int? token;
 }

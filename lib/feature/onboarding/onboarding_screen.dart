@@ -1,33 +1,27 @@
 import 'package:flutter/material.dart';
-import 'package:liquid_swipe/liquid_swipe.dart';
-import 'package:v24_student_app/global/navigation/root_router.dart';
-import 'package:v24_student_app/global/navigation/screen_info.dart';
-import 'package:v24_student_app/global/ui/screen.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:v24_student_app/feature/login/bloc/login_bloc.dart';
 import 'package:v24_student_app/global/ui/space.dart';
 import 'package:v24_student_app/res/colors.dart';
 import 'package:v24_student_app/res/images.dart';
 import 'package:v24_student_app/res/localization/id_values.dart';
-import 'package:v24_student_app/utils/session_state.dart';
-import 'package:v24_student_app/utils/ui.dart';
 
 import 'onboarding_content.dart';
 
-class OnboardingScreen extends AppScreen {
-  const OnboardingScreen({Key? key}) : super(key: key);
+class OnboardingWidget extends StatefulWidget {
+  const OnboardingWidget({Key? key}) : super(key: key);
 
   @override
-  _OnboardingScreenState createState() => _OnboardingScreenState();
-
-  static Page buildPage({Map<String, Object>? params}) {
-    return UiUtils.createPlatformPage(
-      key: const ValueKey('onboarding'),
-      child: const OnboardingScreen(),
-    );
-  }
+  State<StatefulWidget> createState() => _OnboardingScreenState();
 }
 
-class _OnboardingScreenState extends State<OnboardingScreen> {
+class _OnboardingScreenState extends State<OnboardingWidget> {
+  late PageController _pageController;
+
+  Duration pageTurnDuration = const Duration(milliseconds: 200);
+
   int currentPage = 0;
+  bool onboardingClosed = false;
   List<Map<String, Object>> onboardingData = [
     {
       'title': StringId.find,
@@ -47,6 +41,18 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   ];
 
   @override
+  void initState() {
+    super.initState();
+    _pageController = PageController();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _pageController.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: LayoutBuilder(builder: (BuildContext context, BoxConstraints viewportConstraints) {
@@ -56,7 +62,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               gradient: LinearGradient(
                 colors: _getGradientColors(),
                 stops: [0.0, 0.61, 1.0],
-                // transform: const GradientRotation(2.3),
               ),
             ),
             child: Column(
@@ -72,36 +77,44 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 ),
                 const VerticalSpace(70.5),
                 Flexible(
-                  child: Container(
-                    height: MediaQuery.of(context).size.height,
-                    child: PageView(
-                      onPageChanged: (value) {
-                        setState(() {
-                          currentPage = value;
-                        });
-                        if (value == 3) {
-                          RootRouter.of(context)?.push(const ScreenInfo(name: ScreenName.login));
-                          SessionState().setOnboardingFlag(true);
-                        }
-                      },
-                      children: [
-                        OnboardingContent(
-                          title: onboardingData[0]['title'] as StringId,
-                          description: onboardingData[0]['description'] as StringId,
-                          image: onboardingData[0]['image'] as ImageProvider,
-                        ),
-                        OnboardingContent(
-                          title: onboardingData[1]['title'] as StringId,
-                          description: onboardingData[1]['description'] as StringId,
-                          image: onboardingData[1]['image'] as ImageProvider,
-                        ),
-                        OnboardingContent(
-                          title: onboardingData[2]['title'] as StringId,
-                          description: onboardingData[2]['description'] as StringId,
-                          image: onboardingData[2]['image'] as ImageProvider,
-                        ),
-                        const Offstage(),
-                      ],
+                  child: GestureDetector(
+                    onHorizontalDragEnd: (dragEndDetails) {
+                      if (dragEndDetails.primaryVelocity! < 0) {
+                        // Page forwards
+                        _goForward();
+                      } else if (dragEndDetails.primaryVelocity! > 0) {
+                        // Page backwards
+                        _goBack();
+                      }
+                    },
+                    child: Container(
+                      height: MediaQuery.of(context).size.height,
+                      child: PageView(
+                        physics: const NeverScrollableScrollPhysics(),
+                        controller: _pageController,
+                        onPageChanged: (value) {
+                          setState(() {
+                            currentPage = value;
+                          });
+                        },
+                        children: [
+                          OnboardingContent(
+                            title: onboardingData[0]['title'] as StringId,
+                            description: onboardingData[0]['description'] as StringId,
+                            image: onboardingData[0]['image'] as ImageProvider,
+                          ),
+                          OnboardingContent(
+                            title: onboardingData[1]['title'] as StringId,
+                            description: onboardingData[1]['description'] as StringId,
+                            image: onboardingData[1]['image'] as ImageProvider,
+                          ),
+                          OnboardingContent(
+                            title: onboardingData[2]['title'] as StringId,
+                            description: onboardingData[2]['description'] as StringId,
+                            image: onboardingData[2]['image'] as ImageProvider,
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -111,6 +124,18 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         );
       }),
     );
+  }
+
+  void _goForward() {
+    if (currentPage == 2) {
+      BlocProvider.of<LoginBloc>(context).add(LoginCloseOnboardingEvent());
+    } else {
+      _pageController.nextPage(duration: pageTurnDuration, curve: Curves.easeIn);
+    }
+  }
+
+  void _goBack() {
+    _pageController.previousPage(duration: pageTurnDuration, curve: Curves.easeInOut);
   }
 
   List<Color> _getGradientColors() {
