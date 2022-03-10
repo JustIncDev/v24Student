@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import 'id_values.dart';
 
+///Class for managing text locales
 class TextResource {
   TextResource._(this.locale) : forIdValues = ForIdValues(const Locale('en'));
 

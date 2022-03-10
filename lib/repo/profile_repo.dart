@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:v24_student_app/domain/base.dart';
 import 'package:v24_student_app/domain/user_profile.dart';
 import 'package:v24_student_app/global/logger/logger.dart';
@@ -6,6 +5,7 @@ import 'package:v24_student_app/repo/base_repo.dart';
 import 'package:v24_student_app/repo/provider/remote/profile_remote_provider.dart';
 import 'package:v24_student_app/repo/remote/request/profile_request.dart';
 
+///Repo for profile feature
 class ProfileRepo extends BaseRepo {
   ProfileRepo()
       : _profileRemoteProvider = ProfileRemoteProvider(),

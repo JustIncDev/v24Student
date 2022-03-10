@@ -9,7 +9,6 @@ import 'package:v24_student_app/global/injector.dart';
 import 'package:v24_student_app/global/navigation/screen_info.dart';
 import 'package:v24_student_app/global/ui/defocuser.dart';
 import 'package:v24_student_app/res/localization/app_localization.dart';
-import 'package:v24_student_app/utils/session_state.dart';
 
 import 'global/navigation/root_router.dart';
 
@@ -46,6 +45,7 @@ class _V24StudentApplicationState extends State<V24StudentApplication> {
         },
         builder: (context, authState) {
           ScreenInfo _initScreenInfo;
+          ///Check auth state and others values for selecting initial screen
           if (authState.active) {
             if (authState.pinConfigured) {
               _initScreenInfo = const ScreenInfo(name: ScreenName.pin, params: {'enter': true});
@@ -55,7 +55,6 @@ class _V24StudentApplicationState extends State<V24StudentApplication> {
           } else {
             _initScreenInfo = const ScreenInfo(name: ScreenName.login);
           }
-          _initScreenInfo = const ScreenInfo(name: ScreenName.signUpCode, params: {'phone': '+79198128922'});
           return Provider<BlocFactory>(
             key: providerKey,
             create: (ctx) => BlocFactory(

@@ -4,6 +4,7 @@ const String DISPLAY_ONBOARDING = 'DISPLAY_ONBOARDING';
 const String USER_ID = 'USER_ID';
 const String PIN_CODE = 'PIN_CODE';
 
+///SessionState for manage values in shared prefs
 class SessionState {
   SessionState._();
 

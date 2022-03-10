@@ -4,6 +4,7 @@ import 'package:v24_student_app/utils/session_state.dart';
 
 import '../../bloc.dart';
 
+///Auth bloc for auth feature
 @immutable
 abstract class AuthEvent extends BaseBlocEvent {
   @override

@@ -4,6 +4,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:v24_student_app/utils/permission.dart';
 
 class ImageUtils {
+  ///Manage image picker
   static Future<void> openImagePicker({
     required ImageSource imageSource,
     required CropStyle cropStyle,

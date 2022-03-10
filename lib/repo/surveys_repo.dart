@@ -5,6 +5,7 @@ import 'package:v24_student_app/repo/base_repo.dart';
 
 import 'provider/remote/surveys_remote_provider.dart';
 
+///Repo for surveys
 class SurveysRepo extends BaseRepo {
   SurveysRepo()
       : _surveysRemoteProvider = SurveysRemoteProvider(),

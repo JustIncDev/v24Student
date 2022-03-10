@@ -1,6 +1,7 @@
 import 'package:v24_student_app/repo/base_repo.dart';
 import 'package:v24_student_app/repo/provider/remote/sign_in_remote_provider.dart';
 
+///Repo for sign in feature
 class SignInRepo extends BaseRepo {
   SignInRepo()
       : _signInRemoteProvider = SignInRemoteProvider(),

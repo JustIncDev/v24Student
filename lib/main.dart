@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 
 import 'global/logger/logger.dart';
 
+///Starter point in the application
 void main() async {
   await Future.wait([
     _prepareApplicationStart(),
@@ -38,6 +39,7 @@ void _startApplication() {
     (e, s) async {
       return Log.error('Unknown error', exc: e, stackTrace: s);
     },
+    ///Injector for dependencies
     zoneValues: {#injector: Injector()},
   );
 }

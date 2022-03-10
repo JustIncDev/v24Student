@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 
 import 'app_localization.dart';
 
+///Enum for string ids
 enum StringId {
   login,
   email,
@@ -83,6 +84,7 @@ enum StringId {
   delete,
 }
 
+///Relate string id and string value
 class ForIdValues {
   ForIdValues(this.locale);
 

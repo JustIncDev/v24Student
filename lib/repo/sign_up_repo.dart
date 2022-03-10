@@ -1,6 +1,7 @@
 import 'package:v24_student_app/repo/base_repo.dart';
 import 'package:v24_student_app/repo/provider/remote/sign_up_remote_provider.dart';
 
+///Repo for sign up feature
 class SignUpRepo extends BaseRepo {
   SignUpRepo()
       : _signUpRemoteProvider = SignUpRemoteProvider(),

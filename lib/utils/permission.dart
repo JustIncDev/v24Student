@@ -3,6 +3,7 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:v24_student_app/res/localization/id_values.dart';
 
 class PermissionUtils {
+  ///Request permission for getting images
   static Future<bool> requestImagePermission(ImageSource imageSource) async {
     Permission permission;
     StringId messageId;
@@ -33,6 +34,7 @@ class PermissionUtils {
     return permissionStatus.isGranted || permissionStatus.isLimited;
   }
 
+  ///Request permission for receiving notifications
   static Future<void> requestNotificationPermission() async {
     var permission = Permission.notification;
     await permission.request();

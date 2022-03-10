@@ -1,6 +1,4 @@
 import 'package:flutter/widgets.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:v24_student_app/global/data_blocs/auth/auth_bloc.dart';
 import 'package:v24_student_app/global/logger/logger.dart';
 import 'package:v24_student_app/global/navigation/screen_info.dart';
 
@@ -26,6 +24,7 @@ class _RootRouterScope extends InheritedWidget {
   }
 }
 
+///Router for full screens
 class RootRouter extends StatefulWidget {
   RootRouter({
     Key? key,

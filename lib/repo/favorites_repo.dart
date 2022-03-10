@@ -3,6 +3,7 @@ import 'package:v24_student_app/domain/teacher.dart';
 import 'package:v24_student_app/repo/base_repo.dart';
 import 'package:v24_student_app/repo/provider/remote/favorite_remote_provider.dart';
 
+///Repo for favorite feature
 class FavoriteRepo extends BaseRepo {
   FavoriteRepo()
       : _favoriteRemoteProvider = FavoriteRemoteProvider(),

@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'bloc.dart';
 import 'data_blocs/profile/owner_profile_bloc.dart';
 
+///Provider for providing blocs globally
 class GlobalBlocProvider extends StatelessWidget {
   const GlobalBlocProvider({
     Key? key,

@@ -36,6 +36,7 @@ abstract class DataBloc<E extends BaseBlocEvent, S extends BaseBlocState> extend
   Future<void> init();
 }
 
+///Bloc factory for creating feature blocs
 class BlocFactory {
   BlocFactory({
     required this.authBloc,

@@ -3,7 +3,7 @@ import 'package:v24_student_app/utils/session_state.dart';
 
 class Injector {
   late AuthBloc _authBloc;
-
+  ///Init Injector and dependencies
   Future<Injector> init() async {
     _authBloc = AuthBloc();
     await SessionState().initialize();

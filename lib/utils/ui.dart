@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class UiUtils {
+  ///Create page for IOS/Android Platforms
   static Page createPlatformPage({
     required LocalKey? key,
     required Widget child,
